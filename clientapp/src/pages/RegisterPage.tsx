@@ -49,10 +49,11 @@ export default function RegisterPage() {
                                 required: {
                                     value: true, 
                                     message: 'Username is requried'
-                                }
+                                } 
                             })}
                          />
                     </div>
+                    {/*  */}
                     <div className="form-group">
                         <input 
                             type="password" 
