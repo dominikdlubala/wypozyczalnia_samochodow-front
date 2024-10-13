@@ -1,14 +1,14 @@
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 import { useAuth } from '../hooks/useAuth'; 
 import type { User } from '../types'; 
-import { Link } from 'react-router-dom'; 
 
 type FormValues = {
+    email: string
     username: string 
     password: string
 }
 
-export default function LoginPage() {
+export default function RegisterPage() {
 
     const { login } = useAuth(); 
 
@@ -18,7 +18,7 @@ export default function LoginPage() {
         formState: { errors, isSubmitting }
     } = useForm<FormValues>(); 
 
-    const onSubmit: SubmitHandler<FormValues> = ({ username, password }) => {
+    const onSubmit: SubmitHandler<FormValues> = ({ email, username, password }) => {
         login({ username, password } as Omit<User, 'id'>); 
     }
 
@@ -26,7 +26,20 @@ export default function LoginPage() {
         <div className="page page-login">
             <div className="form-wrapper">
                 <form  className="form login-form" onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className="form-title">Log in</h1>
+                    <h1 className="form-title">Sign up</h1>
+                    <div className="form-group">
+                        <input 
+                            type="text" 
+                            className="form-input"
+                            placeholder="E-mail"
+                            {...register("email", {
+                                required: {
+                                    value: true, 
+                                    message: 'E-mail is requried'
+                                }
+                            })}
+                         />
+                    </div>
                     <div className="form-group">
                         <input 
                             type="text" 
@@ -64,10 +77,6 @@ export default function LoginPage() {
                         {isSubmitting ? 'Submitting...' : 'Log in'}
                     </button>
                 </form>
-                <div className="login-register">
-                    Not our user yer? 
-                    <Link to={'/register'}>Sign up</Link>
-                </div>
             </div>
 
         </div>

@@ -124,6 +124,12 @@ code {
   margin: 0; 
 }
 
+.login-register {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Form */
 .form-wrapper {
   border: 2px solid black; 
@@ -131,6 +137,7 @@ code {
   width: 50vw; 
   display: flex; 
   align-items: center; 
+  flex-direction: column;
 }
 
 .form {
