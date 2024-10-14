@@ -124,6 +124,13 @@ code {
   margin: 0; 
 }
 
+.page-home {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+  margin-top: 5rem; 
+}
+
 .login-register {
   display: flex; 
   flex-direction: column;
@@ -136,14 +143,26 @@ code {
   padding: 1rem; 
   width: 50vw; 
   display: flex; 
-  align-items: center; 
+  align-items: center;
   flex-direction: column;
+  margin: auto; 
+}
+
+.form-wrapper--home {
+  margin-top: 1rem; 
+  height: 100%;
+  flex-wrap: wrap; 
 }
 
 .form {
   display: flex; 
   flex-direction:column; 
   width: 100%; 
+}
+
+.form-home {
+  flex-direction: row; 
+  flex-wrap: wrap; 
 }
 
 .form-title {
@@ -158,7 +177,20 @@ code {
   font-size: 1.25rem; 
   position: relative; 
   flex-grow: 1; 
+  flex-wrap: wrap; 
 }
+
+.form-group--home {
+  margin: 1rem;  
+}
+
+.form-home--inputs {
+  display: flex; 
+  flex-direction: row; 
+  flex-wrap: wrap; 
+}
+
+
 
 .form-input {
   /* height: 2rem;   */
@@ -166,6 +198,10 @@ code {
   margin-top: 0.5rem;
   border: none; 
   border-bottom: 1.5px solid #000; 
+}
+
+.form-input--home {
+  width: 140px; 
 }
 
 .form-input:focus {
@@ -178,6 +214,11 @@ code {
   margin-bottom: 1rem; 
 }
 
+.form-input--select {
+  background-color: #fff; 
+  cursor: pointer; 
+}
+
 .btn-submit {
   margin: 1rem 0; 
   border: none; 
@@ -188,7 +229,16 @@ code {
   padding: 0.5rem; 
 }
 
+.btn-submit--home {
+  width: 100%; 
+}
+
 .btn-submit:hover {
   cursor: pointer; 
   background-color: #05a141; 
+}
+
+/* HomePage */
+.gallery--home {
+  margin-top: 2rem; 
 }

@@ -3,6 +3,7 @@ import Root from './pages/Root';
 import HomePage from './pages/HomePage'; 
 import LoginPage from './pages/LoginPage'; 
 import RegisterPage from './pages/RegisterPage'; 
+import CarsPage from './pages/CarsPage'; 
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: '/register', 
         element: <RegisterPage />
+      }, 
+      {
+        path: '/cars', 
+        element: <CarsPage/>
       }
     ]
   }

@@ -9,7 +9,7 @@ export default function Header() {
             <Link to={'/'} className="logo">Logo</Link>
             <div className="menu">
                 <ul className="menu-links">
-                    <li className="menu-link" onClick={() => navigate('/contact')}>Kontakt</li>
+                    <li className="menu-link" onClick={() => navigate('/cars')}>Flota</li>
                     <li className="menu-link" onClick={() => navigate('/login')}>Zaloguj sie</li>
                 </ul>
             </div>
