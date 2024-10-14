@@ -23,6 +23,14 @@ export default function CarsPage() {
     const yearMin = searchParams.get('yearMin'); 
     const yearMax = searchParams.get('yearMax'); 
 
+    const paramsMap = new Map(searchParams); 
+
+    let filter = {}; 
+    paramsMap.forEach((value, key) => {
+      filter = { ...filter, [key]: value }
+    })
+
+    console.log(filter); 
 
   }, [])
 
