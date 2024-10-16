@@ -7,6 +7,8 @@ export default function Header() {
     const navigate = useNavigate(); 
     const { user, logout } = useAuth(); 
 
+    console.log(user); 
+
     return (
         <div className="header">
             <Link to={'/'} className="logo">Logo</Link>

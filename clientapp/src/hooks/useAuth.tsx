@@ -1,12 +1,14 @@
 import { createContext, useContext, useMemo, useEffect } from 'react'; 
 import type { ReactNode } from 'react'; 
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+
 import { useLocalStorage } from './useLocalStorage'; 
 import { User } from '../types'; 
+import { findUser } from '../services/UserService'; 
 
 interface AuthContextType {
     user: Omit<User, 'id'> | null; 
-    login: (user: Omit<User, 'id'>, path?: string) => void; 
+    login: ({ username, password}: {username: string, password: string}, path?: string) => void; 
     logout: () => void; 
 }
 
@@ -25,9 +27,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     }, []); 
 
-    const login = (user: Omit<User, 'id'>, path: string = '/') => {
-        setUser(user); 
-        navigate(path); 
+    const login = async ({username, password}: { username: string, password: string }, path: string = '/')=> {
+        try {   
+            const user = await findUser(username, password); 
+            if(user === undefined) throw new Error('User was not found'); 
+            
+            setUser(user); 
+            navigate(path); 
+        } catch (error) {
+            console.error(error); 
+        }
     }
 
     const logout = () => {

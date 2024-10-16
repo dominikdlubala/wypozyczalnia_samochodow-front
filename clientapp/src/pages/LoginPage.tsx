@@ -1,7 +1,8 @@
 import { useForm, SubmitHandler } from 'react-hook-form'; 
+import { Link } from 'react-router-dom'; 
+
 import { useAuth } from '../hooks/useAuth'; 
 import type { User } from '../types'; 
-import { Link } from 'react-router-dom'; 
 
 type FormValues = {
     username: string 
@@ -18,8 +19,12 @@ export default function LoginPage() {
         formState: { errors, isSubmitting }
     } = useForm<FormValues>(); 
 
-    const onSubmit: SubmitHandler<FormValues> = ({ username, password }) => {
-        login({ username, password } as Omit<User, 'id'>); 
+    const onSubmit: SubmitHandler<FormValues> = async ({ username, password }) => {
+        try {
+            await login({ username, password }); 
+        } catch(error) {
+            console.error(error) ;
+        }
     }
 
     return (
