@@ -12,3 +12,13 @@ export type Car = {
     imageUrl: string
     id: number
 }
+
+export type MyError = {
+    error?: boolean; 
+    message?: string; 
+}
+
+export type UserApiReturn = {
+    data: User | null; 
+    error?: MyError | null; 
+}

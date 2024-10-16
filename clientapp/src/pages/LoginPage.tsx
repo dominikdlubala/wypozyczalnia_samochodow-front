@@ -1,3 +1,4 @@
+import { useState } from 'react'; 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 import { Link } from 'react-router-dom'; 
 
@@ -12,6 +13,7 @@ type FormValues = {
 export default function LoginPage() {
 
     const { login } = useAuth(); 
+    const [isError, setIsError] = useState<boolean>(false); 
 
     const { 
         register, 
@@ -21,11 +23,17 @@ export default function LoginPage() {
 
     const onSubmit: SubmitHandler<FormValues> = async ({ username, password }) => {
         try {
-            await login({ username, password }); 
+            const { error } = await login({ username, password }); 
+
+            if(error){
+                setIsError(true); 
+            }
+
         } catch(error) {
-            console.error(error) ;
+            setIsError(true); 
         }
     }
+
 
     return (
         <div className="page page-login">
@@ -60,6 +68,9 @@ export default function LoginPage() {
                     </div>
                     {
                         (errors.username || errors.password) && <span className="input-validate">{errors.username?.message || errors.password?.message}</span>
+                    }
+                    {
+                        isError && <span className="input-validate">Użytkownik nie istnieje</span>
                     }
                     <button 
                         className="btn-submit"

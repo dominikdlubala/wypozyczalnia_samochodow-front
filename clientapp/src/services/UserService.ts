@@ -1,4 +1,4 @@
-import { User } from '../types'; 
+import type { User, MyError, UserApiReturn } from '../types'; 
 
 const API_URL = '/api/User'; 
 
@@ -32,20 +32,22 @@ export const getUser = async (id: number): Promise<User> => {
     }
 }
 
-export const findUser = async (username: string, password: string): Promise<User | undefined> => {
+export const findUser = async (username: string, password: string): Promise<UserApiReturn> => {
     try {
         const response = await fetch(`${API_URL}/find?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
 
         if(!response.ok) {
             if(response.status === 404){
-                throw new Error('User doesn\'t exist');  
+                return { data: null, error: { error: true, message: 'User not found' } } 
             }
-            throw new Error('Failed to find user'); 
+            return { data: null, error: { error: true, message: 'Unexpected error in UserService/findUSer' } }
         }
 
-        return await response.json(); 
+        const data = await response.json(); 
+        return { data } as { data: User } ;  
     } catch (error) {
         console.error('Error finding user', error)
+        return { data: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }
     }
 }
 

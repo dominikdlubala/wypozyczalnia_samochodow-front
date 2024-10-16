@@ -30,7 +30,6 @@ export default function CarsPage() {
       filter = { ...filter, [key]: value }
     })
 
-    // console.log(filter); 
 
   }, [searchParams]); 
 

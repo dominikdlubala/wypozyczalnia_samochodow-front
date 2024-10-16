@@ -3,12 +3,12 @@ import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useLocalStorage } from './useLocalStorage'; 
-import { User } from '../types'; 
+import type { User, UserApiReturn, MyError } from '../types'; 
 import { findUser } from '../services/UserService'; 
 
 interface AuthContextType {
     user: Omit<User, 'id'> | null; 
-    login: ({ username, password}: {username: string, password: string}, path?: string) => void; 
+    login: ({ username, password}: {username: string, password: string}, path?: string) => Promise<UserApiReturn>; 
     logout: () => void; 
 }
 
@@ -29,13 +29,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async ({username, password}: { username: string, password: string }, path: string = '/')=> {
         try {   
-            const user = await findUser(username, password); 
-            if(user === undefined) throw new Error('User was not found'); 
-            
-            setUser(user); 
-            navigate(path); 
+            const { data: user, error } = await findUser(username, password); 
+
+            if(user !== null) {
+                setUser(user); 
+                navigate(path); 
+                return { data: user }
+            }
+            return { data: null, error } as { data: User | null, error: MyError }
         } catch (error) {
-            console.error(error); 
+            return { data: null, error } as { data: User | null, error: MyError }
         }
     }
 
