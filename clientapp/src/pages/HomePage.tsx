@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'; 
 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
-import Gallery, { galleryItems } from '../components/Gallery'; 
+import Gallery, { galleryItems } from '../components/car/Gallery'; 
 
 interface FormValues {
     engineType?: string | null; 
@@ -21,7 +21,7 @@ export default function HomePage() {
     const {
         register, 
         handleSubmit, 
-        formState: { errors, isSubmitting }
+        formState: { isSubmitting }
     } = useForm<FormValues>(); 
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {    
@@ -47,10 +47,11 @@ export default function HomePage() {
                         <div className="form-group form-group--home">
                             <label>Typ silnika</label>
                             <select 
+                                defaultValue=""
                                 className='form-input form-input--home form-input--select'
                                 {...register('engineType')}
                             >
-                                <option value="" disabled selected hidden>Typ silnika</option>
+                                <option value="" disabled hidden>Typ silnika</option>
                                 <option value="gas">Benzyna</option>
                                 <option value="diesel">Diesel</option>
                                 <option value="hybrid">Hybryda</option>
@@ -59,10 +60,11 @@ export default function HomePage() {
                         <div className="form-group form-group--home">
                             <label>Pojemność</label>
                             <select
+                                defaultValue=""
                                 className='form-input form-input--home form-input--select'
                                 {...register('displacement')}
                             >
-                                <option value="" disabled selected hidden>Rozmiar silnika</option>
+                                <option value="" disabled hidden>Rozmiar silnika</option>
                                 <option value="smallEngine">1.0-2.0</option>
                                 <option value="mediumEngine">2.0-3.0</option>
                                 <option value="bigEngine">3.0+</option>
@@ -71,10 +73,11 @@ export default function HomePage() {
                         <div className="form-group form-group--home">
                             <label>Nadwozie</label>
                             <select 
+                                defaultValue=""
                                 className='form-input form-input--home form-input--select'
                                 {...register('bodyType')}
                             >
-                                <option value="" disabled selected hidden>Nadwozie</option>
+                                <option value="" disabled hidden>Nadwozie</option>
                                 <option value="compact">Kompakt</option>
                                 <option value="sedan">Sedan</option>
                                 <option value="wagon">Kombi</option>

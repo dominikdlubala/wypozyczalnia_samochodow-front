@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom'; 
 
-import Gallery from '../components/Gallery'; 
-import Input from '../components/Input'; 
-import { galleryItems } from '../components/Gallery'; 
+import Gallery from '../components/car/Gallery'; 
+import Input from '../components/primitives/Input'; 
+import { galleryItems } from '../components/car/Gallery'; 
 
 export default function CarsPage() {
 
@@ -30,9 +30,9 @@ export default function CarsPage() {
       filter = { ...filter, [key]: value }
     })
 
-    console.log(filter); 
+    // console.log(filter); 
 
-  }, [])
+  }, [searchParams]); 
 
 
   const onChange = (value: string) => {

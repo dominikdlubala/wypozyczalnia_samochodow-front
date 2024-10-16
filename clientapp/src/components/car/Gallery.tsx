@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'; 
 
-import type { Car } from '../types'; 
+import type { Car } from '../../types'; 
 
 export interface GalleryProps {
     filter?: {category: string, value: string} | null; 
@@ -26,7 +26,6 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
 
     const navigate = useNavigate(); 
 
-
     const galleryList = galleryItems
         .filter(car => car.model.toLowerCase().startsWith(filter ? filter.value : ''))
         .map(car => {
@@ -34,7 +33,7 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
                 <li 
                     className="gallery-item" 
                     key={Math.random()}
-                    onClick={() => navigate(`/car/${car.id}`)}
+                    onClick={() => navigate(`/car?id=${car.id}`)}
                 >
                     <img className="car-image" src={car.imageUrl} alt="car-img"/>
                     <div className="car-model">{car.model}</div>

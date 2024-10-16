@@ -19,7 +19,6 @@ code {
 
 
 .page {
-  margin: 0rem 5rem; 
   min-height: 90vh; 
 }
 
@@ -240,5 +239,90 @@ code {
 
 /* HomePage */
 .gallery--home {
+  margin: 0 3rem; 
   margin-top: 2rem; 
+}
+
+/* CarsPage */
+.page-cars {
+  margin: 0 3rem; 
+}
+
+/* CarPage */
+.page-car {
+  margin: 0; 
+  display: flex; 
+  justify-content: center;
+}
+
+.car-reservation {
+  display: flex; 
+  flex-direction: row;
+  justify-content: center; 
+  align-items: center; 
+  width: 80vw; 
+}
+
+.reservation-controls {
+  width: 50%
+}
+
+.car-image--reservation { 
+  width: 50%; 
+}
+
+.form-wrapper--reservation {
+  margin: 0; 
+  width: 100%; 
+}
+
+
+
+/* Prompt modal */
+.prompt {
+  position: absolute; 
+  z-index: 1000; 
+  top: 10vh; 
+  display: flex; 
+  width: calc(100% - 4rem); 
+  justify-content: space-between;
+  padding: 1rem; 
+  margin: 1rem; 
+  border-radius: 10px; 
+  align-items: center; 
+  transition: opacity 5s ease-in-out;
+  opacity: 1; 
+  animation: fadeIn 3s forwards; 
+}
+
+.prompt-error {
+  background-color: #f74747; 
+  color: #fff; 
+}
+
+.prompt-success {
+  background-color: #69ff7d; 
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; 
+  }
+  25% {
+    opacity: 1; 
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.btn-close--prompt {
+  background-color: inherit; 
+  color:inherit; 
+  border: none; 
+  cursor: pointer; 
+  font-size: 1.25rem; 
 }

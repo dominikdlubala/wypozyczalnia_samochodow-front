@@ -31,11 +31,11 @@ export default function LoginPage() {
                         <input 
                             type="text" 
                             className="form-input"
-                            placeholder="Username"
+                            placeholder="Nazwa użytkownika"
                             {...register("username", {
                                 required: {
                                     value: true, 
-                                    message: 'Username is requried'
+                                    message: 'Oba pola są wymagane'
                                 }
                             })}
                          />
@@ -44,11 +44,11 @@ export default function LoginPage() {
                         <input 
                             type="password" 
                             className="form-input" 
-                            placeholder="Password"  
+                            placeholder="Hasło"  
                             {...register("password", {
                                 required:{
                                     value: true, 
-                                    message: 'Password is required'
+                                    message: 'Oba pola są wymagane'
                                 }
                             })}
                         />
@@ -61,12 +61,12 @@ export default function LoginPage() {
                         type="submit"
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? 'Submitting...' : 'Log in'}
+                        {isSubmitting ? 'Loguję...' : 'Zaloguj'}
                     </button>
                 </form>
                 <div className="login-register">
-                    Not our user yer? 
-                    <Link to={'/register'}>Sign up</Link>
+                    Nie masz konta? 
+                    <Link to={'/register'}>Zarejestruj się</Link>
                 </div>
             </div>
 

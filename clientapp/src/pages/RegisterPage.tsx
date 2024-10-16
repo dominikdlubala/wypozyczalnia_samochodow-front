@@ -26,7 +26,7 @@ export default function RegisterPage() {
         <div className="page page-login">
             <div className="form-wrapper">
                 <form  className="form login-form" onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className="form-title">Sign up</h1>
+                    <h1 className="form-title">Zarejestruj się</h1>
                     <div className="form-group">
                         <input 
                             type="text" 
@@ -35,7 +35,7 @@ export default function RegisterPage() {
                             {...register("email", {
                                 required: {
                                     value: true, 
-                                    message: 'E-mail is requried'
+                                    message: 'E-mail jest wymagany'
                                 }
                             })}
                          />
@@ -44,11 +44,11 @@ export default function RegisterPage() {
                         <input 
                             type="text" 
                             className="form-input"
-                            placeholder="Username"
+                            placeholder="Nazwa użytkownika"
                             {...register("username", {
                                 required: {
                                     value: true, 
-                                    message: 'Username is requried'
+                                    message: 'Nazwa użytkownika jest wymagana'
                                 } 
                             })}
                          />
@@ -58,11 +58,11 @@ export default function RegisterPage() {
                         <input 
                             type="password" 
                             className="form-input" 
-                            placeholder="Password"  
+                            placeholder="Hasło"  
                             {...register("password", {
                                 required:{
                                     value: true, 
-                                    message: 'Password is required'
+                                    message: 'Hasło jest wymagane'
                                 }
                             })}
                         />
@@ -75,7 +75,7 @@ export default function RegisterPage() {
                         type="submit"
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? 'Submitting...' : 'Log in'}
+                        {isSubmitting ? 'Rejestruję...' : 'Zarejestruj'}
                     </button>
                 </form>
             </div>
