@@ -52,9 +52,9 @@ export default function HomePage() {
                                 {...register('engineType')}
                             >
                                 <option value="" disabled hidden>Typ silnika</option>
-                                <option value="gas">Benzyna</option>
-                                <option value="diesel">Diesel</option>
-                                <option value="hybrid">Hybryda</option>
+                                <option value="Petrol">Benzyna</option>
+                                <option value="Diesiel">Diesel</option>
+                                <option value="Hybrid">Hybryda</option>
                             </select> 
                         </div>
                         <div className="form-group form-group--home">
