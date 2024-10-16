@@ -326,3 +326,14 @@ code {
   cursor: pointer; 
   font-size: 1.25rem; 
 }
+
+.list {
+  list-style: none; 
+  padding: 0; 
+}
+
+.list-item--reservation {
+  border: 2px solid black; 
+  padding: 1rem; 
+  margin: 1rem; 
+}

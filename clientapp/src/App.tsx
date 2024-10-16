@@ -6,6 +6,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage'; 
 import CarsPage from './pages/CarsPage'; 
 import CarPage from './pages/CarPage'; 
+import ReservationsPage from './pages/ReservationsPage';
+import ProtectedRoute from './components/login/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
       {
         path: '/car',
         element: <CarPage/>
+      }, 
+      {
+        path: '/reservations', 
+        element: (
+          <ProtectedRoute>
+            <ReservationsPage />
+          </ProtectedRoute>
+        )
       }
     ]
   }

@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router-dom'; 
 
+import { useAuth } from '../hooks/useAuth'; 
 import Prompt from '../components/primitives/Prompt'; 
 
 const CarPage = () => {
+
+    const { user } = useAuth(); 
+    const navigate = useNavigate();
+
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
 
@@ -66,7 +72,20 @@ const CarPage = () => {
                                     placeholderText="Wybierz datę"
                                 />
                             </div>
-                            <button className="btn-submit" type="submit">Zarezerwuj</button>
+                            {
+                                user 
+                                ? 
+                                <button className="btn-submit" type="submit">Zarezerwuj</button>
+                                : 
+                                <button 
+                                    className="btn-submit"
+                                    onClick={(e: React.FormEvent<HTMLButtonElement>) => {
+                                        e.preventDefault() 
+                                        navigate('/login')
+                                    }}
+                                >Zaloguj się przed rezerwacją</button>
+
+                            }
                         </form>
                     </div>
                 </div>
