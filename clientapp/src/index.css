@@ -5,6 +5,7 @@
 body {
   box-sizing: border-box; 
   margin: 0;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -24,19 +25,28 @@ code {
 
 /* Header */
 .header {
-  background-color: #027930; 
-  color: #fff; 
+  background-color: #b8a4a4; 
+  color: #000; 
   display: flex; 
   justify-content: space-between; 
   align-items: center; 
   padding: 1rem;
   height: 5vh;  
+  text-transform: uppercase;
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+  font-size: 1.3rem;
 }
 
 .logo {
   text-decoration: none; 
-  color: #fff; 
+  color: #000; 
   cursor: pointer; 
+}
+
+.logo:hover {
+  color: #666;
+  cursor: pointer;
 }
 
 .menu-links {
@@ -48,7 +58,7 @@ code {
   padding: 1rem; 
 }
 .menu-link:hover {
-  color: #a7a7a7; 
+  color: #666; 
   cursor: pointer; 
 }
 
@@ -73,7 +83,7 @@ code {
   flex-direction: row; 
   flex-wrap: wrap; 
   justify-content: space-between; 
-  height: 80vh; 
+  height: 40vh; 
 }
 
 .gallery-item {
@@ -84,14 +94,33 @@ code {
   align-items: center; 
   max-width: 15vw; 
   max-height: 15vh; 
-  margin: 1rem 0rem;  
-  border: 2px solid black; 
+  margin: 1rem 0.1rem;  
   padding: 0.5rem; 
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
 }
 
 .gallery-item:hover {
   border-color: #027930; 
   cursor: pointer;
+}
+
+
+.gallery--home {
+  background-color: #b8a4a4;
+  width: 100vw;
+  padding: 2rem 0;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.gallery-title--home {
+  font-family: "Nunito", sans-serif;
+  font-weight: 500;
 }
 
 .car-image {
@@ -127,7 +156,6 @@ code {
   display: flex; 
   flex-direction: column;
   justify-content: center; 
-  margin-top: 5rem; 
 }
 
 .login-register {
@@ -136,15 +164,27 @@ code {
   align-items: center;
 }
 
+/* Form background */
+.form-background {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),  url("../public/images/form_background.avif");
+  width: 100vw;
+  min-height: 65vh;
+  padding: 30px 0;
+  background-position: center 60%;
+  background-repeat: no-repeat;
+}
+
 /* Form */
 .form-wrapper {
-  border: 2px solid black; 
   padding: 1rem; 
   width: 50vw; 
   display: flex; 
   align-items: center;
   flex-direction: column;
   margin: auto; 
+  color: #FFF;
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
 }
 
 .form-wrapper--home {
@@ -165,8 +205,11 @@ code {
 }
 
 .form-title {
-  font-size: 1.5rem; 
-  margin-bottom: 0.5rem; 
+  font-size: 3.2rem;
+  margin-bottom: 2rem; 
+  font-family: "Protest Strike", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .form-group {
@@ -180,32 +223,18 @@ code {
 }
 
 .form-group--home {
-  margin: 1rem;  
+  flex: 1 1 22%;
 }
 
 .form-home--inputs {
   display: flex; 
   flex-direction: row; 
   flex-wrap: wrap; 
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.3rem;
 }
 
-
-
-.form-input {
-  /* height: 2rem;   */
-  font-size: 1rem; 
-  margin-top: 0.5rem;
-  border: none; 
-  border-bottom: 1.5px solid #000; 
-}
-
-.form-input--home {
-  width: 140px; 
-}
-
-.form-input:focus {
-  outline: none !important;
-}
 
 .input-validate {
   font-size: 1rem;
@@ -213,35 +242,52 @@ code {
   margin-bottom: 1rem; 
 }
 
+.form-input,
 .form-input--select {
-  background-color: #fff; 
-  cursor: pointer; 
+  width: 100%;
+  padding: 0.7rem;
+  font-size: 1.1rem;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+}
+
+.form-input:focus,
+.form-input--select:focus {
+  outline: none;
+  border-color: #027930;
+  box-shadow: 0 0 8px rgba(2, 121, 48, 0.2);
+}
+
+.form-group label {
+  font-size: 1rem;
+  color: #FFF;
+  margin-bottom: 0.2rem;
 }
 
 .btn-submit {
-  margin: 1rem 0; 
-  border: none; 
-  background-color: #027930; 
-  color: #fff; 
-  border-radius: 10px;
-  font-size: 1rem;  
-  padding: 0.5rem; 
-}
-
-.btn-submit--home {
-  width: 100%; 
+  margin: 0 auto;
+  display: block;
+  width: 200px;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 1px;
+  background-color: #707484;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer; 
+  transition: background-color 0.3s ease;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
 }
 
 .btn-submit:hover {
   cursor: pointer; 
-  background-color: #05a141; 
+  background-color: #b8a4a4; 
 }
 
-/* HomePage */
-.gallery--home {
-  margin: 0 3rem; 
-  margin-top: 2rem; 
-}
 
 /* CarsPage */
 .page-cars {

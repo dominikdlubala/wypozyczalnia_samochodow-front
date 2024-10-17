@@ -22,7 +22,7 @@ export default function Header() {
                         <li className="menu-link" onClick={() => navigate('/login')}>Zaloguj sie</li>
                     }
                 </ul>
-            </div>
+            </div>           
         </div>
     )
 }
