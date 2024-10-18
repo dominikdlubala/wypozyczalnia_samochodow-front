@@ -3,26 +3,21 @@ import { useSearchParams } from 'react-router-dom';
 
 import Gallery from '../components/car/Gallery'; 
 import Input from '../components/primitives/Input'; 
-import { galleryItems } from '../components/car/Gallery'; 
+
+import type { Car, CarApiReturn } from '../types';
+import { getFilteredCars } from '../services/CarsService'; 
 
 export default function CarsPage() {
 
   const [inputValue, setInputValue] = useState<string>(''); 
-  const [galleryFilter, setGalleryFilter] = useState<{category: string, value: string} | null>(null); 
+  const [galleryFilter, setGalleryFilter] = useState<{category: string, value: string} | null>(null);
+  const [filteredCars, setFilteredCars] = useState<CarApiReturn>({ data: null });  
 
   const [searchParams] = useSearchParams(); 
 
+  const query = window.location.search; 
 
   useEffect(() => {
-    const engineType = searchParams.get('engineType'); 
-    const displacement = searchParams.get('displacement'); 
-    const bodyType = searchParams.get('bodyType'); 
-    const colour = searchParams.get('colour'); 
-    const priceMin = searchParams.get('priceMin'); 
-    const priceMax = searchParams.get('priceMax'); 
-    const yearMin = searchParams.get('yearMin'); 
-    const yearMax = searchParams.get('yearMax'); 
-
     const paramsMap = new Map(searchParams); 
 
     let filter = {}; 
@@ -30,8 +25,15 @@ export default function CarsPage() {
       filter = { ...filter, [key]: value }
     })
 
+    const fetchFilteredCars = async () => {
+      const data = await getFilteredCars(query); 
+      setFilteredCars(data); 
+    }
 
+    fetchFilteredCars(); 
   }, [searchParams]); 
+
+  console.log(filteredCars); 
 
 
   const onChange = (value: string) => {
@@ -51,7 +53,7 @@ export default function CarsPage() {
       />
       <Gallery 
         filter={galleryFilter}
-        galleryItems={galleryItems}
+        galleryItems={filteredCars.data as Car[]}
       />
     </div>
   );

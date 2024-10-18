@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async ({username, password}: { username: string, password: string }, path: string = '/')=> {
         try {   
-            const { data: user, error } = await findUser(username, password); 
+            const { data: user, error } = await findUser(username, password) as { data: User, error: MyError }; 
 
             if(user !== null) {
                 setUser(user); 

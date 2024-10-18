@@ -1,7 +1,10 @@
+import { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
-
 import { useForm, SubmitHandler } from 'react-hook-form'; 
-import Gallery, { galleryItems } from '../components/car/Gallery'; 
+
+import { getAllCars } from '../services/CarsService'; 
+import Gallery from '../components/car/Gallery'; 
+import type { Car, CarApiReturn } from '../types'; 
 
 interface FormValues {
     engineType?: string | null; 
@@ -16,8 +19,22 @@ interface FormValues {
 
 export default function HomePage() {
 
+    const [cars, setCars] = useState<CarApiReturn>({ data: null }); 
     const navigate = useNavigate(); 
     
+    useEffect(() => {
+        const fetchCars = async () => {
+            try {
+                const data = await getAllCars(); 
+                setCars(data); 
+            } catch (error) {
+                console.error(error); 
+            }
+        }
+
+        fetchCars(); 
+    }, []); 
+
     const {
         register, 
         handleSubmit, 
@@ -30,7 +47,7 @@ export default function HomePage() {
         for(key in data){
             const value = data[key]
             if(value !== '') {
-                paramsObj = { ...paramsObj, [key]: value }
+                paramsObj = { ...paramsObj, [key.slice(0, 1).toUpperCase() + key.slice(1)]: value }
             }
         }
         const query = new URLSearchParams(paramsObj).toString()
@@ -54,7 +71,7 @@ export default function HomePage() {
                                 >
                                     <option value="" disabled hidden>Wybierz typ silnika</option>
                                     <option value="Petrol">Benzyna</option>
-                                    <option value="Diesiel">Diesel</option>
+                                    <option value="Diesel">Diesel</option>
                                     <option value="Hybrid">Hybryda</option>
                                 </select> 
                             </div>
@@ -138,9 +155,9 @@ export default function HomePage() {
                 <h1 className="gallery-title--home">
                     Najczęściej wybierane
                 </h1>
-                <Gallery
+                {/* <Gallery
                     galleryItems={galleryItems.slice(0, 5)}
-                />
+                /> */}
             </div>
         </div>
 

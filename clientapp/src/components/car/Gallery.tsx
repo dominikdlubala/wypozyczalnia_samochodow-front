@@ -4,29 +4,14 @@ import type { Car } from '../../types';
 
 export interface GalleryProps {
     filter?: {category: string, value: string} | null; 
-    galleryItems: Car[]
+    galleryItems: Car[] | null; 
 }
-
-export const galleryItems = [
-    { model: 'Toyota Corolla', imageUrl: './images/corolla.png', id: 4  }, 
-    { model: 'Toyota RAV4', imageUrl: './images/corolla.png', id: 4 },
-    { model: 'Toyota Supra', imageUrl: './images/corolla.png', id: 4 }, 
-    { model: 'Toyota Yaris GR', imageUrl: './images/corolla.png', id: 4},
-    { model: 'Toyota Corolla', imageUrl: './images/corolla.png', id: 4 }, 
-    { model: 'Toyota RAV4', imageUrl: './images/corolla.png', id: 4 },
-    { model: 'Toyota Supra', imageUrl: './images/corolla.png', id: 4 }, 
-    { model: 'Toyota Yaris GR', imageUrl: './images/corolla.png', id: 4},
-    { model: 'Toyota Corolla', imageUrl: './images/corolla.png', id: 4 }, 
-    { model: 'Toyota RAV4', imageUrl: './images/corolla.png', id: 4 },
-    { model: 'Toyota Supra', imageUrl: './images/corolla.png', id: 4 }, 
-    { model: 'Toyota Yaris GR', imageUrl: './images/corolla.png', id: 4},
-] 
 
 export default function Gallery({ filter, galleryItems }: GalleryProps) {
 
     const navigate = useNavigate(); 
 
-    const galleryList = galleryItems
+    const galleryList = galleryItems ? galleryItems
         .filter(car => car.model.toLowerCase().startsWith(filter ? filter.value : ''))
         .map(car => {
             return (
@@ -40,6 +25,10 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
                 </li>
             );
     })
+    :
+    <div>
+        Nie znaleziono samochodu o Twoich wymaganiach
+    </div>
 
     return (
         <div className="gallery">
