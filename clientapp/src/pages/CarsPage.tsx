@@ -5,12 +5,12 @@ import Gallery from '../components/car/Gallery';
 import Input from '../components/primitives/Input'; 
 
 import type { Car, CarApiReturn } from '../types';
-import { getFilteredCars } from '../services/CarsService'; 
+import { getFilteredCars } from '../services/CarService'; 
 
 export default function CarsPage() {
 
   const [inputValue, setInputValue] = useState<string>(''); 
-  const [galleryFilter, setGalleryFilter] = useState<{category: string, value: string} | null>(null);
+  const [galleryFilter, setGalleryFilter] = useState<string | null>(null);
   const [filteredCars, setFilteredCars] = useState<CarApiReturn>({ data: null });  
 
   const [searchParams] = useSearchParams(); 
@@ -33,15 +33,15 @@ export default function CarsPage() {
     fetchFilteredCars(); 
   }, [searchParams]); 
 
-  console.log(filteredCars); 
-
 
   const onChange = (value: string) => {
     setInputValue(value); 
+    setGalleryFilter(value); 
   }
   const inputSubmit = (x:string) => {
-    setGalleryFilter({category: 'model', value: inputValue}); 
+    setGalleryFilter(inputValue); 
   }
+
 
   return (
     <div className="page page-cars">

@@ -1,30 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom'; 
 
+import type { Reservation } from '../types'; 
 import { useAuth } from '../hooks/useAuth'; 
 import Prompt from '../components/primitives/Prompt'; 
+
+import { addReservation } from '../services/ReservationService';
 
 const CarPage = () => {
 
     const { user } = useAuth(); 
     const navigate = useNavigate();
 
+    const [searchParams] = useSearchParams(); 
+    
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
+    const [carId, setCarId] = useState<number>(); 
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false); 
     const [isError, setIsError] = useState<boolean>(false); 
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    useEffect(() => {
+        const id = searchParams.get('id'); 
+        if(id !== null) setCarId(Number(id)); 
+    }, [searchParams]); 
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(startDate && endDate){
             console.log(startDate, endDate);
+
+            const { data, error } = await addReservation({ userId: user?.id, carId, startDate, endDate } as Omit<Reservation, 'id'>); 
+
+            console.log(data); 
+            console.log(error); 
+
             setIsSuccess(true)
-            setTimeout(() => {
-                setIsSuccess(false)
-            }, 3000); 
+            // setTimeout(() => {
+            //     setIsSuccess(false)
+            //     navigate('/reservations'); 
+            // }, 3000); 
         } else {
             setIsError(true); 
             setTimeout(() => {
@@ -32,7 +51,6 @@ const CarPage = () => {
             }, 3000); 
         }   
     };
-
 
     return (
         <div className="page page-car">

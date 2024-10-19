@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 
-import { getAllCars } from '../services/CarsService'; 
+import { getAllCars } from '../services/CarService'; 
 import Gallery from '../components/car/Gallery'; 
 import type { Car, CarApiReturn } from '../types'; 
 

@@ -7,7 +7,7 @@ import type { User, UserApiReturn, MyError } from '../types';
 import { findUser } from '../services/UserService'; 
 
 interface AuthContextType {
-    user: Omit<User, 'id'> | null; 
+    user: User | null; 
     login: ({ username, password}: {username: string, password: string}, path?: string) => Promise<UserApiReturn>; 
     logout: () => void; 
 }
@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    const [user, setUser] = useLocalStorage<Omit<User, 'id'> | null>('user', null); 
+    const [user, setUser] = useLocalStorage<User | null>('user', null); 
     const navigate = useNavigate(); 
 
     useEffect(() => {

@@ -383,3 +383,21 @@ code {
   padding: 1rem; 
   margin: 1rem; 
 }
+
+/* Error */
+.error-wrapper {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh; 
+  margin: auto; 
+}
+
+.error-box {
+  background-color: #f53c3c; 
+  padding: 5rem;
+  text-align: center;
+  color: #fff; 
+  border-radius: 16px;   
+}

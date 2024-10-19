@@ -42,8 +42,8 @@ export type Reservation = {
     carId: number; 
     startDate: Date; 
     endDate: Date; 
-    car: Car; 
-    user: User; 
+    car?: Car; 
+    user?: User; 
 }
 
 export type Fault = {
@@ -79,5 +79,10 @@ export type UserApiReturn = {
 
 export type CarApiReturn = {
     data: Car | Car[] | null; 
+    error?: MyError | null; 
+}
+
+export type ReservationApiReturn = {
+    data: Reservation | Reservation[] | null; 
     error?: MyError | null; 
 }

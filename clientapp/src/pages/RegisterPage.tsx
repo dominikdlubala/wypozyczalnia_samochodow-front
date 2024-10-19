@@ -19,7 +19,7 @@ export default function RegisterPage() {
     } = useForm<FormValues>(); 
 
     const onSubmit: SubmitHandler<FormValues> = ({ email, username, password }) => {
-        login({ username, password } as Omit<User, 'id'>); 
+        // login({ username, password } as Omit<User, 'id'>); 
     }
 
     return (
