@@ -29,11 +29,11 @@ export const addReservation = async (newReservation: Omit<Reservation, 'id'>): P
                 'EndDate': newReservation.endDate
             })
         }); 
-        if(!response.ok) return { data: null, error: { error: true, message: 'Bad request / addReservation' } }
+        if(!response.ok) return { data: null, error: { error: true, message: 'Bad request / addReservation' } } 
 
-        const data = await response.json(); 
-        return { data }; 
+        return { data: await response.json() }; 
     } catch (error) {
+        console.error(error); 
         return { data: null, error: { error: true, message: 'Unexpected error / addReservation' } }
     }
 }
