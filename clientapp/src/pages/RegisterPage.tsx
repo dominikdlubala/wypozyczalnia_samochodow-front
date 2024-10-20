@@ -23,14 +23,14 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="page page-login">
-            <div className="form-wrapper">
-                <form  className="form login-form" onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className="form-title">Zarejestruj się</h1>
-                    <div className="form-group">
+        <div className="page register-page d-flex justify-content-center align-items-center">
+            <div className="register-form-wrapper">
+                <form  className="register-form" onSubmit={handleSubmit(onSubmit)}>
+                    <h1 className="register-form-title">Zarejestruj się</h1>
+                    <div className="register-form-group">
                         <input 
                             type="text" 
-                            className="form-input"
+                            className="register-form-input"
                             placeholder="E-mail"
                             {...register("email", {
                                 required: {
@@ -40,10 +40,10 @@ export default function RegisterPage() {
                             })}
                          />
                     </div>
-                    <div className="form-group">
+                    <div className="register-form-group">
                         <input 
                             type="text" 
-                            className="form-input"
+                            className="register-form-input"
                             placeholder="Nazwa użytkownika"
                             {...register("username", {
                                 required: {
@@ -53,11 +53,10 @@ export default function RegisterPage() {
                             })}
                          />
                     </div>
-                    {/*  */}
-                    <div className="form-group">
+                    <div className="register-form-group">
                         <input 
                             type="password" 
-                            className="form-input" 
+                            className="register-form-input" 
                             placeholder="Hasło"  
                             {...register("password", {
                                 required:{
@@ -68,10 +67,14 @@ export default function RegisterPage() {
                         />
                     </div>
                     {
-                        (errors.username || errors.password) && <span className="input-validate">{errors.username?.message || errors.password?.message}</span>
+                        (errors.username || errors.password || errors.email) && (
+                            <span className="register-input-validate">
+                                {errors.email?.message || errors.username?.message || errors.password?.message}
+                            </span>
+                        )
                     }
                     <button 
-                        className="btn-submit"
+                        className="register-btn-submit"
                         type="submit"
                         disabled={isSubmitting}
                     >
@@ -79,7 +82,6 @@ export default function RegisterPage() {
                     </button>
                 </form>
             </div>
-
         </div>
     )
 }
