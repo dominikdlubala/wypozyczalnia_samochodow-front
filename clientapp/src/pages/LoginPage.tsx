@@ -34,58 +34,56 @@ export default function LoginPage() {
         }
     }
 
-
     return (
-        <div className="page page-login">
-            <div className="form-wrapper">
-                <form  className="form login-form" onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className="form-title">Log in</h1>
-                    <div className="form-group">
+        <div className="page login-page d-flex justify-content-center align-items-center">
+            <div className="login-form-wrapper">
+                <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+                    <h1 className="login-form-title">Zaloguj się</h1>
+                    <div className="login-form-group">
                         <input 
                             type="text" 
-                            className="form-input"
+                            className="login-form-input"
                             placeholder="Nazwa użytkownika"
                             {...register("username", {
                                 required: {
                                     value: true, 
-                                    message: 'Oba pola są wymagane'
+                                    message: 'Nazwa użytkownika jest wymagana'
                                 }
                             })}
-                         />
+                        />
                     </div>
-                    <div className="form-group">
+                    <div className="login-form-group">
                         <input 
                             type="password" 
-                            className="form-input" 
+                            className="login-form-input" 
                             placeholder="Hasło"  
                             {...register("password", {
                                 required:{
                                     value: true, 
-                                    message: 'Oba pola są wymagane'
+                                    message: 'Hasło jest wymagane'
                                 }
                             })}
                         />
                     </div>
                     {
-                        (errors.username || errors.password) && <span className="input-validate">{errors.username?.message || errors.password?.message}</span>
+                        (errors.username || errors.password) && <span className="login-input-validate">{errors.username?.message || errors.password?.message}</span>
                     }
                     {
-                        isError && <span className="input-validate">Użytkownik nie istnieje</span>
+                        isError && <span className="login-input-validate">Użytkownik nie istnieje</span>
                     }
                     <button 
-                        className="btn-submit"
+                        className="login-btn-submit"
                         type="submit"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Loguję...' : 'Zaloguj'}
                     </button>
                 </form>
-                <div className="login-register">
-                    Nie masz konta? 
+                <div className="login-register-link mt-2">
+                    <span>Nie masz konta?</span> <br/>
                     <Link to={'/register'}>Zarejestruj się</Link>
                 </div>
             </div>
-
         </div>
     )
 }
