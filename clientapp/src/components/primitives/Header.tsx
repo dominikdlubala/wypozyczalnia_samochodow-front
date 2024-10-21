@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 export default function Header() {
 
     const navigate = useNavigate(); 
-    const { user, logout } = useAuth(); 
+    const { token, logout } = useAuth(); 
 
     return (
         <div className="header">
@@ -13,9 +13,9 @@ export default function Header() {
             <div className="menu">
                 <ul className="menu-links">
                     <li className="menu-link" onClick={() => navigate('/cars')}>Flota</li>
-                    { user && <li className="menu-link" onClick={() => navigate('/reservations', { state: { user }})}>Moje rezerwacje</li>}
+                    { token && <li className="menu-link" onClick={() => navigate('/reservations', { state: { token }})}>Moje rezerwacje</li>}
                     {
-                        user 
+                        token 
                         ? 
                         <li className="menu-link" onClick={() => logout()}>Wyloguj się</li>
                         :

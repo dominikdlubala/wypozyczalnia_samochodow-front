@@ -3,12 +3,12 @@ import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useLocalStorage } from './useLocalStorage'; 
-import type { User, UserApiReturn, MyError } from '../types'; 
-import { findUser } from '../services/UserService'; 
+import type { User, UserLoginApiReturn, MyError } from '../types'; 
+import { loginUser } from '../services/UserService'; 
 
 interface AuthContextType {
-    user: User | null; 
-    login: ({ username, password}: {username: string, password: string}, path?: string) => Promise<UserApiReturn>; 
+    token: string | null; 
+    login: ({ username, password}: {username: string, password: string}, path?: string) => Promise<UserLoginApiReturn>; 
     logout: () => void; 
 }
 
@@ -16,44 +16,46 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    const [user, setUser] = useLocalStorage<User | null>('user', null); 
+    const [token, setToken] = useLocalStorage<string | null>('token', null); 
     const navigate = useNavigate(); 
 
     useEffect(() => {
-        if(user) {
-            setUser(user); 
+        if(token) {
+            setToken(token); 
         } else {
             logout(); 
         }
     }, []); 
 
-    const login = async ({username, password}: { username: string, password: string }, path: string = '/')=> {
+    const login = async ({username, password}: { username: string, password: string }, path: string = '/'): Promise<UserLoginApiReturn> => {
         try {   
-            const { data: user, error } = await findUser(username, password) as { data: User, error: MyError }; 
+            const { token, error } = await loginUser(username, password) as UserLoginApiReturn; 
 
-            if(user !== null) {
-                setUser(user); 
+            console.log(token); 
+
+            if(token !== null) {
+                setToken(token); 
                 navigate(path); 
-                return { data: user }
+                return { token }
             }
-            return { data: null, error } as { data: User | null, error: MyError }
+            return { token: null, error }; 
         } catch (error) {
-            return { data: null, error } as { data: User | null, error: MyError }
+            return { token: null, error } as UserLoginApiReturn; 
         }
     }
 
     const logout = () => {
-        setUser(null); 
+        setToken(null); 
         navigate('/', { replace: true })
     }
 
     const value = useMemo(
         () => ({
-            user, 
+            token, 
             login, 
             logout
         }),
-        [user]
+        [token]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

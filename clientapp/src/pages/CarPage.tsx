@@ -12,7 +12,7 @@ import { addReservation } from '../services/ReservationService';
 
 const CarPage = () => {
 
-    const { user } = useAuth(); 
+    const { token } = useAuth(); 
     const navigate = useNavigate();
 
     const [searchParams] = useSearchParams(); 
@@ -34,10 +34,10 @@ const CarPage = () => {
         if(startDate && endDate){
             console.log(startDate, endDate);
 
-            const { data, error } = await addReservation({ userId: user?.id, carId, startDate, endDate } as Omit<Reservation, 'id'>); 
+            // const { data, error } = await addReservation({ userId: user?.id, carId, startDate, endDate } as Omit<Reservation, 'id'>); 
 
-            console.log(data); 
-            console.log(error); 
+            // console.log(data); 
+            // console.log(error); 
 
             // setIsSuccess(true)
             // setTimeout(() => {
@@ -91,7 +91,7 @@ const CarPage = () => {
                                 />
                             </div>
                             {
-                                user 
+                                token 
                                 ? 
                                 <button className="btn-submit" type="submit">Zarezerwuj</button>
                                 : 

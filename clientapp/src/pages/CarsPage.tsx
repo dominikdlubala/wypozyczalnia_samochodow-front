@@ -42,7 +42,6 @@ export default function CarsPage() {
     setGalleryFilter(inputValue); 
   }
 
-
   return (
     <div className="page page-cars">
       <Input

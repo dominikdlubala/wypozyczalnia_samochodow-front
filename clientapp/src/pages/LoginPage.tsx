@@ -23,6 +23,7 @@ export default function LoginPage() {
 
     const onSubmit: SubmitHandler<FormValues> = async ({ username, password }) => {
         try {
+            console.log(username, password); 
             const { error } = await login({ username, password }); 
 
             if(error){
@@ -69,7 +70,7 @@ export default function LoginPage() {
                         (errors.username || errors.password) && <span className="login-input-validate">{errors.username?.message || errors.password?.message}</span>
                     }
                     {
-                        isError && <span className="login-input-validate">Użytkownik nie istnieje</span>
+                        isError && <span className="login-input-validate">Użytkownik nie istnieje lub błąd połączenia z bazą</span>
                     }
                     <button 
                         className="login-btn-submit"

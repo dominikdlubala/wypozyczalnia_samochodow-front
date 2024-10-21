@@ -77,6 +77,11 @@ export type UserApiReturn = {
     error?: MyError | null; 
 }
 
+export type UserLoginApiReturn = {
+    token: string | null; 
+    error?: MyError | null; 
+}
+
 export type CarApiReturn = {
     data: Car | Car[] | null; 
     error?: MyError | null; 

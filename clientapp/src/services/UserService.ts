@@ -1,4 +1,4 @@
-import type { User, MyError, UserApiReturn } from '../types'; 
+import type { User, MyError, UserApiReturn, UserLoginApiReturn } from '../types'; 
 
 const API_URL = '/api/User'; 
 
@@ -32,24 +32,54 @@ export const getUser = async (id: number): Promise<User> => {
     }
 }
 
-export const findUser = async (username: string, password: string): Promise<UserApiReturn> => {
+// export const findUser = async (username: string, password: string): Promise<UserApiReturn> => {
+//     try {
+//         const response = await fetch(`${API_URL}/find?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
+
+//         if(!response.ok) {
+//             if(response.status === 404){
+//                 return { data: null, error: { error: true, message: 'User not found' } } 
+//             }
+//             return { data: null, error: { error: true, message: 'Unexpected error in UserService/findUSer' } }
+//         }
+
+//         const data = await response.json(); 
+//         return { data } as { data: User } ;  
+//     } catch (error) {
+//         console.error('Error finding user', error)
+//         return { data: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }
+//     }
+// }
+
+export const loginUser = async (username: string, password: string): Promise<UserLoginApiReturn> => {
     try {
-        const response = await fetch(`${API_URL}/find?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
+        const response = await fetch(`${API_URL}/login`, {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username, 
+                password: password 
+            })
+        });
 
         if(!response.ok) {
             if(response.status === 404){
-                return { data: null, error: { error: true, message: 'User not found' } } 
+                return { token: null, error: { error: true, message: 'User not found' } } 
             }
-            return { data: null, error: { error: true, message: 'Unexpected error in UserService/findUSer' } }
+            return { token: null, error: { error: true, message: 'Unexpected error in UserService/findUSer' } }
         }
 
         const data = await response.json(); 
-        return { data } as { data: User } ;  
+        return { token: data };  
     } catch (error) {
         console.error('Error finding user', error)
-        return { data: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }
+        return { token: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }
     }
 }
+
+
 
 export const addUser = async (user: Omit<User, 'id'>): Promise<User> => {
     try {
