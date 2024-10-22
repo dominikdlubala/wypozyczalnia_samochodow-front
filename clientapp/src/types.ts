@@ -2,9 +2,9 @@ export type User = {
     id: number; 
     username: string; 
     password: string; 
-    firstName?: string; 
-    lastName?: string; 
-    registrationDate: Date; 
+    firstName?: string | null; 
+    lastName?: string | null; 
+    registrationDate?: Date; 
 }
 
 export type Car = {

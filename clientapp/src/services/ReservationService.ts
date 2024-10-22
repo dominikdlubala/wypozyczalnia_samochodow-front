@@ -2,9 +2,16 @@ import type { Reservation, ReservationApiReturn } from '../types';
 
 const API_URL = '/api/Reservation'; 
 
-export const getUserReservations = async (userId: number): Promise<ReservationApiReturn> => {
-    try {
-        const response = await fetch(`${API_URL}/user${userId}`); 
+
+
+export const getUserReservations = async (token: string): Promise<ReservationApiReturn> => {
+    try{
+        const response = await fetch(`${API_URL}/user`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }); 
         if(!response.ok) {
             return { data: null, error: { error: true, message: 'Bad request / getUserReservations' } }
         }
@@ -15,15 +22,16 @@ export const getUserReservations = async (userId: number): Promise<ReservationAp
     }
 }
 
-export const addReservation = async (newReservation: Omit<Reservation, 'id'>): Promise<ReservationApiReturn> => {
+export const addReservation = async (newReservation: Omit<Reservation, 'id' & 'userId'>, token: string): Promise<ReservationApiReturn> => {
+
     try {
         const response = await fetch(API_URL, {
             method: 'POST', 
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json', 
+                'Authorization': 'Bearer ' + token
             }, 
             body: JSON.stringify({
-                'UserId': newReservation.userId,
                 'CarId': newReservation.carId, 
                 'StartDate': newReservation.startDate,
                 'EndDate': newReservation.endDate

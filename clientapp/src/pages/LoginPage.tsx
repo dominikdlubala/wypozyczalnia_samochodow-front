@@ -23,13 +23,8 @@ export default function LoginPage() {
 
     const onSubmit: SubmitHandler<FormValues> = async ({ username, password }) => {
         try {
-            console.log(username, password); 
             const { error } = await login({ username, password }); 
-
-            if(error){
-                setIsError(true); 
-            }
-
+            error && setIsError(true)
         } catch(error) {
             setIsError(true); 
         }

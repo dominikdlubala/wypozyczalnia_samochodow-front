@@ -1,6 +1,11 @@
+import { useState } from 'react'; 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
+import { useNavigate } from 'react-router-dom'; 
+
 import { useAuth } from '../hooks/useAuth'; 
 import type { User } from '../types'; 
+import { registerUser } from '../services/UserService';
+import Prompt from '../components/primitives/Prompt'; 
 
 type FormValues = {
     email: string
@@ -10,6 +15,10 @@ type FormValues = {
 
 export default function RegisterPage() {
 
+    const [formError, setFormError] = useState<{ isError: boolean, message?: string | null}>({ isError: false }); 
+    const [formSuccess, setFormSuccess] = useState<{ isSuccess: boolean, message?: string | null}>({ isSuccess: false });
+
+    const navigate = useNavigate(); 
     const { login } = useAuth(); 
 
     const { 
@@ -18,12 +27,24 @@ export default function RegisterPage() {
         formState: { errors, isSubmitting }
     } = useForm<FormValues>(); 
 
-    const onSubmit: SubmitHandler<FormValues> = ({ email, username, password }) => {
-        // login({ username, password } as Omit<User, 'id'>); 
+    const onSubmit: SubmitHandler<FormValues> = async ({ email, username, password }) => {
+        const { error } = await registerUser({ email, username, password }) 
+        if(error) {
+            setFormError({ isError: true, message: error.message });
+            setTimeout(() => setFormError({ ...formError, isError: false }), 3000);  
+        } else {
+            setFormSuccess({ isSuccess: true, message: 'User created successfuly' }); 
+            setTimeout(() => {
+                setFormSuccess({ ...formSuccess, isSuccess: false })
+                navigate('/login'); 
+            }); 
+        }
     }
 
     return (
         <div className="page register-page d-flex justify-content-center align-items-center">
+            { formError.isError && <Prompt error handleClose={() => setFormError({ ...formError, isError: false })} >{formError.message}</Prompt>}
+            { formSuccess.isSuccess && <Prompt success handleClose={() => setFormSuccess({ ...formSuccess, isSuccess: false })}>{formSuccess.message}</Prompt>}
             <div className="register-form-wrapper">
                 <form  className="register-form" onSubmit={handleSubmit(onSubmit)}>
                     <h1 className="register-form-title">Zarejestruj się</h1>

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useLocalStorage } from './useLocalStorage'; 
-import type { User, UserLoginApiReturn, MyError } from '../types'; 
+import type { UserLoginApiReturn } from '../types'; 
 import { loginUser } from '../services/UserService'; 
 
 interface AuthContextType {
@@ -29,9 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async ({username, password}: { username: string, password: string }, path: string = '/'): Promise<UserLoginApiReturn> => {
         try {   
-            const { token, error } = await loginUser(username, password) as UserLoginApiReturn; 
-
-            console.log(token); 
+            const { token, error } = await loginUser(username, password) 
 
             if(token !== null) {
                 setToken(token); 
@@ -46,7 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const logout = () => {
         setToken(null); 
-        navigate('/', { replace: true })
+        navigate('/login', { replace: true })
     }
 
     const value = useMemo(

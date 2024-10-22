@@ -31,19 +31,17 @@ const CarPage = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(startDate && endDate){
-            console.log(startDate, endDate);
+        if(startDate && endDate) {
+            const { data, error } = await addReservation({  carId, startDate, endDate } as Omit<Reservation, 'id' & 'userId'>, token as string);
 
-            // const { data, error } = await addReservation({ userId: user?.id, carId, startDate, endDate } as Omit<Reservation, 'id'>); 
+            console.log(data); 
+            console.log(error); 
 
-            // console.log(data); 
-            // console.log(error); 
-
-            // setIsSuccess(true)
-            // setTimeout(() => {
-            //     setIsSuccess(false)
-            //     navigate('/reservations'); 
-            // }, 3000); 
+            setIsSuccess(true)
+            setTimeout(() => {
+                setIsSuccess(false)
+                navigate('/reservations'); 
+            }, 3000); 
         } else {
             setIsError(true); 
             setTimeout(() => {
