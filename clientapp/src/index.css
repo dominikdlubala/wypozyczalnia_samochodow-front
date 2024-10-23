@@ -244,12 +244,24 @@ code {
 
 /* CarPage */
 .page-car {
-  margin: 0; 
-  display: flex; 
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("../public/images/car_background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  color: white;
 }
 
 .car-reservation {
+  background: rgba(0,0,0, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 3px;
+  padding: 4rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   display: flex; 
   flex-direction: row;
   justify-content: center; 
@@ -257,20 +269,43 @@ code {
   width: 80vw; 
 }
 
+.form-title--reservation {
+  width: 40vw;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .reservation-controls {
-  width: 50%
+  width: 30vw;
 }
 
 .car-image--reservation { 
-  width: 50%; 
+  width: 25vw; 
+  height: auto;
+  margin-right: 5rem;
 }
 
 .form-wrapper--reservation {
   margin: 0; 
-  width: 100%; 
+  width: 100vw; 
 }
 
+.form-group--reservation {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
 
+.form-group--reservation label {
+  font-size: 1.1rem;
+}
+
+.form-button-submit {
+  width: 15vw;
+  margin: 1.5rem 0;
+  padding: 0.6rem;
+  font-size: 1.1rem;
+}
 
 /* Prompt modal */
 .prompt {
@@ -516,4 +551,5 @@ code {
 .register-btn-submit:hover {
   background-color: #b8a4a4;
 }
+
 

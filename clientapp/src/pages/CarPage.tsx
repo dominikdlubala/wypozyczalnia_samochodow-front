@@ -91,10 +91,10 @@ const CarPage = () => {
                             {
                                 token 
                                 ? 
-                                <button className="btn-submit" type="submit">Zarezerwuj</button>
+                                <button className="btn-submit form-button-submit" type="submit">Zarezerwuj</button>
                                 : 
                                 <button 
-                                    className="btn-submit"
+                                    className="btn-submit form-button-submit"
                                     onClick={(e: React.FormEvent<HTMLButtonElement>) => {
                                         e.preventDefault() 
                                         navigate('/login')
