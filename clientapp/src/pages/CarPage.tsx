@@ -22,7 +22,7 @@ const CarPage = () => {
     const [carId, setCarId] = useState<number>(); 
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false); 
-    const [isError, setIsError] = useState<boolean>(false); 
+    const [isError, setIsError] = useState<{ isError: boolean, message?: string }>({ isError: false }); 
 
     useEffect(() => {
         const id = searchParams.get('id'); 
@@ -32,20 +32,22 @@ const CarPage = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(startDate && endDate) {
-            const { data, error } = await addReservation({  carId, startDate, endDate } as Omit<Reservation, 'id' & 'userId'>, token as string);
+            const { error } = await addReservation({  carId, startDate, endDate } as Omit<Reservation, 'id' & 'userId'>, token as string);
+            
+            if(error) {
+                setIsError({ isError: true, message: error.message }); 
+            } else {
+                setIsSuccess(true)
+                setTimeout(() => {
+                    setIsSuccess(false)
+                    navigate('/reservations'); 
+                }, 3000); 
+            }
 
-            console.log(data); 
-            console.log(error); 
-
-            setIsSuccess(true)
-            setTimeout(() => {
-                setIsSuccess(false)
-                navigate('/reservations'); 
-            }, 3000); 
         } else {
-            setIsError(true); 
+            setIsError({ isError: true, message: 'Nie wybrano okresu rezerwacji'}); 
             setTimeout(() => {
-                setIsError(false)
+                setIsError({ isError: false }); 
             }, 3000); 
         }   
     };
@@ -55,12 +57,9 @@ const CarPage = () => {
             { 
                 isSuccess 
                 &&
-                <Prompt
-                    success
-                    handleClose={() => setIsSuccess(false)}
-                >Pomyślnie zarezewowałeś samochód</Prompt>
+                <Prompt success handleClose={() => setIsSuccess(false)} >Pomyślnie zarezewowałeś samochód</Prompt>
             }
-            { isError && <Prompt error handleClose={() => setIsError(false)}>Nie udało się dokonać rezerwacji</Prompt>}
+            { isError.isError && <Prompt error handleClose={() => setIsError({ isError: false })}>{ isError.message }</Prompt>}
             <div className="car car-reservation">
                 <img className="car-image car-image--reservation" src="images/corolla.png" alt="car-image" />
                 <div className="reservation-controls">

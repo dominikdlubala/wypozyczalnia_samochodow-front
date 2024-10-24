@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 
-import { getAllCars } from '../services/CarService'; 
+import { getTopCars } from '../services/CarService'; 
 import Gallery from '../components/car/Gallery'; 
 import DatePicker from 'react-datepicker'; 
-import type {  CarApiReturn } from '../types'; 
+import type { Car } from '../types'; 
 
 
 interface FormValues {
@@ -21,7 +21,8 @@ interface FormValues {
 
 export default function HomePage() {
 
-    const [cars, setCars] = useState<CarApiReturn>({ data: null }); 
+    const [cars, setCars] = useState<Car[] | null>(null); 
+    const [error, setError] = useState<{ error: boolean, message?: string }>({ error: false }); 
     const [startDate, setStartDate] = useState<Date | null>(null); 
     const [endDate, setEndDate] = useState<Date | null>(null); 
     const navigate = useNavigate(); 
@@ -29,14 +30,18 @@ export default function HomePage() {
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const data = await getAllCars(); // change in future to get top cars
-                setCars(data); 
+                const { data, error } = await getTopCars(); 
+                console.log(data); 
+                if(error) 
+                    setError({ error: true, message: error.message }); 
+                else
+                    setCars(data as Car[]); 
             } catch (error) {
-                console.error(error); 
+                setError({ error: true, message: 'Unexpected error' })
             }
         }
 
-        // fetchCars(); 
+        fetchCars(); 
     }, []); 
 
     const {
@@ -73,6 +78,7 @@ export default function HomePage() {
                         <div className="col-md-3">
                             <label htmlFor="engineType" className="form-label">Typ silnika</label>
                             <select 
+                                defaultValue=""
                                 className='form-select'
                                 {...register('engineType')}
                             >
@@ -85,6 +91,7 @@ export default function HomePage() {
                         <div className="col-md-3">
                             <label htmlFor="displacement" className="form-label">Pojemność</label>
                             <select 
+                                defaultValue=""
                                 className='form-select'
                                 {...register('displacement')}
                             >
@@ -97,6 +104,7 @@ export default function HomePage() {
                         <div className="col-md-3">
                             <label htmlFor="bodyType" className="form-label">Nadwozie</label>
                             <select 
+                                defaultValue=""
                                 className='form-select'
                                 {...register('bodyType')}
                             >
@@ -184,7 +192,7 @@ export default function HomePage() {
                 <h1 className="gallery-title--home text-center">
                     Najczęściej wybierane
                 </h1>
-                {/* <Gallery galleryItems={galleryItems.slice(0, 5)} /> */}
+                <Gallery galleryItems={cars} />
             </div>
         </div>
     )

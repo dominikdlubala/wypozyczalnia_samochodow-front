@@ -33,3 +33,15 @@ export const getFilteredCars = async (query: string): Promise<CarApiReturn> => {
         return { data: null, error: { error: true, message: 'Unexpected error / getFilteredCars' } }
     }
 }
+
+export const getTopCars = async (): Promise<CarApiReturn> => {
+    try {
+        const response = await fetch(`${API_URL}/topCars`); 
+        if(!response.ok) 
+            return { error: { error: true, message: await response.text()}}
+        const data = await response.json(); 
+        return { data }
+    } catch (error) {
+        return {  error: { error: true, message: 'Unexpected error / getTopCars' } }
+    }
+}

@@ -116,7 +116,7 @@ code {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 15vh;
+  min-height: 15vh;
   margin: 0;
 }
 

@@ -55,7 +55,6 @@ export const findUser = async (username: string, password: string): Promise<User
         const data = await response.json(); 
         return { token: data };  
     } catch (error) {
-        console.error('Error finding user', error)
         return { token: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }
     }
 }
@@ -83,7 +82,6 @@ export const loginUser = async (username: string, password: string): Promise<Use
         const data = await response.json() as { token: string }; 
         return { token: data.token };  
     } catch (error) {
-        console.error('Error finding user', error)
         return { token: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }
     }
 }
@@ -114,7 +112,6 @@ export const registerUser = async ({ email, username, password }: { email: strin
 
         return { token: null }
     } catch (error) {
-        console.error(error); 
         return { token: null, error: { error: true, message: 'Unexpected error / registerUser' } };
     }
 }

@@ -41,7 +41,18 @@ export const addReservation = async (newReservation: Omit<Reservation, 'id' & 'u
 
         return { data: await response.json() }; 
     } catch (error) {
-        console.error(error); 
         return { data: null, error: { error: true, message: 'Unexpected error / addReservation' } }
     }
 }
+
+// export const deleteReservation = async (id: number): Promise<ReservationApiReturn> => {
+//     try {
+//         const response = await fetch(API_URL, {
+//             method: 'DELETE', 
+
+//         }); 
+
+//     } catch(error) {
+//         return { error: { error: true, message: 'Unexpected error / deleteReservation' } }
+//     }
+// }

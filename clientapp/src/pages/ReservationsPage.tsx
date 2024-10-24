@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'; 
 import { useAuth } from '../hooks/useAuth'; 
 
-import type { User, Reservation, MyError } from '../types'; 
+import type { Reservation, MyError } from '../types'; 
 import { getUserReservations } from '../services/ReservationService';
 import Error from '../components/primitives/Error'; 
 

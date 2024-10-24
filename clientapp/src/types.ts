@@ -75,7 +75,7 @@ export type MyError = {
 }
 
 export type UserApiReturn = {
-    data: User | User[] | null; 
+    data?: User | User[] | null; 
     error?: MyError | null; 
 }
 
@@ -85,11 +85,11 @@ export type UserLoginApiReturn = {
 }
 
 export type CarApiReturn = {
-    data: Car | Car[] | null; 
+    data?: Car | Car[] | null; 
     error?: MyError | null; 
 }
 
 export type ReservationApiReturn = {
-    data: Reservation | Reservation[] | null; 
+    data?: Reservation | Reservation[] | null; 
     error?: MyError | null; 
 }
