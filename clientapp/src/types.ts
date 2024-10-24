@@ -34,6 +34,8 @@ export type CarFilter = {
     priceMax?: string | null;
     yearMin?: string | null;
     yearMax?: string | null;
+    reservationStart?: Date | null; 
+    reservationEnd?: Date | null; 
 }
 
 export type Reservation = {

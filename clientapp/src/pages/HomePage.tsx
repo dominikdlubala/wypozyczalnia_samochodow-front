@@ -4,7 +4,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { getAllCars } from '../services/CarService'; 
 import Gallery from '../components/car/Gallery'; 
-import type { Car, CarApiReturn } from '../types'; 
+import DatePicker from 'react-datepicker'; 
+import type {  CarApiReturn } from '../types'; 
+
 
 interface FormValues {
     engineType?: string | null; 
@@ -20,19 +22,21 @@ interface FormValues {
 export default function HomePage() {
 
     const [cars, setCars] = useState<CarApiReturn>({ data: null }); 
+    const [startDate, setStartDate] = useState<Date | null>(null); 
+    const [endDate, setEndDate] = useState<Date | null>(null); 
     const navigate = useNavigate(); 
     
     useEffect(() => {
         const fetchCars = async () => {
             try {
-                const data = await getAllCars(); 
+                const data = await getAllCars(); // change in future to get top cars
                 setCars(data); 
             } catch (error) {
                 console.error(error); 
             }
         }
 
-        fetchCars(); 
+        // fetchCars(); 
     }, []); 
 
     const {
@@ -50,6 +54,8 @@ export default function HomePage() {
                 paramsObj = { ...paramsObj, [key.slice(0, 1).toUpperCase() + key.slice(1)]: value }
             }
         }
+        startDate && ( paramsObj = { ...paramsObj, reservationStart: startDate.toISOString()} ); 
+        endDate && (paramsObj = { ...paramsObj, reservationEnd: endDate.toISOString()});
         const query = new URLSearchParams(paramsObj).toString()
         navigate(`/cars?${query}`); 
     }
@@ -139,6 +145,28 @@ export default function HomePage() {
                                 type="text" 
                                 className='form-control'
                                 {...register('yearMax')}
+                            />
+                        </div>
+                        <div className="col-md-3">
+                            <label className="form-label">Data rozpoczecia</label>
+                            <DatePicker
+                                className="form-control"
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                minDate={new Date()}
+                                dateFormat="dd/MM/yyyy"
+                                placeholderText="Wybierz datę"
+                            />
+                        </div>
+                        <div className="col-md-3">
+                            <label className="form-label">Data zakonczenia</label>
+                            <DatePicker
+                                className="form-control"
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                minDate={startDate ? startDate : new Date()}
+                                dateFormat="dd/MM/yyyy"
+                                placeholderText="Wybierz datę"
                             />
                         </div>
                         <div className="col-12 text-center mt-4">
