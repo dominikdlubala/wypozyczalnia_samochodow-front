@@ -44,16 +44,18 @@ export default function CarsPage() {
 
   return (
     <div className="page page-cars">
-      <Input
-        value={inputValue}
-        onChange={onChange}
-        onSubmit={inputSubmit}
-        className="input-home"
-      />
-      <Gallery 
-        filter={galleryFilter}
-        galleryItems={filteredCars.data as Car[]}
-      />
+      <div className="content-wrapper">
+        <Input
+          value={inputValue}
+          onChange={onChange}
+          onSubmit={inputSubmit}
+          className="input-home"
+        />
+        <Gallery 
+          filter={galleryFilter}
+          galleryItems={filteredCars.data as Car[]}
+        />
+      </div>
     </div>
   );
 }
