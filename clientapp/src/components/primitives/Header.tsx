@@ -3,7 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 export default function Header() {
   const navigate = useNavigate();
-  const { token, role, logout } = useAuth(); // Dodano role
+  const { token, role, logout } = useAuth();
   console.log(role);
 
   return (
@@ -17,12 +17,17 @@ export default function Header() {
             Flota
           </li>
           {token && (
-            <li
-              className="menu-link"
-              onClick={() => navigate("/reservations", { state: { token } })}
-            >
-              Moje rezerwacje
-            </li>
+            <>
+              <li
+                className="menu-link"
+                onClick={() => navigate("/reservations", { state: { token } })}
+              >
+                Moje rezerwacje
+              </li>
+              <li className="menu-link" onClick={() => navigate("/account")}>
+                Konto
+              </li>
+            </>
           )}
           {role === "Admin" && (
             <li className="menu-link" onClick={() => navigate("/admin")}>
@@ -35,7 +40,7 @@ export default function Header() {
             </li>
           ) : (
             <li className="menu-link" onClick={() => navigate("/login")}>
-              Zaloguj sie
+              Zaloguj się
             </li>
           )}
         </ul>
