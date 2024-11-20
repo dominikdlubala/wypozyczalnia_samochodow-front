@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { jwtDecode } from "jwt-decode";
-import { useLocalStorage } from "./useLocalStorage";
+import { useSessionStorage } from "./useSessionStorage";
 import type { UserLoginApiReturn } from "../types";
 import { loginUser } from "../services/UserService";
 
@@ -25,7 +25,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useLocalStorage<string | null>("token", null);
+  const [token, setToken] = useSessionStorage<string | null>("token", null);
   const [role, setRole] = useState<string | null>(null); // Stan dla roli użytkownika
   const navigate = useNavigate();
 
