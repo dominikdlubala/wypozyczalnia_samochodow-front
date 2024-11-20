@@ -2,21 +2,18 @@ import type { Car, MyError, CarApiReturn, CarFilter } from '../types';
 
 const API_URL = '/api/Car'; 
 
-export const getAllCars = async (): Promise<CarApiReturn> => {
+export const getAllCars = async (): Promise<{ data: Car[] | null; error?: MyError }> => {
     try {
-        const response = await fetch(API_URL);
-        if(!response.ok){
-            return { data: null, error: { error: true, message: 'Bad request / getAllCars'}}
-        }
-        const data = await response.json(); 
-        if(data !== null){
-            return { data }; 
-        }
-        return { data: null, error: { error: true, message: 'Data not found / getAllCars' } }; 
+      const response = await fetch(`${API_URL}`);
+      if (!response.ok) {
+        return { data: null, error: { error: true, message: "Bad request / getAllCars" } };
+      }
+      const data = await response.json();
+      return { data };
     } catch (error) {
-        return { data: null, error: { error: true, message: 'Unexpected error / getAllCars' } }
+      return { data: null, error: { error: true, message: "Unexpected error / getAllCars" } };
     }
-}
+};
 
 export const getFilteredCars = async (query: string): Promise<CarApiReturn> => {
     try {
