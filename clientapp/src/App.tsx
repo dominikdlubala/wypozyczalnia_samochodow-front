@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import CarsPage from './pages/CarsPage'; 
 import CarPage from './pages/CarPage'; 
 import ReservationsPage from './pages/ReservationsPage';
+import AdminPage from './pages/AdminPage';
 import ProtectedRoute from './components/login/ProtectedRoute';
 
 const router = createBrowserRouter([
@@ -41,7 +42,15 @@ const router = createBrowserRouter([
             <ReservationsPage />
           </ProtectedRoute>
         )
-      }
+      },
+      {
+        path: '/admin',
+        element: (
+          <ProtectedRoute requiredRole="Admin">
+            <AdminPage />
+          </ProtectedRoute>
+        ),
+      }          
     ]
   }
 ])
