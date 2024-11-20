@@ -1,11 +1,22 @@
-import type { ReactElement } from 'react'; 
-import { Navigate } from 'react-router-dom'; 
-import { useAuth } from '../../hooks/useAuth'; 
+import type { ReactElement } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
-export default function ProtectedRoute({ children }: { children: ReactElement<any, any> }) {
-    const { token } = useAuth(); 
-    if(!token) {
-        return <Navigate to={'/login'}/>
-    }
-    return children; 
+interface ProtectedRouteProps {
+  children: ReactElement<any, any>;
+  requiredRole?: string;
+}
+
+export default function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
+  const { token, role } = useAuth();
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (requiredRole && role !== requiredRole) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 }
