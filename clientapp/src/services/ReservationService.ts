@@ -1,56 +1,71 @@
-import type { Reservation, ReservationApiReturn } from '../types'; 
+import type { Reservation, ReservationApiReturn } from "../types";
 
-const API_URL = '/api/Reservation'; 
+const API_URL = "/api/Reservation";
 
-
-
-export const getUserReservations = async (token: string): Promise<ReservationApiReturn> => {
-    try{
-        const response = await fetch(`${API_URL}/user`, {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        }); 
-        if(!response.ok) {
-            return { data: null, error: { error: true, message: 'Bad request / getUserReservations' } }
-        }
-        const data = await response.json(); 
-        return { data }; 
-    } catch (error) {
-        return { data: null, error: { error: true, message: 'Unexpected error / getUserReservations' } } 
+export const getUserReservations = async (
+  token: string
+): Promise<ReservationApiReturn> => {
+  try {
+    const response = await fetch(`${API_URL}/user`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (!response.ok) {
+      return {
+        data: null,
+        error: { error: true, message: "Bad request / getUserReservations" },
+      };
     }
-}
+    const data = await response.json();
+    return { data };
+  } catch (error) {
+    return {
+      data: null,
+      error: { error: true, message: "Unexpected error / getUserReservations" },
+    };
+  }
+};
 
-export const addReservation = async (newReservation: Omit<Reservation, 'id' & 'userId'>, token: string): Promise<ReservationApiReturn> => {
+export const addReservation = async (
+  newReservation: Omit<Reservation, "id" & "userId">,
+  token: string
+): Promise<ReservationApiReturn> => {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        CarId: newReservation.carId,
+        StartDate: newReservation.startDate,
+        EndDate: newReservation.endDate,
+      }),
+    });
+    if (!response.ok)
+      return {
+        data: null,
+        error: { error: true, message: "Bad request / addReservation" },
+      };
 
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST', 
-            headers: {
-                'Content-type': 'application/json', 
-                'Authorization': 'Bearer ' + token
-            }, 
-            body: JSON.stringify({
-                'CarId': newReservation.carId, 
-                'StartDate': newReservation.startDate,
-                'EndDate': newReservation.endDate
-            })
-        }); 
-        if(!response.ok) return { data: null, error: { error: true, message: 'Bad request / addReservation' } } 
-
-        return { data: await response.json() }; 
-    } catch (error) {
-        return { data: null, error: { error: true, message: 'Unexpected error / addReservation' } }
-    }
-}
+    return { data: await response.json() };
+  } catch (error) {
+    return {
+      data: null,
+      error: { error: true, message: "Unexpected error / addReservation" },
+    };
+  }
+};
 
 // export const deleteReservation = async (id: number): Promise<ReservationApiReturn> => {
 //     try {
 //         const response = await fetch(API_URL, {
-//             method: 'DELETE', 
+//             method: 'DELETE',
 
-//         }); 
+//         });
 
 //     } catch(error) {
 //         return { error: { error: true, message: 'Unexpected error / deleteReservation' } }

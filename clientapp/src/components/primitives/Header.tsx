@@ -4,7 +4,6 @@ import { useAuth } from "../../hooks/useAuth";
 export default function Header() {
   const navigate = useNavigate();
   const { token, role, logout } = useAuth();
-  console.log(role);
 
   return (
     <div className="header">
