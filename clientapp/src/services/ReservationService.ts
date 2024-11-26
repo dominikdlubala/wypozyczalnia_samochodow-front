@@ -2,6 +2,18 @@ import type { Reservation, ReservationApiReturn } from '../types';
 
 const API_URL = '/api/Reservation'; 
 
+export const getAllReservations = async (): Promise<{ data: any[] | null; error?: { error: boolean; message: string } }> => {
+    try {
+        const response = await fetch('/api/Reservation');
+        if (!response.ok) {
+            return { data: null, error: { error: true, message: 'Failed to fetch reservations' } };
+        }
+        const data = await response.json();
+        return { data };
+    } catch (error) {
+        return { data: null, error: { error: true, message: 'Unexpected error / getAllReservations' } };
+    }
+};
 
 
 export const getUserReservations = async (token: string): Promise<ReservationApiReturn> => {

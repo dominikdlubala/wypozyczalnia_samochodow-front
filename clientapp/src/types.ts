@@ -93,3 +93,8 @@ export type ReservationApiReturn = {
     data?: Reservation | Reservation[] | null; 
     error?: MyError | null; 
 }
+
+export type ReviewApiReturn = {
+    data?: Review | Review[] | null; 
+    error?: MyError | null; 
+}
