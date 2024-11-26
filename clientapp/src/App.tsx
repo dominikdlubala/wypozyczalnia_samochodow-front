@@ -1,51 +1,51 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'; 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Root from './pages/Root'; 
-import HomePage from './pages/HomePage'; 
-import LoginPage from './pages/LoginPage'; 
-import RegisterPage from './pages/RegisterPage'; 
-import CarsPage from './pages/CarsPage'; 
-import CarPage from './pages/CarPage'; 
-import ReservationsPage from './pages/ReservationsPage';
-import AdminPage from './pages/AdminPage';
-import AccountPage from './pages/AccountPage'; // Import nowej strony
-import ProtectedRoute from './components/login/ProtectedRoute';
+import Root from "./pages/Root";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import CarsPage from "./pages/CarsPage";
+import CarPage from "./pages/CarPage";
+import ReservationsPage from "./pages/ReservationsPage";
+import AdminPage from "./pages/AdminPage";
+import AccountPage from "./pages/AccountPage"; // Import nowej strony
+import ProtectedRoute from "./components/login/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Root />, 
+    path: "/",
+    element: <Root />,
     children: [
       {
-        index: true, 
-        element: <HomePage />
-      }, 
+        index: true,
+        element: <HomePage />,
+      },
       {
-        path: '/login', 
-        element: <LoginPage />
-      }, 
+        path: "/login",
+        element: <LoginPage />,
+      },
       {
-        path: '/register', 
-        element: <RegisterPage />
-      }, 
+        path: "/register",
+        element: <RegisterPage />,
+      },
       {
-        path: '/cars', 
-        element: <CarsPage/>
-      }, 
+        path: "/cars",
+        element: <CarsPage />,
+      },
       {
-        path: '/car',
-        element: <CarPage/>
-      }, 
+        path: "/car/:id",
+        element: <CarPage />,
+      },
       {
-        path: '/reservations', 
+        path: "/reservations",
         element: (
           <ProtectedRoute>
             <ReservationsPage />
           </ProtectedRoute>
-        )
+        ),
       },
       {
-        path: '/admin',
+        path: "/admin",
         element: (
           <ProtectedRoute requiredRole="Admin">
             <AdminPage />
@@ -53,19 +53,17 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/account', // Dodana nowa trasa
+        path: "/account", // Dodana nowa trasa
         element: (
           <ProtectedRoute>
             <AccountPage />
           </ProtectedRoute>
         ),
-      }         
-    ]
-  }
-])
+      },
+    ],
+  },
+]);
 
 export default function App() {
-  return (
-    <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />;
 }
