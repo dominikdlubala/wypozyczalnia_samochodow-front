@@ -85,7 +85,7 @@ code {
   flex-direction: row; 
   flex-wrap: wrap; 
   justify-content: space-between; 
-  height: 40vh; 
+  height: auto; 
 }
 
 .gallery-item {
@@ -96,7 +96,7 @@ code {
   align-items: center; 
   max-width: 15vw; 
   max-height: 15vh; 
-  margin: 1rem 0.1rem;  
+  margin: 2rem 0.1rem;  
   padding: 0.5rem; 
   font-family: "Nunito", sans-serif;
   font-weight: 400;
@@ -244,7 +244,7 @@ code {
   background-position: center;
   background-repeat: no-repeat;
   width: 100vw;
-  min-height: 100vh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -263,7 +263,6 @@ code {
   border-radius: 3px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(20px);
-  min-height: 80vh;
 }
 
 .input-home {
@@ -691,3 +690,58 @@ table tr:hover td {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Account page */
+.page-account {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../public/images/car_background.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: white;
+  padding: 3rem 0;
+}
+
+.content-wrapper-account {
+  width: 50vw;
+  max-width: 500px;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+}
+
+.form-account .form-group {
+  margin-bottom: 0.5rem;
+}
+
+.form-account .form-control {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+}
+
+.form-account .btn-primary {
+  background-color: #027930;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 2px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.form-account .btn-primary:hover {
+  background-color: #026920;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}

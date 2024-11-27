@@ -109,88 +109,108 @@ export default function AccountPage() {
   if (error) return <p>Błąd: {error}</p>;
 
   return (
-    <div className="account-page">
-      <h1>Moje konto</h1>
-      {success && <p style={{ color: "green" }}>{success}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {user ? (
-        <>
-          <form onSubmit={handleFormSubmit}>
-            <div className="form-group">
-              <label>Imię:</label>
-              <input
-                type="text"
-                name="firstName"
-                value={user.firstName || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Nazwisko:</label>
-              <input
-                type="text"
-                name="lastName"
-                value={user.lastName || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Email:</label>
-              <input
-                type="email"
-                name="email"
-                value={user.email || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Nazwa użytkownika:</label>
-              <input
-                type="text"
-                name="username"
-                value={user.username}
-                onChange={handleInputChange}
-              />
-            </div>
-            <button type="submit">Zapisz zmiany</button>
-          </form>
+    <div className="page-account">
+      <div className="content-wrapper-account">
+        <h2>Moje konto</h2>
+        {success && <p className="prompt-success">{success}</p>}
+        {error && <p className="prompt-error">{error}</p>}
+        {user ? (
+          <>
+            <form onSubmit={handleFormSubmit} className="form-account">
+              <div className="form-group">
+                <label>Imię:</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={user.firstName || ""}
+                  onChange={handleInputChange}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group">
+                <label>Nazwisko:</label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={user.lastName || ""}
+                  onChange={handleInputChange}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={user.email || ""}
+                  onChange={handleInputChange}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group">
+                <label>Nazwa użytkownika:</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={user.username}
+                  onChange={handleInputChange}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-actions">
+                <button type="submit" className="btn btn-primary">
+                  Zapisz zmiany
+                </button>
+              </div>
+            </form>
 
-          <h2>Zmiana hasła</h2>
-          {passwordSuccess && (
-            <p style={{ color: "green" }}>{passwordSuccess}</p>
-          )}
-          {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
-          <form onSubmit={handlePasswordChangeSubmit}>
-            <div className="form-group">
-              <label>Aktualne hasło:</label>
-              <input
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Nowe hasło:</label>
-              <input
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Potwierdzenie nowego hasła:</label>
-              <input
-                type="password"
-                value={confirmNewPassword}
-                onChange={(e) => setConfirmNewPassword(e.target.value)}
-              />
-            </div>
-            <button type="submit">Zmień hasło</button>
-          </form>
-        </>
-      ) : (
-        <p>Nie znaleziono użytkownika.</p>
-      )}
+            <h2 className="mt-4">Zmiana hasła</h2>
+            {passwordSuccess && (
+              <p className="prompt-success">{passwordSuccess}</p>
+            )}
+            {passwordError && <p className="prompt-error">{passwordError}</p>}
+            <form
+              onSubmit={handlePasswordChangeSubmit}
+              className="form-account"
+            >
+              <div className="form-group">
+                <label>Aktualne hasło:</label>
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group">
+                <label>Nowe hasło:</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group">
+                <label>Potwierdzenie nowego hasła:</label>
+                <input
+                  type="password"
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-actions">
+                <button type="submit" className="btn btn-primary">
+                  Zmień hasło
+                </button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <p>Nie znaleziono użytkownika.</p>
+        )}
+      </div>
     </div>
   );
 }
