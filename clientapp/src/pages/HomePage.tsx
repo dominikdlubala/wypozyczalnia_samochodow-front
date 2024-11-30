@@ -218,7 +218,24 @@ export default function HomePage() {
         <h1 className="gallery-title--home text-center">
           Najczęściej wybierane
         </h1>
-        <Gallery galleryItems={cars} />
+        <div className="row justify-content-center">
+          {cars &&
+            cars.map((car) => (
+              <div className="col-12 col-md-4 col-lg-2" key={car.id}>
+                <div
+                  className="gallery-item"
+                  onClick={() => navigate(`/car/${car.id}`)}
+                >
+                  <img
+                    className="car-image img-fluid"
+                    src={"/images/cars" + car.imageUrl}
+                    alt="car-img"
+                  />
+                  <div className="car-model">{car.model}</div>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );

@@ -115,6 +115,13 @@ code {
   text-align: center;
 }
 
+/* Gallery home */
+.gallery--home .car-image {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
 /* Input */
 .search-input {
   display: flex;
