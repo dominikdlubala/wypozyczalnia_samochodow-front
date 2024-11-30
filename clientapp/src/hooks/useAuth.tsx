@@ -31,12 +31,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (token) {
-      try {
-        const decoded: DecodedToken = jwtDecode(token);
-        setRole(decoded.role || null); // Ustaw rolę na podstawie tokena
-      } catch (error) {
-        console.error("Invalid token:", error);
-        logout();
+      if (isTokenExpired(token)) {
+        console.warn("Token wygasł, użytkownik został wylogowany.");
+        logout(); // Usuń token i rolę, jeśli token jest przestarzały
+      } else {
+        try {
+          const decoded: DecodedToken = jwtDecode(token);
+          setRole(decoded.role || null);
+        } catch (error) {
+          console.error("Invalid token:", error);
+          logout(); // Jeśli token nie da się zdekodować, wyloguj użytkownika
+        }
       }
     } else {
       setRole(null);
@@ -51,11 +56,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { token, error } = await loginUser(username, password);
 
       if (token !== null) {
+        if (isTokenExpired(token)) {
+          console.error("Received expired token.");
+          return { token: null, error };
+        }
+
         setToken(token);
 
         try {
           const decoded: DecodedToken = jwtDecode(token);
-          setRole(decoded.role || null); // Dekoduj token, aby ustawić rolę
+          setRole(decoded.role || null);
         } catch (error) {
           console.error("Invalid token:", error);
           setRole(null);
@@ -74,6 +84,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(null);
     setRole(null); // Reset roli
     navigate("/login", { replace: true });
+  };
+
+  const isTokenExpired = (token: string): boolean => {
+    try {
+      const decoded: DecodedToken = jwtDecode(token);
+      if (decoded.exp) {
+        const currentTime = Math.floor(Date.now() / 1000);
+        return decoded.exp < currentTime; // Token wygasł, jeśli exp jest mniejszy od aktualnego czasu
+      }
+      return false; // Brak `exp`, więc uznajemy token za ważny
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return true;
+    }
   };
 
   const value = useMemo(

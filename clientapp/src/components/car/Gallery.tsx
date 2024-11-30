@@ -15,19 +15,21 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
       .filter((car) => car.model.toLowerCase().startsWith(filter ? filter : ""))
       .map((car) => {
         return (
-          <div className="mt-2">
-          <li
-            className="gallery-item"
+          <div
+            className="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center mb-4"
             key={car.id}
-            onClick={() => navigate(`/car/${car.id}`)}
           >
-            <img
-              className="car-image"
-              src={"/images/cars/" + car.imageUrl}
-              alt="car-img"
-            />
-            <div className="car-model">{car.model}</div>
-          </li>
+            <li
+              className="gallery-item"
+              onClick={() => navigate(`/car/${car.id}`)}
+            >
+              <img
+                className="car-image"
+                src={"/images/cars" + car.imageUrl}
+                alt="car-img"
+              />
+              <div className="car-model">{car.model}</div>
+            </li>
           </div>
         );
       })
@@ -35,5 +37,5 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
     <div>Nie znaleziono samochodu o Twoich wymaganiach</div>
   );
 
-  return <div className="gallery">{galleryList}</div>;
+  return <div className="row">{galleryList}</div>;
 }
