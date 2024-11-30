@@ -1,47 +1,46 @@
 * {
-  margin: 0; 
+  margin: 0;
 }
 
 body {
-  box-sizing: border-box; 
+  box-sizing: border-box;
   margin: 0;
   overflow-x: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-
 .page {
-  min-height: 90vh; 
+  min-height: 90vh;
 }
 
 /* Header */
 .header {
-  background-color: #b8a4a4; 
-  color: #000; 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
+  background-color: #b8a4a4;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 1rem;
-  height: 6vh;  
+  height: 6vh;
   text-transform: uppercase;
   font-family: "Nunito", sans-serif;
   font-weight: 400;
-  font-size: 1.3rem;
+  /*font-size: 1.3rem;*/
 }
 
 .logo {
-  text-decoration: none; 
-  color: #000; 
-  cursor: pointer; 
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
 }
 
 .logo:hover {
@@ -50,126 +49,112 @@ code {
 }
 
 .menu-links {
-  list-style: none; 
+  list-style: none;
   display: flex;
   align-items: center;
-  margin: 0; 
+  margin: 0;
 }
 
 .menu-link {
-  padding: 1rem; 
+  padding: 1rem;
 }
 .menu-link:hover {
-  color: #666; 
-  cursor: pointer; 
+  color: #666;
+  cursor: pointer;
 }
 
 /* Footer */
 .footer {
-  background-color: #000; 
-  color: #fff; 
-  display: flex; 
-  width: 100vw; 
-  height: 6vh; 
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  width: 100vw;
+  height: 6vh;
   justify-content: center;
   align-items: center;
 }
 
 .footer-items {
-  list-style: none; 
+  list-style: none;
 }
 
 /* Gallery */
-.gallery {
-  display: flex; 
-  flex-direction: row; 
-  flex-wrap: wrap; 
-  justify-content: space-between; 
-  height: auto; 
-}
-
 .gallery-item {
-  display: flex; 
-  flex-direction: column; 
-  list-style: none; 
-  justify-content: center; 
-  align-items: center; 
-  max-width: 15vw; 
-  max-height: 15vh; 
-  margin: 2rem 0.1rem;  
-  padding: 0.5rem; 
-  font-family: "Nunito", sans-serif;
-  font-weight: 400;
-  font-size: 1.1rem;
-}
-
-.gallery-item:hover {
-  border-color: #027930; 
-  cursor: pointer;
-}
-
-.gallery--home {
-  background-color: #b8a4a4;
-  padding: 2rem 0;
+  position: relative; /* Aby ustawić overlay na elemencie */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 15vh;
-  margin: 0;
+  /*max-width: 200px; /* Ograniczenie rozmiaru */
+  list-style: none;
+  padding: 0.5rem;
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  border: 1px solid transparent;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.gallery-title--home {
-  font-family: "Nunito", sans-serif;
-  font-weight: 500;
-  font-size: 2rem;
+.gallery-item:hover {
+  transform: scale(0.95); /* Lekkie powiększenie dla efektu */
+  opacity: 0.8; /* Przyciemnienie */
+  cursor: pointer;
 }
 
 .car-image {
-  width: 100%; 
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  transition: filter 0.3s ease;
+}
+
+.car-model {
+  margin-top: 0.5rem;
+  text-align: center;
 }
 
 /* Input */
 .search-input {
-  display: flex; 
-  width: 100%; 
-  border: none; 
-  border-bottom: 2px solid black; 
-  font-size: 1rem; 
-  margin: 1rem 0rem; 
+  display: flex;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+  font-size: 1rem;
+  margin: 1rem 0rem;
 }
 
 .search-input:focus {
-  outline: none; 
+  outline: none;
   border-color: #027930;
 }
 
-
 .page-login {
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  height: 100%; 
-  width: 100%; 
-  margin: 0; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 .page-home {
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .login-register {
-  display: flex; 
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 /* Form background */
 .form-background {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../public/images/form_background.avif");
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("../public/images/form_background.avif");
   background-size: cover;
   background-position: center;
   width: 100vw;
@@ -196,7 +181,8 @@ code {
   font-size: 1.2rem;
 }
 
-.form-control, .form-select {
+.form-control,
+.form-select {
   border: 1px solid darkgray;
   border-radius: 3px;
   padding: 0.6rem 0.75rem;
@@ -204,15 +190,16 @@ code {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
 }
 
 .input-validate {
   font-size: 1rem;
-  color: red;  
-  margin-bottom: 1rem; 
+  color: red;
+  margin-bottom: 1rem;
 }
 
 .btn-submit {
@@ -225,21 +212,21 @@ code {
   background-color: #707484;
   color: #fff;
   font-size: 1.3rem;
-  cursor: pointer; 
+  cursor: pointer;
   transition: background-color 0.3s ease;
   font-family: "Nunito", sans-serif;
   font-weight: 600;
 }
 
 .btn-submit:hover {
-  cursor: pointer; 
-  background-color: #b8a4a4; 
+  cursor: pointer;
+  background-color: #b8a4a4;
 }
-
 
 /* CarsPage */
 .page-cars {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../public/images/car_background.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../public/images/car_background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -259,7 +246,7 @@ code {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background: rgba(0, 0, 0, 0.4); 
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 3px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(20px);
@@ -275,7 +262,8 @@ code {
 
 /* CarPage */
 .page-car {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../public/images/car_background.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../public/images/car_background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -289,16 +277,16 @@ code {
 }
 
 .car-reservation {
-  background: rgba(0,0,0, 0.4);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(20px);
   border-radius: 3px;
   padding: 4rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  display: flex; 
+  display: flex;
   flex-direction: row;
-  justify-content: center; 
-  align-items: center; 
-  width: 80vw; 
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
 }
 
 .form-title--reservation {
@@ -311,15 +299,15 @@ code {
   width: 30vw;
 }
 
-.car-image--reservation { 
-  width: 25vw; 
+.car-image--reservation {
+  width: 25vw;
   height: auto;
   margin-right: 5rem;
 }
 
 .form-wrapper--reservation {
-  margin: 0; 
-  width: 100vw; 
+  margin: 0;
+  width: 100vw;
 }
 
 .form-group--reservation {
@@ -341,36 +329,36 @@ code {
 
 /* Prompt modal */
 .prompt {
-  position: absolute; 
-  z-index: 1000; 
-  top: 10vh; 
-  display: flex; 
-  width: calc(100% - 4rem); 
+  position: absolute;
+  z-index: 1000;
+  top: 10vh;
+  display: flex;
+  width: calc(100% - 4rem);
   justify-content: space-between;
-  padding: 1rem; 
-  margin: 1rem; 
-  border-radius: 10px; 
-  align-items: center; 
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  align-items: center;
   transition: opacity 5s ease-in-out;
-  opacity: 1; 
-  animation: fadeIn 3s forwards; 
+  opacity: 1;
+  animation: fadeIn 3s forwards;
 }
 
 .prompt-error {
-  background-color: #f74747; 
-  color: #fff; 
+  background-color: #f74747;
+  color: #fff;
 }
 
 .prompt-success {
-  background-color: #69ff7d; 
+  background-color: #69ff7d;
 }
 
 @keyframes fadeIn {
   0% {
-    opacity: 0; 
+    opacity: 0;
   }
   25% {
-    opacity: 1; 
+    opacity: 1;
   }
   50% {
     opacity: 1;
@@ -381,26 +369,27 @@ code {
 }
 
 .btn-close--prompt {
-  background-color: inherit; 
-  color:inherit; 
-  border: none; 
-  cursor: pointer; 
-  font-size: 1.25rem; 
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
 }
 
 .list {
-  list-style: none; 
-  padding: 0; 
+  list-style: none;
+  padding: 0;
 }
 
 /* Reservation page */
 .list-item--reservation {
-  padding: 1rem; 
-  margin: 0.5rem; 
+  padding: 1rem;
+  margin: 0.5rem;
 }
 
 .page-reservations {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../public/images/car_background.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../public/images/car_background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -425,28 +414,29 @@ code {
 
 /* Error */
 .error-wrapper {
-  display: flex; 
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90vh; 
-  margin: auto; 
+  height: 90vh;
+  margin: auto;
 }
 
 .error-box {
-  background-color: #f53c3c; 
+  background-color: #f53c3c;
   padding: 5rem;
   text-align: center;
-  color: #fff; 
-  border-radius: 16px;   
+  color: #fff;
+  border-radius: 16px;
 }
 
 /* Login Page */
 .login-page {
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../public/images/login_register_background.jpg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../public/images/login_register_background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -468,7 +458,6 @@ code {
   max-width: 700px;
   margin: auto;
 }
-
 
 .login-form-title {
   color: #333;
@@ -534,10 +523,11 @@ code {
 
 /* Register Page */
 .register-page {
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../public/images/login_register_background.jpg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../public/images/login_register_background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -636,7 +626,8 @@ table tr:hover td {
 }
 
 .page-admin {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../public/images/car_background.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../public/images/car_background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -665,7 +656,7 @@ table tr:hover td {
 
 .btn-action-edit-car {
   padding: 8px 16px;
-  background-color: #0056b3;;
+  background-color: #0056b3;
   color: white;
   border: none;
   border-radius: 1px;
@@ -692,7 +683,8 @@ table tr:hover td {
 
 /* Account page */
 .page-account {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../public/images/car_background.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../public/images/car_background.jpg");
   background-size: cover;
   background-position: center;
   width: 100vw;
