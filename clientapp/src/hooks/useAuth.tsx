@@ -9,7 +9,7 @@ import { loginUser } from "../services/UserService";
 
 interface DecodedToken {
   role?: string; // Pole do przechowywania roli
-  exp?: number; // Czas wygaśnięcia tokena
+  exp: number; // Czas wygaśnięcia tokena
 }
 
 interface AuthContextType {
@@ -38,6 +38,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
           const decoded: DecodedToken = jwtDecode(token);
           setRole(decoded.role || null);
+
+          const tokenTimer = setTimeout(() => {
+            logout()
+          }, decoded.exp); 
+
+          return () => clearTimeout(tokenTimer); 
+
         } catch (error) {
           console.error("Invalid token:", error);
           logout(); // Jeśli token nie da się zdekodować, wyloguj użytkownika
@@ -46,6 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } else {
       setRole(null);
     }
+
   }, [token]);
 
   const login = async (
@@ -82,8 +90,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     setToken(null);
-    setRole(null); // Reset roli
-    navigate("/login", { replace: true });
+    setRole(null); 
+    // navigate("/home", { replace: true });
   };
 
   const isTokenExpired = (token: string): boolean => {
