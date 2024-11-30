@@ -15,19 +15,18 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
       .filter((car) => car.model.toLowerCase().startsWith(filter ? filter : ""))
       .map((car) => {
         return (
-          <div className="mt-2">
-          <li
-            className="gallery-item"
-            key={car.id}
-            onClick={() => navigate(`/car/${car.id}`)}
-          >
-            <img
-              className="car-image"
-              src={"/images/cars/" + car.imageUrl}
-              alt="car-img"
-            />
-            <div className="car-model">{car.model}</div>
-          </li>
+          <div className="mt-2" key={car.id}>
+            <li
+              className="gallery-item"
+              onClick={() => navigate(`/car/${car.id}`)}
+            >
+              <img
+                className="car-image"
+                src={"/images/cars" + car.imageUrl}
+                alt="car-img"
+              />
+              <div className="car-model">{car.model}</div>
+            </li>
           </div>
         );
       })

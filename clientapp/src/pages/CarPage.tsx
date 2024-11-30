@@ -17,7 +17,7 @@ const CarPage = () => {
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  //const [carId, setCarId] = useState<number>();
+  const [carId, setCarId] = useState<number>();
 
   const [car, setCar] = useState<Car | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -34,6 +34,7 @@ const CarPage = () => {
           setIsError({ isError: true, message: error.message });
         } else {
           setCar(data);
+          setCarId(data?.id);
         }
       };
       fetchCar();
@@ -44,7 +45,7 @@ const CarPage = () => {
     e.preventDefault();
     if (startDate && endDate) {
       const { error } = await addReservation(
-        { car, startDate, endDate } as Omit<Reservation, "id" & "userId">,
+        { carId, startDate, endDate } as Omit<Reservation, "id" & "userId">,
         token as string
       );
 
