@@ -15,3 +15,16 @@ export const getAllReviews = async (): Promise<{ data: any[] | null; error?: { e
     }
 };
 
+export const getCarsReviews = async (carId: number): Promise<ReviewApiReturn> => {
+    try {
+        const response = await fetch(`${API_URL}/car/${carId}`); 
+        if(!response.ok) {
+            return { data: null, error: { error: true, message: await response.text() } }
+        }
+        const data = await response.json(); 
+        return { data }; 
+    } catch (error) {
+        return { error: { error: true, message: 'Unexpected error / getCarsReviews' } }; 
+    }
+}
+

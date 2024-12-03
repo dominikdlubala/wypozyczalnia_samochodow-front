@@ -132,8 +132,6 @@ export const registerUser = async ({
   password: string;
 }): Promise<UserLoginApiReturn> => {
   try {
-    console.log(email, username, password);
-
     const response = await fetch(`${API_URL}/register`, {
       method: "POST",
       headers: {
@@ -192,7 +190,6 @@ export async function changePassword(
 ): Promise<void> {
   try {
     const token = localStorage.getItem("token");
-    console.log(token); // Sprawdzanie, czy token jest dostępny
 
     if (!token) {
       throw new Error("Użytkownik nie jest zalogowany.");

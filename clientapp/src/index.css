@@ -277,6 +277,7 @@ code {
   width: 100vw;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 3rem;
@@ -743,4 +744,27 @@ table tr:hover td {
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
+}
+
+
+
+
+/* car review */
+.car-reviews {
+  width: 70vw; 
+}
+
+.review {
+  display: flex; 
+  flex-direction: column;
+  background-color: #fff;
+  color: #000;  
+  margin-top: 1rem; 
+  padding: 1rem; 
+}
+
+.review-header {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between; 
 }

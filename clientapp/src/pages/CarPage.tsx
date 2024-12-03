@@ -3,12 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import type { Reservation, Car } from "../types";
+import type { Reservation, Car, Review } from "../types";
 import { useAuth } from "../hooks/useAuth";
 import Prompt from "../components/primitives/Prompt";
 
 import { addReservation } from "../services/ReservationService";
 import { getCarById } from "../services/CarService";
+
+import { getCarsReviews, getAllReviews } from '../services/ReviewService'; 
+import CarReviews from "../components/car/CarReviews";
+
 
 const CarPage = () => {
   const { token } = useAuth();
@@ -26,10 +30,20 @@ const CarPage = () => {
     message?: string;
   }>({ isError: false });
 
+  const [reviews, setReviews] = useState<Review[] | null>(null); 
+
   useEffect(() => {
     if (id) {
       const fetchCar = async () => {
-        const { data, error } = await getCarById(Number(id)); // Pobieranie samochodu po ID
+        const { data, error } = await getCarById(Number(id));
+
+        const { data: reviewData, error: reviewError } = await getCarsReviews(Number(id));  
+        if(reviewError) {
+          setIsError({ isError: true, message: reviewError.message }); 
+        } else {
+          setReviews(reviewData as Review[]); 
+        }
+
         if (error) {
           setIsError({ isError: true, message: error.message });
         } else {
@@ -40,6 +54,7 @@ const CarPage = () => {
       fetchCar();
     }
   }, [id]);
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -131,7 +146,10 @@ const CarPage = () => {
             </form>
           </div>
         </div>
+
       </div>
+      
+      <CarReviews reviewsData={reviews} />
     </div>
   );
 };
