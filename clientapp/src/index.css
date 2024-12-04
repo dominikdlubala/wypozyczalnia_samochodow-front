@@ -106,7 +106,7 @@ code {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 0.5rem;
+  border-radius: 0.1rem;
   transition: filter 0.3s ease;
 }
 
@@ -304,13 +304,13 @@ code {
 }
 
 .reservation-controls {
-  width: 30vw;
+  width: 20vw;
 }
 
 .car-image--reservation {
   width: 25vw;
   height: auto;
-  margin-right: 5rem;
+  margin-right: 3rem;
 }
 
 .form-wrapper--reservation {
@@ -333,6 +333,39 @@ code {
   margin: 1.5rem 0;
   padding: 0.6rem;
   font-size: 1.1rem;
+}
+
+.car-details {
+  width: 40%;
+  text-align: left;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  color: white;
+  font-family: "Nunito", sans-serif;
+}
+
+.car-details h2 {
+  font-size: 2.1rem;
+  font-weight: 600;
+}
+
+.car-specs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.car-specs li {
+  margin-bottom: 0.5rem;
+}
+
+.car-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 /* Prompt modal */
@@ -745,9 +778,6 @@ table tr:hover td {
   justify-content: flex-end;
   margin-top: 1rem;
 }
-
-
-
 
 /* car review */
 .car-reviews {
