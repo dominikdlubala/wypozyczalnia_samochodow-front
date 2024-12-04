@@ -78,3 +78,31 @@ export const getTopCars = async (): Promise<CarApiReturn> => {
     return { error: { error: true, message: "Unexpected error / getTopCars" } };
   }
 };
+
+export const getUniquePropertyValues = async (): Promise<{
+  data: { fuelTypes: string[]; bodyTypes: string[]; colors: string[] } | null;
+  error?: MyError;
+}> => {
+  try {
+    const response = await fetch(`${API_URL}/uniqueProperties`);
+    if (!response.ok) {
+      return {
+        data: null,
+        error: {
+          error: true,
+          message: "Bad request / getUniquePropertyValues",
+        },
+      };
+    }
+    const data = await response.json();
+    return { data };
+  } catch (error) {
+    return {
+      data: null,
+      error: {
+        error: true,
+        message: "Unexpected error / getUniquePropertyValues",
+      },
+    };
+  }
+};

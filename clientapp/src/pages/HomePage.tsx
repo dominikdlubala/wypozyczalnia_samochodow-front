@@ -2,10 +2,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { getTopCars } from "../services/CarService";
-import Gallery from "../components/car/Gallery";
+import { getTopCars, getUniquePropertyValues } from "../services/CarService";
 import DatePicker from "react-datepicker";
 import type { Car } from "../types";
+
+interface UniqueCarProperties {
+  fuelTypes: string[];
+  bodyTypes: string[];
+  colors: string[];
+}
 
 interface FormValues {
   engineType?: string | null;
@@ -25,6 +30,9 @@ export default function HomePage() {
   });
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [uniqueProps, setUniqueProps] = useState<UniqueCarProperties | null>(
+    null
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +45,20 @@ export default function HomePage() {
         setError({ error: true, message: "Unexpected error" });
       }
     };
+
+    const fetchUniqueProps = async () => {
+      try {
+        const { data } = await getUniquePropertyValues();
+        setUniqueProps(data as UniqueCarProperties);
+        console.log(uniqueProps);
+        console.log(data);
+      } catch (error) {
+        setError({ error: true, message: "Failed to fetch unique properties" });
+      }
+    };
+
+    fetchCars();
+    fetchUniqueProps();
 
     fetchCars();
   }, []);
@@ -89,9 +111,11 @@ export default function HomePage() {
                 <option value="" disabled hidden>
                   Wybierz typ silnika
                 </option>
-                <option value="Petrol">Benzyna</option>
-                <option value="Diesel">Diesel</option>
-                <option value="Hybrid">Hybryda</option>
+                {uniqueProps?.fuelTypes.map((fuelType) => (
+                  <option key={fuelType} value={fuelType}>
+                    {fuelType}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="col-md-3">
@@ -123,28 +147,38 @@ export default function HomePage() {
                 <option value="" disabled hidden>
                   Wybierz rodzaj nadwozia
                 </option>
-                <option value="compact">Kompakt</option>
-                <option value="sedan">Sedan</option>
-                <option value="wagon">Kombi</option>
-                <option value="coupe">Coupe</option>
+                {uniqueProps?.bodyTypes.map((bodyType) => (
+                  <option key={bodyType} value={bodyType}>
+                    {bodyType}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="col-md-3">
               <label htmlFor="colour" className="form-label">
                 Kolor
               </label>
-              <input
-                type="text"
-                className="form-control"
+              <select
+                defaultValue=""
+                className="form-select"
                 {...register("colour")}
-              />
+              >
+                <option value="" disabled hidden>
+                  Wybierz kolor
+                </option>
+                {uniqueProps?.colors.map((color) => (
+                  <option key={color} value={color}>
+                    {color}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="col-md-3">
               <label htmlFor="priceMin" className="form-label">
                 Cena minimalna
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 {...register("priceMin")}
               />
@@ -154,7 +188,7 @@ export default function HomePage() {
                 Cena maksymalna
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 {...register("priceMax")}
               />
@@ -164,7 +198,7 @@ export default function HomePage() {
                 Rocznik minimalny
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 {...register("yearMin")}
               />
@@ -174,7 +208,7 @@ export default function HomePage() {
                 Rocznik maksymalny
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 {...register("yearMax")}
               />

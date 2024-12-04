@@ -41,12 +41,15 @@ export type CarFilter = {
 
 export type Reservation = {
   id: number;
-  userId: number;
+  startDate: Date;
+  endDate: Date;
+  car: Car;
+};
+
+export type AddReservation = {
   carId: number;
   startDate: Date;
   endDate: Date;
-  car?: Car;
-  user?: User;
 };
 
 export type Fault = {
