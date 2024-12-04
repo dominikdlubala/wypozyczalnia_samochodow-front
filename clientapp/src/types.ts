@@ -14,7 +14,7 @@ export type Car = {
   model: string;
   imageUrl: string;
   fuelType: string;
-  capcity: number;
+  capacity: number;
   bodyType: string;
   color: string;
   pricePerDay: number;
