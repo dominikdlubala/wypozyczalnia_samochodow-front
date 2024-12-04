@@ -3,16 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import type { Reservation, Car, Review } from "../types";
+import type { AddReservation, Car, Review } from "../types";
 import { useAuth } from "../hooks/useAuth";
 import Prompt from "../components/primitives/Prompt";
 
 import { addReservation } from "../services/ReservationService";
 import { getCarById } from "../services/CarService";
 
-import { getCarsReviews, getAllReviews } from '../services/ReviewService'; 
+import { getCarsReviews, getAllReviews } from "../services/ReviewService";
 import CarReviews from "../components/car/CarReviews";
-
 
 const CarPage = () => {
   const { token } = useAuth();
@@ -30,18 +29,20 @@ const CarPage = () => {
     message?: string;
   }>({ isError: false });
 
-  const [reviews, setReviews] = useState<Review[] | null>(null); 
+  const [reviews, setReviews] = useState<Review[] | null>(null);
 
   useEffect(() => {
     if (id) {
       const fetchCar = async () => {
         const { data, error } = await getCarById(Number(id));
 
-        const { data: reviewData, error: reviewError } = await getCarsReviews(Number(id));  
-        if(reviewError) {
-          setIsError({ isError: true, message: reviewError.message }); 
+        const { data: reviewData, error: reviewError } = await getCarsReviews(
+          Number(id)
+        );
+        if (reviewError) {
+          setIsError({ isError: true, message: reviewError.message });
         } else {
-          setReviews(reviewData as Review[]); 
+          setReviews(reviewData as Review[]);
         }
 
         if (error) {
@@ -55,12 +56,11 @@ const CarPage = () => {
     }
   }, [id]);
 
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (startDate && endDate) {
+    if (startDate && endDate && carId) {
       const { error } = await addReservation(
-        { carId, startDate, endDate } as Omit<Reservation, "id" & "userId">,
+        { carId, startDate, endDate },
         token as string
       );
 
@@ -146,9 +146,8 @@ const CarPage = () => {
             </form>
           </div>
         </div>
-
       </div>
-      
+
       <CarReviews reviewsData={reviews} />
     </div>
   );

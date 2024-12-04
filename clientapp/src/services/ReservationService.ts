@@ -1,4 +1,8 @@
-import type { Reservation, ReservationApiReturn } from "../types";
+import type {
+  AddReservation,
+  Reservation,
+  ReservationApiReturn,
+} from "../types";
 
 const API_URL = "/api/Reservation";
 
@@ -51,7 +55,7 @@ export const getUserReservations = async (
 };
 
 export const addReservation = async (
-  newReservation: Omit<Reservation, "id" & "userId">,
+  newReservation: AddReservation,
   token: string
 ): Promise<ReservationApiReturn> => {
   try {
