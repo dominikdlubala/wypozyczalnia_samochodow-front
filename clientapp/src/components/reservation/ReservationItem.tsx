@@ -14,6 +14,10 @@ export default function ReservationItem({
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); 
 
+  const today = new Date().getTime(); 
+  const isReservationActive = today > new Date(startDate).getTime() && today < new Date(endDate).getTime();   
+  const hasReservationFinished = today > new Date(endDate).getTime(); 
+
   return (
     <div className="reservation card mb-3">
 
@@ -57,7 +61,11 @@ export default function ReservationItem({
           </div>
 
           <div className="col-2">
-            <button className="btn-add btn-add--review" onClick={() => setIsModalOpen(true)}>Oceń samochód</button>
+            {
+              hasReservationFinished
+              &&
+              <button className="btn-add btn-add--review" onClick={() => setIsModalOpen(true)}>Oceń samochód</button>
+            }
           </div>
         </div>
       </div>
