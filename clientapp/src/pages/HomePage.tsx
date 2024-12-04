@@ -50,8 +50,6 @@ export default function HomePage() {
       try {
         const { data } = await getUniquePropertyValues();
         setUniqueProps(data as UniqueCarProperties);
-        console.log(uniqueProps);
-        console.log(data);
       } catch (error) {
         setError({ error: true, message: "Failed to fetch unique properties" });
       }

@@ -1,4 +1,7 @@
+import { useState } from 'react'; 
 import type { Reservation } from "../../types";
+import Modal from '../primitives/Modal';
+import ReviewForm from '../review/ReviewForm';
 
 interface ReservationItemProps {
   reservationData: Reservation;
@@ -9,8 +12,19 @@ export default function ReservationItem({
 }: ReservationItemProps) {
   const { id, startDate, endDate, car } = reservationData;
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); 
+
   return (
     <div className="reservation card mb-3">
+
+      {
+        isModalOpen
+        &&
+        <Modal modalClose={() => setIsModalOpen(false)}>
+          <ReviewForm modalClose={() => setIsModalOpen(false)} carId={car.id}/>
+        </Modal>
+      }
+
       <div className="card-body">
         <h3 className="card-title">Rezerwacja #{id}</h3>
         <div className="row g-3 align-items-center">
@@ -28,7 +42,7 @@ export default function ReservationItem({
           </div>
 
           {/* Szczegóły rezerwacji */}
-          <div className="col-8">
+          <div className="col-6">
             <h4>
               {car.brand || "Nie podano"} {car.model || "Nie podano"}
             </h4>
@@ -40,6 +54,10 @@ export default function ReservationItem({
               <strong>Data zakończenia:</strong>{" "}
               {new Date(endDate).toLocaleDateString()}
             </p>
+          </div>
+
+          <div className="col-2">
+            <button className="btn-add btn-add--review" onClick={() => setIsModalOpen(true)}>Oceń samochód</button>
           </div>
         </div>
       </div>

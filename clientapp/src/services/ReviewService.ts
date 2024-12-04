@@ -1,4 +1,4 @@
-import type { Review, ReviewApiReturn } from '../types';
+import type { AddReview, Review, ReviewApiReturn } from '../types';
 
 const API_URL = '/api/Review';
 
@@ -28,3 +28,34 @@ export const getCarsReviews = async (carId: number): Promise<ReviewApiReturn> =>
     }
 }
 
+export const addReview = async (
+  newReview: AddReview,
+  token: string
+): Promise<ReviewApiReturn> => {
+    try {
+        const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+            Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+            carId: newReview.carId,
+            starsOutOfFive: newReview.starsOutOfFive,
+            revuewContent: newReview.reviewContent,
+        }),
+        });
+        if (!response.ok)
+        return {
+            data: null,
+            error: { error: true, message: "Bad request / addReview" },
+        };
+
+        return { data: await response.json() };
+    } catch (error) {
+        return {
+        data: null,
+        error: { error: true, message: "Unexpected error / addReview" },
+        };
+    }
+};
