@@ -73,6 +73,12 @@ export type Review = {
   user: User;
 };
 
+export type AddReview = {
+  carId: number;
+  starsOutOfFive: number;
+  reviewContent?: string | null;
+}
+
 export type MyError = {
   error?: boolean;
   message?: string;
