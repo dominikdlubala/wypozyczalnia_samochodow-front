@@ -38,7 +38,7 @@ export default function ReservationItem({
               <img
                 src={"/images/cars" + car.imageUrl}
                 alt={`${car.brand} ${car.model}`}
-                className="img-fluid rounded border"
+                className="img-fluid rounded"
               />
             ) : (
               <div className="text-muted">Brak zdjęcia</div>
