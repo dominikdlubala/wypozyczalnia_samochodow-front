@@ -290,11 +290,14 @@ code {
   border-radius: 3px;
   padding: 4rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 80vw;
+}
+
+.roow {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 80vw;
 }
 
 .form-title--reservation {
@@ -367,6 +370,15 @@ code {
   align-items: center;
   width: 100%;
 }
+
+.car-reviews-section {
+  margin-top: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 
 /* Prompt modal */
 .prompt {
@@ -452,6 +464,15 @@ code {
   font-family: "Nunito", sans-serif;
   transition: transform 0.3s ease;
 }
+
+.reservation {
+  background: rgba(0,0,0, 0.5);
+  border-radius: 2px;
+  color: white;
+  padding: 0.3rem;
+  backdrop-filter: blur(20px);
+}
+
 
 /* Error */
 .error-wrapper {
@@ -785,18 +806,34 @@ table tr:hover td {
 }
 
 .review {
-  display: flex; 
-  flex-direction: column;
-  background-color: #fff;
-  color: #000;  
-  margin-top: 1rem; 
-  padding: 1rem; 
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  padding: 1.5rem;
+  border-radius: 2px;
+  font-family: "Nunito", sans-serif;
 }
 
 .review-header {
-  display: flex; 
-  flex-direction: row;
-  justify-content: space-between; 
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.review-data {
+  color: #999;
+}
+
+.review-stars {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.review-content {
+  font-size: 1.1rem;
+  line-height: 1.5;
 }
 
 .btn-add--review {
