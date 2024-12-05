@@ -81,6 +81,23 @@ const CarPage = () => {
     }
   };
 
+  const allDatesBetween = (startDate: Date, endDate: Date): Date[] => {
+    const start = new Date(startDate); 
+    const end = new Date(endDate); 
+    const dates: Date[] = []; 
+
+    while(start <= end) {
+      dates.push(new Date(start)); 
+      start.setDate(start.getDate() + 1); 
+    }
+    return dates;
+  }
+
+  const excludedDates: Date[] = car?.reservations ? car.reservations.map(r => (
+    allDatesBetween(r.startDate, r.endDate)
+  )).flat() : [];  
+
+
   return (
     <div className="page page-car">
       {isSuccess && (
@@ -126,6 +143,7 @@ const CarPage = () => {
                 maxDate={new Date(new Date().setDate(new Date().getDate() + 90))}
                 dateFormat="dd/MM/yyyy"
                 placeholderText="Wybierz datę"
+                excludeDates={excludedDates}
               />
             </div>
             <div className="form-group form-group--reservation">
@@ -136,6 +154,7 @@ const CarPage = () => {
                 minDate={startDate ? startDate : new Date()}
                 dateFormat="dd/MM/yyyy"
                 placeholderText="Wybierz datę"
+                excludeDates={excludedDates}
               />
             </div>
             {token ? (
