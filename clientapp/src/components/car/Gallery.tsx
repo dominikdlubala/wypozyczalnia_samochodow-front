@@ -12,7 +12,13 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
 
   const galleryList = galleryItems ? (
     galleryItems
-      .filter((car) => car.model.toLowerCase().startsWith(filter ? filter : ""))
+      .filter((car) => {
+        const search = filter ? filter.toLowerCase() : "";
+        return (
+          car.model.toLowerCase().includes(search) || // Wyszukiwanie po modelu
+          car.brand.toLowerCase().includes(search)   // Wyszukiwanie po marce
+        );
+      })
       .map((car) => {
         return (
           <div
@@ -28,7 +34,7 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
                 src={"/images/cars" + car.imageUrl}
                 alt="car-img"
               />
-              <div className="car-model">{car.model}</div>
+              <div className="car-model">{car.brand} {car.model}</div>
             </li>
           </div>
         );
