@@ -1,7 +1,8 @@
-import { useState } from 'react'; 
+import { useState } from "react";
 import type { Reservation } from "../../types";
-import Modal from '../primitives/Modal';
-import ReviewForm from '../review/ReviewForm';
+import Modal from "../primitives/Modal";
+import ReviewForm from "../review/ReviewForm";
+import FaultForm from "../fault/FaultForm";
 
 interface ReservationItemProps {
   reservationData: Reservation;
@@ -12,27 +13,31 @@ export default function ReservationItem({
 }: ReservationItemProps) {
   const { id, startDate, endDate, car } = reservationData;
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); 
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
+  const [isFaultModalOpen, setIsFaultModalOpen] = useState<boolean>(false);
 
-  const today = new Date().getTime(); 
-  const isReservationActive = today > new Date(startDate).getTime() && today < new Date(endDate).getTime();   
-  const hasReservationFinished = today > new Date(endDate).getTime(); 
+  const today = new Date().getTime();
+  const isReservationActive =
+    today > new Date(startDate).getTime() && today < new Date(endDate).getTime();
+  const hasReservationFinished = today > new Date(endDate).getTime();
 
   return (
     <div className="reservation card mb-3">
-
-      {
-        isModalOpen
-        &&
-        <Modal modalClose={() => setIsModalOpen(false)}>
-          <ReviewForm modalClose={() => setIsModalOpen(false)} carId={car.id}/>
+      {isReviewModalOpen && (
+        <Modal modalClose={() => setIsReviewModalOpen(false)}>
+          <ReviewForm modalClose={() => setIsReviewModalOpen(false)} carId={car.id} />
         </Modal>
-      }
+      )}
+
+      {isFaultModalOpen && (
+        <Modal modalClose={() => setIsFaultModalOpen(false)}>
+          <FaultForm modalClose={() => setIsFaultModalOpen(false)} carId={car.id} />
+        </Modal>
+      )}
 
       <div className="card-body">
         <h3 className="card-title">Rezerwacja #{id}</h3>
         <div className="row g-3 align-items-center">
-          {/* Zdjęcie samochodu */}
           <div className="col-4">
             {car.imageUrl ? (
               <img
@@ -45,7 +50,6 @@ export default function ReservationItem({
             )}
           </div>
 
-          {/* Szczegóły rezerwacji */}
           <div className="col-6">
             <h4>
               {car.brand || "Nie podano"} {car.model || "Nie podano"}
@@ -60,12 +64,23 @@ export default function ReservationItem({
             </p>
           </div>
 
-          <div className="col-2">
-            {
-              hasReservationFinished
-              &&
-              <button className="btn-add btn-add--review" onClick={() => setIsModalOpen(true)}>Oceń samochód</button>
-            }
+          <div className="col-2 d-flex flex-column gap-2">
+            {hasReservationFinished && (
+              <button
+                className="btn-add btn-add--review"
+                onClick={() => setIsReviewModalOpen(true)}
+              >
+                Oceń samochód
+              </button>
+            )}
+            {isReservationActive && (
+              <button
+                className="btn-add btn-add--fault"
+                onClick={() => setIsFaultModalOpen(true)}
+              >
+                Zgłoś usterkę
+              </button>
+            )}
           </div>
         </div>
       </div>
