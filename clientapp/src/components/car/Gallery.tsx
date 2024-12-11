@@ -15,8 +15,8 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
       .filter((car) => {
         const search = filter ? filter.toLowerCase() : "";
         return (
-          car.model.toLowerCase().includes(search) || // Wyszukiwanie po modelu
-          car.brand.toLowerCase().includes(search)   // Wyszukiwanie po marce
+          car.model.toLowerCase().includes(search) ||
+          car.brand.toLowerCase().includes(search)   
         );
       })
       .map((car) => {
