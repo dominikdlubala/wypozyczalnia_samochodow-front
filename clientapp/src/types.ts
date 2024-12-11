@@ -62,6 +62,11 @@ export type Fault = {
   reportedUser: User;
 };
 
+export type AddFault = {
+  carId: number;
+  description: string;
+};
+
 export type Review = {
   id: number;
   userId: number;
@@ -106,5 +111,10 @@ export type ReservationApiReturn = {
 
 export type ReviewApiReturn = {
   data?: Review | Review[] | null;
+  error?: MyError | null;
+};
+
+export type FaultApiReturn = {
+  data?: Fault | Fault[] | null;
   error?: MyError | null;
 };
