@@ -884,3 +884,11 @@ table tr:hover td {
 .btn-modal--close:hover {
   background-color: rgb(253, 65, 65); 
 }
+
+.btn-add--fault {
+  background-color: rgb(253, 65, 65); 
+}
+
+.btn-add--fault:hover {
+  background-color: rgb(250, 87, 87); 
+}
