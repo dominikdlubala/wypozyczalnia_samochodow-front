@@ -31,7 +31,7 @@ export default function ReservationsPage() {
   if (isError.error) {
     content = <Error message={isError.message} />;
   } else if (userReservations && userReservations.length === 0) {
-    content = <h2>Brak rezerwacji.</h2>; // Wyświetlanie informacji o braku rezerwacji
+    content = <h2>Brak rezerwacji.</h2>;
   } else {
     content = userReservations && <ReservationList reservationsData={userReservations}/>
   }

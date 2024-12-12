@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { Reservation } from "../../types";
 import Modal from "../primitives/Modal";
 import ReviewForm from "../review/ReviewForm";
+import FaultForm from "../fault/FaultForm";
 
 interface ReservationItemProps {
   reservationData: Reservation;
@@ -15,7 +16,8 @@ export default function ReservationItem({
 
   const { id, startDate, endDate, car } = reservationData;
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
+  const [isFaultModalOpen, setIsFaultModalOpen] = useState<boolean>(false);
 
   const today = new Date().getTime();
   const isReservationActive =
@@ -25,16 +27,27 @@ export default function ReservationItem({
 
   return (
     <div className="reservation card mb-3">
-      {isModalOpen && (
-        <Modal modalClose={() => setIsModalOpen(false)}>
-          <ReviewForm modalClose={() => setIsModalOpen(false)} carId={car.id} />
+      {isReviewModalOpen && (
+        <Modal modalClose={() => setIsReviewModalOpen(false)}>
+          <ReviewForm
+            modalClose={() => setIsReviewModalOpen(false)}
+            carId={car.id}
+          />
+        </Modal>
+      )}
+
+      {isFaultModalOpen && (
+        <Modal modalClose={() => setIsFaultModalOpen(false)}>
+          <FaultForm
+            modalClose={() => setIsFaultModalOpen(false)}
+            carId={car.id}
+          />
         </Modal>
       )}
 
       <div className="card-body">
         <h3 className="card-title">Rezerwacja</h3>
         <div className="row g-3 align-items-center">
-          {/* Zdjęcie samochodu */}
           <div className="col-4">
             {car.imageUrl ? (
               <img
@@ -49,7 +62,6 @@ export default function ReservationItem({
             )}
           </div>
 
-          {/* Szczegóły rezerwacji */}
           <div className="col-6">
             <h4 onClick={() => navigate(`/car/${car.id}`)} role="button">
               {car.brand || "Nie podano"} {car.model || "Nie podano"}
@@ -64,13 +76,21 @@ export default function ReservationItem({
             </p>
           </div>
 
-          <div className="col-2">
+          <div className="col-2 d-flex flex-column gap-2">
             {hasReservationFinished && (
               <button
                 className="btn-add btn-add--review"
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => setIsReviewModalOpen(true)}
               >
                 Oceń samochód
+              </button>
+            )}
+            {isReservationActive && (
+              <button
+                className="btn-add btn-add--fault"
+                onClick={() => setIsFaultModalOpen(true)}
+              >
+                Zgłoś usterkę
               </button>
             )}
           </div>

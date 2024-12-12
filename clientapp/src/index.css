@@ -834,7 +834,8 @@ table tr:hover td {
   line-height: 1.5;
 }
 
-.btn-add--review {
+.btn-add--review,
+.btn-add--fault {
   border: none;
   border-radius: 10px;
   padding: 1rem;
@@ -883,4 +884,12 @@ table tr:hover td {
 
 .btn-modal--close:hover {
   background-color: rgb(253, 65, 65);
+}
+
+.btn-add--fault {
+  background-color: rgb(253, 65, 65);
+}
+
+.btn-add--fault:hover {
+  background-color: rgb(250, 87, 87);
 }
