@@ -58,3 +58,30 @@ export const updateCar = async (
     };
   }
 };
+
+export const deleteCar = async (
+  carId: number,
+  token: string
+): Promise<CarApiReturn> => {
+  try {
+    const response = await fetch(API_URL + "/car/" + carId, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (!response.ok)
+      return {
+        data: null,
+        error: { error: true, message: "Bad request / deleteCar" },
+      };
+
+    return { data: await response.json() };
+  } catch (error) {
+    return {
+      data: null,
+      error: { error: true, message: "Unexpected error / deleteCar" },
+    };
+  }
+};

@@ -7,6 +7,8 @@ import { getAllFaults } from "../services/FaultService";
 import Modal from "../components/primitives/Modal";
 import AddOrEditCarForm from "../components/car/AddOrEditCarForm";
 import { Car } from "../types";
+import { deleteCar } from "../services/AdminService";
+import { useAuth } from "../hooks/useAuth";
 
 const AdminPage = () => {
   const [cars, setCars] = useState<any[]>([]);
@@ -24,6 +26,22 @@ const AdminPage = () => {
 
   const [isCarModalOpen, setIsCarModalOpen] = useState<boolean>(false);
   const [car, setCar] = useState<Car | null>(null);
+
+  const { token } = useAuth();
+
+  const handleDeleteCar = async (carId: number) => {
+    const confirmed = window.confirm(
+      "Czy na pewno chcesz usunąć ten samochód?"
+    );
+    if (confirmed) {
+      try {
+        await deleteCar(carId, token || ""); // Zastąp funkcją odpowiedzialną za usunięcie samochodu
+        fetchCars(); // Odśwież listę samochodów po usunięciu
+      } catch (error) {
+        setError("Nie udało się usunąć samochodu");
+      }
+    }
+  };
 
   const fetchCars = async () => {
     const response = await getAllCars();
@@ -190,7 +208,12 @@ const AdminPage = () => {
                       </button>
                     </td>
                     <td>
-                      <button className="btn btn-danger btn-sm">Usuń</button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDeleteCar(car.id)}
+                      >
+                        Usuń
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -208,8 +231,6 @@ const AdminPage = () => {
                 <th>Nazwa użytkownika</th>
                 <th>Email</th>
                 <th>Data rejestracji</th>
-                <th></th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -222,12 +243,6 @@ const AdminPage = () => {
                   <td>{user.email}</td>
                   <td>
                     {new Date(user.registrationDate).toLocaleDateString()}
-                  </td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">Edytuj</button>
-                  </td>
-                  <td>
-                    <button className="btn btn-danger btn-sm">Usuń</button>
                   </td>
                 </tr>
               ))}
@@ -243,8 +258,6 @@ const AdminPage = () => {
                 <th>Samochód</th>
                 <th>Data rozpoczęcia</th>
                 <th>Data zakończenia</th>
-                <th></th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -257,12 +270,6 @@ const AdminPage = () => {
                     {new Date(reservation.startDate).toLocaleDateString()}
                   </td>
                   <td>{new Date(reservation.endDate).toLocaleDateString()}</td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">Edytuj</button>
-                  </td>
-                  <td>
-                    <button className="btn btn-danger btn-sm">Usuń</button>
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -278,8 +285,6 @@ const AdminPage = () => {
                 <th>Ocena</th>
                 <th>Recenzja</th>
                 <th>Data dodania</th>
-                <th></th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -291,12 +296,6 @@ const AdminPage = () => {
                   <td>{review.starsOutOfFive}</td>
                   <td>{review.reviewContent}</td>
                   <td>{new Date(review.dateOfIssue).toLocaleDateString()}</td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">Edytuj</button>
-                  </td>
-                  <td>
-                    <button className="btn btn-danger btn-sm">Usuń</button>
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -311,8 +310,6 @@ const AdminPage = () => {
                 <th>Zgłaszający</th>
                 <th>Opis</th>
                 <th>Data zgłoszenia</th>
-                <th></th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -323,12 +320,6 @@ const AdminPage = () => {
                   <td>{fault.reportedUserName}</td>
                   <td>{fault.description}</td>
                   <td>{new Date(fault.dateOfIssue).toLocaleDateString()}</td>
-                  <td>
-                    <button className="btn btn-warning btn-sm">Edytuj</button>
-                  </td>
-                  <td>
-                    <button className="btn btn-danger btn-sm">Usuń</button>
-                  </td>
                 </tr>
               ))}
             </tbody>
