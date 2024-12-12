@@ -41,7 +41,7 @@ export default function ReservationItem({
                 src={"/images/cars" + car.imageUrl}
                 alt={`${car.brand} ${car.model}`}
                 onClick={() => navigate(`/car/${car.id}`)}
-                className="img-fluid rounded border"
+                className="img-fluid rounded"
                 role="button"
               />
             ) : (
