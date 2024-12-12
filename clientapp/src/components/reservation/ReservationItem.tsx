@@ -32,7 +32,7 @@ export default function ReservationItem({
       )}
 
       <div className="card-body">
-        <h3 className="card-title">Rezerwacja #{id}</h3>
+        <h3 className="card-title">Rezerwacja</h3>
         <div className="row g-3 align-items-center">
           {/* Zdjęcie samochodu */}
           <div className="col-4">
