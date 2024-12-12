@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Reservation } from "../../types";
 import Modal from "../primitives/Modal";
 import ReviewForm from "../review/ReviewForm";
@@ -11,6 +12,8 @@ interface ReservationItemProps {
 export default function ReservationItem({
   reservationData,
 }: ReservationItemProps) {
+  const navigate = useNavigate();
+
   const { id, startDate, endDate, car } = reservationData;
 
   const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
@@ -18,32 +21,41 @@ export default function ReservationItem({
 
   const today = new Date().getTime();
   const isReservationActive =
-    today > new Date(startDate).getTime() && today < new Date(endDate).getTime();
+    today > new Date(startDate).getTime() &&
+    today < new Date(endDate).getTime();
   const hasReservationFinished = today > new Date(endDate).getTime();
 
   return (
     <div className="reservation card mb-3">
       {isReviewModalOpen && (
         <Modal modalClose={() => setIsReviewModalOpen(false)}>
-          <ReviewForm modalClose={() => setIsReviewModalOpen(false)} carId={car.id} />
+          <ReviewForm
+            modalClose={() => setIsReviewModalOpen(false)}
+            carId={car.id}
+          />
         </Modal>
       )}
 
       {isFaultModalOpen && (
         <Modal modalClose={() => setIsFaultModalOpen(false)}>
-          <FaultForm modalClose={() => setIsFaultModalOpen(false)} carId={car.id} />
+          <FaultForm
+            modalClose={() => setIsFaultModalOpen(false)}
+            carId={car.id}
+          />
         </Modal>
       )}
 
       <div className="card-body">
-        <h3 className="card-title">Rezerwacja #{id}</h3>
+        <h3 className="card-title">Rezerwacja</h3>
         <div className="row g-3 align-items-center">
           <div className="col-4">
             {car.imageUrl ? (
               <img
                 src={"/images/cars" + car.imageUrl}
                 alt={`${car.brand} ${car.model}`}
+                onClick={() => navigate(`/car/${car.id}`)}
                 className="img-fluid rounded"
+                role="button"
               />
             ) : (
               <div className="text-muted">Brak zdjęcia</div>
@@ -51,7 +63,7 @@ export default function ReservationItem({
           </div>
 
           <div className="col-6">
-            <h4>
+            <h4 onClick={() => navigate(`/car/${car.id}`)} role="button">
               {car.brand || "Nie podano"} {car.model || "Nie podano"}
             </h4>
             <p>
