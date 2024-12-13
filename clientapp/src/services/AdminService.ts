@@ -2,6 +2,23 @@ import { Car, CarApiReturn } from "../types";
 
 const API_URL = "/api/admin";
 
+export const uploadImage = async (
+  file: File,
+  token: string
+): Promise<{ uniqueFileName: string }> => {
+  const formData = new FormData();
+  formData.append("imageFile", file);
+
+  const response = await fetch(API_URL + "/uploadImage", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData, // FormData automatycznie ustawi odpowiedni Content-Type
+  });
+
+  const result = await response.json();
+  return result;
+};
+
 export const addCar = async (
   newCar: Omit<Car, "id">,
   token: string

@@ -16,7 +16,7 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
         const search = filter ? filter.toLowerCase() : "";
         return (
           car.model.toLowerCase().includes(search) || // Wyszukiwanie po modelu
-          car.brand.toLowerCase().includes(search)   // Wyszukiwanie po marce
+          car.brand.toLowerCase().includes(search) // Wyszukiwanie po marce
         );
       })
       .map((car) => {
@@ -31,10 +31,12 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
             >
               <img
                 className="car-image"
-                src={"/images/cars" + car.imageUrl}
+                src={"/images/cars/" + car.imageUrl}
                 alt="car-img"
               />
-              <div className="car-model">{car.brand} {car.model}</div>
+              <div className="car-model">
+                {car.brand} {car.model}
+              </div>
             </li>
           </div>
         );
