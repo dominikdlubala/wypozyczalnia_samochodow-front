@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
 import { Car } from "../../types";
-import { useState } from "react";
-import { addCar, updateCar } from "../../services/AdminService";
+import { useEffect, useState } from "react";
+import { addCar, updateCar, uploadImage } from "../../services/AdminService";
 
 type FormValues = {
   brand: string;
@@ -22,46 +22,77 @@ interface FormProps {
   onSubmited: () => void;
 }
 
+const fuelTypes = ["Petrol", "Diesel", "Hybrid", "Electric"];
+const bodyTypes = [
+  "Convertible",
+  "Coupe",
+  "Hatchback",
+  "Kombi",
+  "Sedan",
+  "SUV",
+];
+const colors = [
+  "Black",
+  "Blue",
+  "Gray",
+  "Green",
+  "Red",
+  "Silver",
+  "White",
+  "Yellow",
+];
+
 export default function AddOrEditCarForm({
   car,
   modalClose,
   onSubmited,
 }: FormProps) {
-  const fuelTypes = ["Petrol", "Diesel", "Hybrid", "Electric"];
-  const bodyTypes = [
-    "Convertible",
-    "Coupe",
-    "Hatchback",
-    "Kombi",
-    "Sedan",
-    "SUV",
-  ];
-  const colors = [
-    "Black",
-    "Blue",
-    "Gray",
-    "Green",
-    "Red",
-    "Silver",
-    "White",
-    "Yellow",
-  ];
   const { token } = useAuth();
 
   const [isError, setIsError] = useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string | null | undefined>(null);
+
+  useEffect(() => {
+    setImageUrl(car?.imageUrl);
+    setValue("imageUrl", car?.imageUrl || "");
+  }, [car]);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    setValue,
+    formState: { errors },
   } = useForm<FormValues>();
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files && event.target.files[0]) {
+      try {
+        const file = event.target.files[0];
+        const response = await uploadImage(file, token || "");
+        const fileUrl = response.uniqueFileName;
+        setImageUrl(fileUrl);
+
+        setValue("imageUrl", fileUrl);
+      } catch (error) {
+        console.error("Błąd przesyłania zdjęcia:", error);
+        setIsError(true);
+      }
+    }
+  };
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
     try {
+      if (!values.imageUrl) {
+        setIsError(true);
+        return;
+      }
+
       if (car == null) {
-        const { data, error } = await addCar(values, token || "");
+        await addCar(values, token || "");
       } else {
-        const { data, error } = await updateCar(car.id, values, token || "");
+        await updateCar(car.id, values, token || "");
       }
       modalClose();
       onSubmited();
@@ -75,13 +106,38 @@ export default function AddOrEditCarForm({
       <h1 className="login-form-title">
         {car ? "Edytuj samochód" : "Dodaj nowy samochód"}
       </h1>
-      {/* Zdjęcie TODO */}
-      <input
-        type="text"
-        defaultValue={car?.imageUrl}
-        hidden
-        {...register("imageUrl")}
-      />
+
+      {/* Zdjęcie */}
+      <div className="login-form-group">
+        {imageUrl && (
+          <div className="mb-3 text-center">
+            <img
+              src={"/images/cars/" + imageUrl}
+              alt="Car Preview"
+              style={{ width: "auto", height: "auto", maxHeight: "200px" }}
+            />
+          </div>
+        )}
+
+        <label className="login-form-label">Dodaj zdjęcie:</label>
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+
+        <input
+          type="hidden"
+          {...register("imageUrl", {
+            required: {
+              value: true,
+              message: "Zdjęcie jest wymagane",
+            },
+          })}
+        />
+        {errors.imageUrl && (
+          <span className="login-input-validate">
+            {errors.imageUrl?.message}
+          </span>
+        )}
+      </div>
+
       {/* Marka */}
       <div className="login-form-group">
         <input
@@ -96,7 +152,12 @@ export default function AddOrEditCarForm({
             },
           })}
         />
+
+        {errors.brand && (
+          <span className="login-input-validate">{errors.brand?.message}</span>
+        )}
       </div>
+
       {/* Model */}
       <div className="login-form-group">
         <input
@@ -111,7 +172,12 @@ export default function AddOrEditCarForm({
             },
           })}
         />
+
+        {errors.model && (
+          <span className="login-input-validate">{errors.model?.message}</span>
+        )}
       </div>
+
       {/* Typ silnika */}
       <div className="login-form-group">
         <label className="login-form-label">Typ silnika: </label>
@@ -127,7 +193,8 @@ export default function AddOrEditCarForm({
           ))}
         </select>
       </div>
-      {/* Pojemnosc */}
+
+      {/* Pojemność */}
       <div className="login-form-group">
         <label>Pojemność silnika (L):</label>
         <input
@@ -139,7 +206,7 @@ export default function AddOrEditCarForm({
           {...register("capacity", {
             min: {
               value: 0,
-              message: "Pojemnośc nie może być ujemna",
+              message: "Pojemność nie może być ujemna",
             },
             max: {
               value: 10,
@@ -151,7 +218,14 @@ export default function AddOrEditCarForm({
             },
           })}
         />
+
+        {errors.capacity && (
+          <span className="login-input-validate">
+            {errors.capacity?.message}
+          </span>
+        )}
       </div>
+
       {/* Rodzaj nadwozia */}
       <div className="login-form-group">
         <label className="login-form-label">Rodzaj nadwozia: </label>
@@ -167,6 +241,7 @@ export default function AddOrEditCarForm({
           ))}
         </select>
       </div>
+
       {/* Kolor */}
       <div className="login-form-group">
         <label className="login-form-label">Kolor: </label>
@@ -182,6 +257,7 @@ export default function AddOrEditCarForm({
           ))}
         </select>
       </div>
+
       {/* Cena */}
       <div className="login-form-group">
         <label>Cena za dzień (PLN):</label>
@@ -201,8 +277,15 @@ export default function AddOrEditCarForm({
             },
           })}
         />
+
+        {errors.pricePerDay && (
+          <span className="login-input-validate">
+            {errors.pricePerDay?.message}
+          </span>
+        )}
       </div>
-      {/* Rok */}
+
+      {/* Rok produkcji */}
       <div className="login-form-group">
         <label>Rok produkcji:</label>
         <input
@@ -225,32 +308,13 @@ export default function AddOrEditCarForm({
             },
           })}
         />
-      </div>
 
-      {errors.brand && (
-        <span className="login-input-validate">{errors.brand?.message}</span>
-      )}
-      {errors.model && (
-        <span className="login-input-validate">{errors.model?.message}</span>
-      )}
-      {errors.capacity && (
-        <span className="login-input-validate">{errors.capacity?.message}</span>
-      )}
-      {errors.pricePerDay && (
-        <span className="login-input-validate">
-          {errors.pricePerDay?.message}
-        </span>
-      )}
-      {errors.productionYear && (
-        <span className="login-input-validate">
-          {errors.productionYear?.message}
-        </span>
-      )}
-      {isError && (
-        <span className="login-input-validate">
-          Błąd w {car ? "edycji" : "dodawaniu"} samochodu
-        </span>
-      )}
+        {errors.productionYear && (
+          <span className="login-input-validate">
+            {errors.productionYear?.message}
+          </span>
+        )}
+      </div>
 
       {/* Przycisk */}
       <div className="mt-3">
@@ -258,6 +322,12 @@ export default function AddOrEditCarForm({
           {car ? "Edytuj" : "Dodaj"}
         </button>
       </div>
+
+      {isError && (
+        <span className="login-input-validate">
+          Błąd w {car ? "edycji" : "dodawaniu"} samochodu
+        </span>
+      )}
     </form>
   );
 }
