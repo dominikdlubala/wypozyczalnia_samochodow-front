@@ -8,7 +8,7 @@ import CarsPage from "./pages/CarsPage";
 import CarPage from "./pages/CarPage";
 import ReservationsPage from "./pages/ReservationsPage";
 import AdminPage from "./pages/AdminPage";
-import AccountPage from "./pages/AccountPage"; // Import nowej strony
+import AccountPage from "./pages/AccountPage";
 import ProtectedRoute from "./components/login/ProtectedRoute";
 
 const router = createBrowserRouter([
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/account", // Dodana nowa trasa
+        path: "/account",
         element: (
           <ProtectedRoute>
             <AccountPage />
