@@ -129,7 +129,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                     {...register("displacement")}
                 >
                 <option value="" disabled hidden>
-                    Wybierz pojemność silnika
+                    Wybierz pojemność
                 </option>
                 <option value="smallEngine">1.0-2.0</option>
                 <option value="mediumEngine">2.0-3.0</option>
@@ -146,7 +146,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                     {...register("bodyType")}
                 >
                 <option value="" disabled hidden>
-                    Wybierz rodzaj nadwozia
+                    Wybierz nadwozie
                 </option>
                 {uniqueProps?.bodyTypes.map((bodyType) => (
                     <option key={bodyType} value={bodyType}>
@@ -242,7 +242,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 type="submit"
                 disabled={isSubmitting}
                 >
-                    Filtruj
+                    Szukaj
                 </button>
             </div>
         </form>

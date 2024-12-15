@@ -37,13 +37,16 @@ export default function HomePage() {
       </div>
 
       <div className="gallery--home">
-        <h1 className="gallery-title--home text-center">
-          Najczęściej wybierane
-        </h1>
+        <div className="section-title text-center">
+          <h1 className="gallery-title--home">NAJPOPULARNIEJSZE</h1>
+        </div>
+        <p className="section-description text-center">
+          Zobacz najczęściej wybierane pojazdy.
+        </p>
         <div className="row justify-content-center">
           {cars &&
             cars.map((car) => (
-              <div className="col-12 col-md-4 col-lg-2" key={car.id}>
+              <div className="col-12 col-md-4 col-lg-3" key={car.id}>
                 <div
                   className="gallery-item"
                   onClick={() => navigate(`/car/${car.id}`)}
@@ -53,7 +56,8 @@ export default function HomePage() {
                     src={"/images/cars" + car.imageUrl}
                     alt="car-img"
                   />
-                  <div className="car-model">{car.model}</div>
+                  <div className="car-model">{car.brand} {car.model}</div>
+                  <div><span className="car-model-span">{car.pricePerDay} zł</span> za dobę</div>
                 </div>
               </div>
             ))}

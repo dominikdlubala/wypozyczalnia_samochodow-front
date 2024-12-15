@@ -22,19 +22,19 @@ export default function Gallery({ filter, galleryItems }: GalleryProps) {
       .map((car) => {
         return (
           <div
-            className="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center mb-4"
+            className="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center mt-3"
             key={car.id}
           >
             <li
-              className="gallery-item"
+              className="gallery-item-allCars"
               onClick={() => navigate(`/car/${car.id}`)}
             >
               <img
-                className="car-image"
+                className="car-image-allCars"
                 src={"/images/cars/" + car.imageUrl}
                 alt="car-img"
               />
-              <div className="car-model">
+              <div className="car-model-allCars">
                 {car.brand} {car.model}
               </div>
             </li>
