@@ -621,6 +621,17 @@ code {
   font-family: "Rubik", sans-serif;
 }
 
+.reservation-card--active {
+  background-color: #e8f5e9;
+  border: 1px solid #e8f5e9;
+}
+
+.reservation-card--finished {
+  background-color: #f0f0f0;
+  border: 1px solid #f0f0f0;
+  color: #6c757d;
+}
+
 .card-body p {
   margin: 0.1rem 0;
 }
@@ -1023,12 +1034,13 @@ table tr:hover td {
 }
 
 .btn-add--review,
-.btn-add--fault {
+.btn-add--fault,
+.btn-add--cancel {
   max-width: 200px;
   border: none;
   border-radius: 2px;
   padding: 0.6rem;
-  background-color: #49eb43;
+  background-color: #1da518;
   cursor: pointer;
   color: black;
   font-size: 1.1rem;
@@ -1036,7 +1048,17 @@ table tr:hover td {
 }
 
 .btn-add--review:hover {
-  background-color: #59db55;
+  background-color: #37c532;
+}
+
+.btn-add--cancel
+ {
+  background-color: #ffc107;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add--cancel:hover {
+  background-color: #e6b31c;
 }
 
 /* Modal */

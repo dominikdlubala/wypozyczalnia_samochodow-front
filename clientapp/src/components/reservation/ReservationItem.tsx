@@ -26,7 +26,7 @@ export default function ReservationItem({
   const hasReservationFinished = today > new Date(endDate).getTime();
 
   return (
-    <div className="reservation-card">
+    <div className={`reservation-card ${ isReservationActive ? "reservation-card--active" : ""} ${ hasReservationFinished ? "reservation-card--finished" : ""}`}>
       {isReviewModalOpen && (
         <Modal modalClose={() => setIsReviewModalOpen(false)}>
           <ReviewForm
@@ -83,6 +83,11 @@ export default function ReservationItem({
                   onClick={() => setIsFaultModalOpen(true)}
                 >
                   Zgłoś usterkę
+                </button>
+              )}
+              {!isReservationActive && !hasReservationFinished && (
+                <button className="btn-add btn-add--cancel">
+                  Anuluj rezerwację
                 </button>
               )}
             </div>
