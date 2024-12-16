@@ -32,7 +32,7 @@ export default function HomePage() {
     <div className="container-fluid p-0">
       <div className="form-background p-5 d-flex justify-content-center">
         <div className="form-wrapper">
-          <CarFilterForm initialValues={{}} />
+          <CarFilterForm initialValues={{}} labelColor="white" />
         </div>
       </div>
 

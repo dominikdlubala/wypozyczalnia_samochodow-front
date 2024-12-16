@@ -54,9 +54,18 @@ export default function CarsPage() {
 
   return (
     <div className="page page-cars">
+
+      <div className="banner-section">
+        <div className="banner-content">
+          <h1 className="banner-title">FLOTA SAMOCHODÓW</h1>
+          <p className="banner-description">
+            Wynajmij auto szybko i wygodnie. Znajdź pojazd na każdą okazję.
+          </p>
+        </div>
+      </div>
+
       <div className="content-wrapper">
         <div className="form-group w-100">
-          <label className="form-label">Model</label>
           <Input
             value={inputValue}
             onChange={onChange}
@@ -65,11 +74,12 @@ export default function CarsPage() {
           />
         </div>
 
-        <CarFilterForm initialValues={initialValues} />
+        <CarFilterForm initialValues={initialValues}  labelColor="black" />
 
         <Gallery 
           filter={galleryFilter}
           galleryItems={filteredCars.data as Car[]}
+          className="gallery-carsPage"
         />
       </div>
     </div>

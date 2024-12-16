@@ -85,6 +85,10 @@ code {
 }
 
 /* Gallery */
+.gallery-carsPage {
+  margin-top: 3rem;
+}
+
 .section-title {
   margin: 5rem auto 1rem auto;
   padding-top: 2rem;
@@ -159,16 +163,6 @@ code {
   font-size: 1.3rem;
 }
 
-.car-model-allCars {
-  margin-top: 0.5rem;
-  text-align: center;
-  font-family: "Rubik", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-}
-
 .gallery-item-allCars {
   position: relative;
   display: flex;
@@ -178,11 +172,50 @@ code {
   width: 100%;
   list-style: none;
   padding: 0.5rem;
-  font-family: "Nunito", sans-serif;
-  font-weight: 400;
-  font-size: 1.1rem;
-  border: 1px solid transparent;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid rgb(189, 186, 186);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.car-info-allCars {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.car-info-span-allCars {
+  color: #FF0000;
+  font-weight: 600;
+}
+
+.car-info-brandModel-allCars {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.btn-submit-allCars {
+  margin: 1vh auto;
+  display: block;
+  width: 100px;
+  padding: 0.3rem;
+  border: none;
+  border-radius: 1px;
+  background-color: #ec0d0d;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Rubik", sans-serif;
+  font-weight: 350;
+}
+
+.btn-submit-allCars:hover {
+  background-color: #b61919;
+
 }
 
 .gallery--home .car-image {
@@ -196,15 +229,14 @@ code {
 .search-input {
   display: flex;
   width: 100%;
-  border: none;
-  border-bottom: 2px solid black;
+  border: 2px solid black;
   font-size: 1rem;
   margin: 1rem 0rem;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #027930;
+  border-color: black;
 }
 
 .page-login {
@@ -308,19 +340,16 @@ code {
 
 /* CarsPage */
 .page-cars {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("../public/images/car_background.jpg");
+  background-color: #ffffff;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100vw;
+  width: 100%;
   height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
   color: white;
-  padding: 3rem 0;
+  padding: 0;
 }
+
 
 .content-wrapper {
   width: 85vw;
@@ -328,10 +357,9 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
   padding: 2rem;
-  background: rgba(0, 0, 0, 0.4);
   border-radius: 3px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(20px);
 }
 
@@ -342,6 +370,37 @@ code {
   border: 1px solid #ccc;
   border-radius: 3px;
 }
+
+.banner-section {
+  background-color: #dfdfdf;
+  width: 100vw;
+  margin: 0;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+}
+
+.banner-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.banner-title {
+  font-family: "Rubik", sans-serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.banner-description {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  line-height: 1.5;
+}
+
 
 /* CarPage */
 .page-car {

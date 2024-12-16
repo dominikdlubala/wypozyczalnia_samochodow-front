@@ -10,7 +10,7 @@ export default function Input({ onChange, value, className='', onSubmit }: Input
     return (
         <input
             className={`search-input ${className}`} 
-            placeholder="Search..."
+            placeholder="Szukaj po marce lub modelu..."
             value={value}
             onChange={(e:React.FormEvent<HTMLInputElement>) => onChange(e.currentTarget.value)}
             onKeyUp={onSubmit ? (e: React.KeyboardEvent<HTMLInputElement>) => {
