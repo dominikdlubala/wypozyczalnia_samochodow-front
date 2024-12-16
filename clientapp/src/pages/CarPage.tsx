@@ -110,81 +110,85 @@ const CarPage = () => {
           {isError.message}
         </Prompt>
       )}
+
+      <div className="banner-section">
+        <div className="banner-content">
+          <h1 className="banner-title">{car?.brand} {car?.model}</h1>
+          <p className="banner-description">
+            Rocznik: {car?.productionYear}<br />
+            Silnik: {car?.fuelType}<br />
+            Pojemność silnika: {car?.capacity} L<br />
+            Typ nadwozia: {car?.bodyType}<br />
+            Kolor: {car?.color}<br />
+            Cena za dobę: <span className="car-info-span-allCars">{car?.pricePerDay} zł</span>
+          </p>
+        </div>
+      </div>
       
       <div className="car car-reservation">
-  <div className="roow">
-    <div className="car-details">
-      <h2>{car?.brand} {car?.model}</h2>
-      <ul className="car-specs">
-        <li>Rodzaj paliwa: {car?.fuelType}</li>
-        <li>Pojemność silnika: {car?.capacity} L</li>
-        <li>Typ nadwozia: {car?.bodyType}</li>
-        <li>Kolor: {car?.color}</li>
-        <li>Rok produkcji: {car?.productionYear}</li>
-        <li>Cena za dzień: {car?.pricePerDay} PLN</li>
-      </ul>
-    </div>
-    <div className="car-content">
-      <img
-        className="car-image car-image--reservation"
-        src={"/images/cars/" + car?.imageUrl}
-        alt="car-image"
-      />
-      <div className="reservation-controls">
-        <div className="form-wrapper form-wrapper--reservation">
-          <h1 className="form-title form-title--reservation">Zarezerwuj!</h1>
-          <form className="form form--reservation" onSubmit={handleSubmit}>
-            <div className="form-group form-group--reservation">
-              <label>Wybierz datę rozpoczęcia:</label>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                minDate={new Date()}
-                maxDate={new Date(new Date().setDate(new Date().getDate() + 90))}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="Wybierz datę"
-                excludeDates={excludedDates}
-              />
+          <div className="car-content">
+            <img
+              className="car-image car-image--reservation"
+              src={"/images/cars/" + car?.imageUrl}
+              alt="car-image"
+            />
+            <div className="reservation-controls">
+              <div className="form-wrapper form-wrapper--reservation">
+                <h1 className="form-title form-title--reservation">Zarezerwuj!</h1>
+                <form className="form form--reservation" onSubmit={handleSubmit}>
+                  <div className="form-group form-group--reservation">
+                    <label>Wybierz datę rozpoczęcia:</label>
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      minDate={new Date()}
+                      maxDate={new Date(new Date().setDate(new Date().getDate() + 90))}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="Wybierz datę"
+                      excludeDates={excludedDates}
+                      
+                    />
+                  </div>
+                  <div className="form-group form-group--reservation">
+                    <label>Wybierz datę zakończenia:</label>
+                    <DatePicker
+                      selected={endDate}
+                      onChange={(date) => setEndDate(date)}
+                      minDate={startDate ? startDate : new Date()}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="Wybierz datę"
+                      excludeDates={excludedDates}
+                    />
+                  </div>
+                  {token ? (
+                    <button className="btn-submit form-button-submit" type="submit">
+                      Zarezerwuj
+                    </button>
+                  ) : (
+                    <button
+                      className="btn-submit form-button-submit"
+                      onClick={(e: React.FormEvent<HTMLButtonElement>) => {
+                        e.preventDefault();
+                        navigate("/login");
+                      }}
+                    >
+                      Zaloguj się przed rezerwacją
+                    </button>
+                  )}
+                </form>
+              </div>
             </div>
-            <div className="form-group form-group--reservation">
-              <label>Wybierz datę zakończenia:</label>
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                minDate={startDate ? startDate : new Date()}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="Wybierz datę"
-                excludeDates={excludedDates}
-              />
-            </div>
-            {token ? (
-              <button className="btn-submit form-button-submit" type="submit">
-                Zarezerwuj
-              </button>
-            ) : (
-              <button
-                className="btn-submit form-button-submit"
-                onClick={(e: React.FormEvent<HTMLButtonElement>) => {
-                  e.preventDefault();
-                  navigate("/login");
-                }}
-              >
-                Zaloguj się przed rezerwacją
-              </button>
-            )}
-          </form>
+        </div>
+
+        <div className="reviews-title-box">
+          <h1 className="reviews-title">RECENZJE</h1>
+        </div>
+
+        <div className="car-reviews-section">
+          <CarReviews reviewsData={reviews} />
         </div>
       </div>
     </div>
-  </div>
-  {/* Komentarze poniżej */}
-  <div className="car-reviews-section">
-    <CarReviews reviewsData={reviews} />
-  </div>
-</div>
-
-  </div>
-
   );
 };
 
