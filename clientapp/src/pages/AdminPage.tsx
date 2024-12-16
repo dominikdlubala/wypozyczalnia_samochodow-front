@@ -115,9 +115,16 @@ const AdminPage = () => {
 
   return (
     <div className="page page-admin">
-      <div className="content-wrapper-admin">
-        <h1>Admin Panel</h1>
 
+      <div className="banner-section">
+        <div className="banner-content">
+          <h1 className="banner-title">PANEL ADMINISTRATORA</h1>
+          <p className="banner-description">
+          </p>
+        </div>
+      </div>
+
+      <div className="content-wrapper-admin">
         {isCarModalOpen && (
           <Modal modalClose={() => setIsCarModalOpen(false)}>
             <AddOrEditCarForm
