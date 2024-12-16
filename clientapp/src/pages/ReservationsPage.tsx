@@ -38,6 +38,14 @@ export default function ReservationsPage() {
 
   return (
     <div className="page page-reservations">
+      <div className="banner-section">
+        <div className="banner-content">
+          <h1 className="banner-title">MOJE REZERWACJE</h1>
+          <p className="banner-description">
+            Przeglądaj swoje rezerwacje, zgłaszaj usterki oraz wystawiaj recenzje.
+          </p>
+        </div>
+      </div>
       {content}
     </div>
   );

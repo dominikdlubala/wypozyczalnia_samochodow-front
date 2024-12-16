@@ -375,7 +375,6 @@ code {
 .banner-section {
   background-color: #dfdfdf;
   width: 100vw;
-  margin: 0;
   padding: 2rem 1.5rem;
   box-sizing: border-box;
   text-align: center;
@@ -570,42 +569,42 @@ code {
 }
 
 /* Reservation page */
-.list-item--reservation {
-  padding: 1rem;
-  margin: 0.5rem;
-}
-
 .page-reservations {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("../public/images/car_background.jpg");
+  background-color: #FFFFFF;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
+  color: white;
+}
+
+.reservation-card {
+  max-width: 800px;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  color: white;
-  padding: 1rem;
-}
-
-.list-item--reservation {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
+  background-color: #fff;
+  color: rgb(46, 46, 46);
+  border: 1px solid #ddd;
+  border-radius: 4px;
   padding: 1.5rem;
-  border-radius: 2px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  font-size: 1.1rem;
-  font-family: "Nunito", sans-serif;
-  transition: transform 0.3s ease;
+  margin: 1rem auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  font-family: "Rubik", sans-serif;
 }
 
-.reservation {
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 2px;
-  color: white;
-  padding: 0.3rem;
-  backdrop-filter: blur(20px);
+.card-body p {
+  margin: 0.1rem 0;
+}
+
+.card-body h3 {
+  font-weight: 350;
+}
+
+.list--reservation {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 /* Error */
@@ -895,7 +894,7 @@ table tr:hover td {
   border-radius: 5px;
   color: black;
   margin: 2rem auto;
-  font-family: "Nunito", sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 .form-account .form-group {
@@ -968,15 +967,19 @@ table tr:hover td {
 
 .btn-add--review,
 .btn-add--fault {
+  max-width: 200px;
   border: none;
-  border-radius: 10px;
-  padding: 1rem;
-  background-color: #6aff64;
+  border-radius: 2px;
+  padding: 0.6rem;
+  background-color: #49eb43;
   cursor: pointer;
+  color: black;
+  font-size: 1.1rem;
+  font-family: "Rubik", sans-serif;
 }
 
 .btn-add--review:hover {
-  background-color: #50fd4a;
+  background-color: #59db55;
 }
 
 /* Modal */
@@ -1019,9 +1022,9 @@ table tr:hover td {
 }
 
 .btn-add--fault {
-  background-color: rgb(253, 65, 65);
+  background-color: rgb(241, 52, 52);
 }
 
 .btn-add--fault:hover {
-  background-color: rgb(250, 87, 87);
+  background-color: rgb(252, 66, 66);
 }

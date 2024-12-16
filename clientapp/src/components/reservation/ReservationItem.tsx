@@ -26,7 +26,7 @@ export default function ReservationItem({
   const hasReservationFinished = today > new Date(endDate).getTime();
 
   return (
-    <div className="reservation card mb-3">
+    <div className="reservation-card">
       {isReviewModalOpen && (
         <Modal modalClose={() => setIsReviewModalOpen(false)}>
           <ReviewForm
@@ -46,9 +46,49 @@ export default function ReservationItem({
       )}
 
       <div className="card-body">
-        <h3 className="card-title">Rezerwacja</h3>
+        <h3 className="card-title">
+          {hasReservationFinished
+            ? "Rezerwacja zakończona"
+            : isReservationActive
+            ? "Rezerwacja w toku"
+            : "Rezerwacja zaplanowana"}
+        </h3>
         <div className="row g-3 align-items-center">
-          <div className="col-4">
+
+          <div className="col-6">
+            <h2 onClick={() => navigate(`/car/${car.id}`)} role="button">
+              {car.brand || "Nie podano"} {car.model || "Nie podano"}
+            </h2>
+            <p>
+              Data rozpoczęcia:{" "}
+              <strong>{new Date(startDate).toLocaleDateString()}</strong>
+            </p>
+            <p>
+              Data zakończenia:{" "}
+              <strong>{new Date(endDate).toLocaleDateString()}</strong>
+            </p>
+
+            <div className="col-6 d-flex flex-column mt-3">
+              {hasReservationFinished && (
+                <button
+                  className="btn-add btn-add--review"
+                  onClick={() => setIsReviewModalOpen(true)}
+                >
+                  Oceń samochód
+                </button>
+              )}
+              {isReservationActive && (
+                <button
+                  className="btn-add btn-add--fault"
+                  onClick={() => setIsFaultModalOpen(true)}
+                >
+                  Zgłoś usterkę
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="col-6">
             {car.imageUrl ? (
               <img
                 src={"/images/cars" + car.imageUrl}
@@ -59,39 +99,6 @@ export default function ReservationItem({
               />
             ) : (
               <div className="text-muted">Brak zdjęcia</div>
-            )}
-          </div>
-
-          <div className="col-6">
-            <h4 onClick={() => navigate(`/car/${car.id}`)} role="button">
-              {car.brand || "Nie podano"} {car.model || "Nie podano"}
-            </h4>
-            <p>
-              <strong>Data rozpoczęcia:</strong>{" "}
-              {new Date(startDate).toLocaleDateString()}
-            </p>
-            <p>
-              <strong>Data zakończenia:</strong>{" "}
-              {new Date(endDate).toLocaleDateString()}
-            </p>
-          </div>
-
-          <div className="col-2 d-flex flex-column gap-2">
-            {hasReservationFinished && (
-              <button
-                className="btn-add btn-add--review"
-                onClick={() => setIsReviewModalOpen(true)}
-              >
-                Oceń samochód
-              </button>
-            )}
-            {isReservationActive && (
-              <button
-                className="btn-add btn-add--fault"
-                onClick={() => setIsFaultModalOpen(true)}
-              >
-                Zgłoś usterkę
-              </button>
             )}
           </div>
         </div>
