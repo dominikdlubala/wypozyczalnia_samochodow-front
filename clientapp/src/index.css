@@ -279,11 +279,11 @@ code {
 }
 
 .form-title {
-  color: white;
+  color: black;
   font-family: "Protest Strike", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 3.2rem;
+  font-size: 3rem;
 }
 
 .form-label {
@@ -404,36 +404,27 @@ code {
 
 /* CarPage */
 .page-car {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("../public/images/car_background.jpg");
+  background-color: #FFFFFF;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   width: 100vw;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 3rem;
   color: white;
 }
 
 .car-reservation {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  border-radius: 3px;
-  padding: 4rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  width: 80vw;
-}
-
-.roow {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 4rem;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
+
 
 .form-title--reservation {
   width: 40vw;
@@ -441,19 +432,12 @@ code {
   margin-bottom: 1.5rem;
 }
 
-.reservation-controls {
-  width: 20vw;
-}
-
-.car-image--reservation {
-  width: 25vw;
-  height: auto;
-  margin-right: 3rem;
-}
-
 .form-wrapper--reservation {
+  width: 100%;
   margin: 0;
-  width: 100vw;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  border-radius: 0px 10px 10px 0px; 
 }
 
 .form-group--reservation {
@@ -464,10 +448,11 @@ code {
 
 .form-group--reservation label {
   font-size: 1.1rem;
+  color: black;
+  font-family: "Rubik", sans-serif;
 }
 
 .form-button-submit {
-  width: 15vw;
   margin: 1.5rem 0;
   padding: 0.6rem;
   font-size: 1.1rem;
@@ -500,18 +485,60 @@ code {
 
 .car-content {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
+  max-width: 800px;
+  box-shadow: 0px 0px 7px 0px rgba(66, 68, 90, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.reviews-title-box {
+  margin: 5rem auto 1rem auto;
+  padding-top: 2rem;
+  border-top: 4px solid #ff0000;
+  width: fit-content;
+}
+
+.reviews-title {
+  text-transform: uppercase;
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 750;
+  color: #292727;
 }
 
 .car-reviews-section {
-  margin-top: 3rem;
-  width: 100%;
+  width: 50vw;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.reviews {
+  text-transform: uppercase;
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 750;
+  color: #292727;
+}
+
+.car-image--reservation {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px 0 0 10px;
+}
+
+.reservation-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.react-datepicker-popper .react-datepicker__triangle {
+  display: none;
 }
 
 /* Prompt modal */
@@ -931,15 +958,15 @@ table tr:hover td {
 
 /* car review */
 .car-reviews {
-  width: 70vw;
+  width: 50vw;
 }
 
 .review {
-  background: rgba(0, 0, 0, 0.5);
-  color: #f1f1f1;
+  background-color: #FFFFFF;
+  color: black;
+  border-top: 1px solid rgb(207, 207, 207);
   padding: 1.5rem;
-  border-radius: 2px;
-  font-family: "Nunito", sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 .review-header {
@@ -957,7 +984,7 @@ table tr:hover td {
 .review-stars {
   font-size: 1rem;
   font-weight: bold;
-  color: #ffd700;
+  color: #dbbc0a;
 }
 
 .review-content {

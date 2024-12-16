@@ -37,7 +37,7 @@ export default function Header() {
                 }`}
                 onClick={() => navigate("/reservations", { state: { token } })}
               >
-                Moje rezerwacje
+                Rezerwacje
               </li>
               <li
                 className={`menu-link fs-md-5 fs-sm-4 ${
