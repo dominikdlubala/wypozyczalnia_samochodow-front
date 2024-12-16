@@ -110,8 +110,18 @@ export default function AccountPage() {
 
   return (
     <div className="page-account">
+
+      <div className="banner-section">
+        <div className="banner-content">
+          <h1 className="banner-title">PANEL UŻYTKOWNIKA</h1>
+          <p className="banner-description">
+            Tutaj możesz edytować swoje dane użytkownika oraz zmienić hasło.
+          </p>
+        </div>
+      </div>
+
       <div className="content-wrapper-account">
-        <h2>Moje konto</h2>
+        <h2>Moje dane</h2>
         {success && <p className="prompt-success">{success}</p>}
         {error && <p className="prompt-error">{error}</p>}
         {user ? (
