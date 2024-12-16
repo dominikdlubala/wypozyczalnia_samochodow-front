@@ -26,10 +26,11 @@ export interface FormValues {
 
 interface CarFilterFormProps {
     initialValues: FormValues; 
+    labelColor?: string;
 }
   
 
-export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
+export default function CarFilterForm({ initialValues, labelColor  }: CarFilterFormProps) {
 
     const normalizedValues = Object.fromEntries(
         Object.entries(initialValues).map(([key, value]) => [key[0].toLowerCase() + key.slice(1), value])
@@ -101,7 +102,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
             <div className="col-md-3">
-                <label htmlFor="engineType" className="form-label">
+                <label htmlFor="engineType" className="form-label" style={{ color: labelColor || 'black' }}>
                 Typ silnika
                 </label>
                 <select
@@ -120,7 +121,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 </select>
             </div>
             <div className="col-md-3">
-                <label htmlFor="displacement" className="form-label">
+                <label htmlFor="displacement" className="form-label" style={{ color: labelColor || 'black' }}>
                     Pojemność
                 </label>
                 <select
@@ -137,7 +138,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 </select>
             </div>
             <div className="col-md-3">
-                <label htmlFor="bodyType" className="form-label">
+                <label htmlFor="bodyType" className="form-label" style={{ color: labelColor || 'black' }}>
                 Nadwozie
                 </label>
                 <select
@@ -156,7 +157,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 </select>
             </div>
             <div className="col-md-3">
-                <label htmlFor="colour" className="form-label">
+                <label htmlFor="colour" className="form-label" style={{ color: labelColor || 'black' }}>
                 Kolor
                 </label>
                 <select
@@ -175,7 +176,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 </select>
             </div>
             <div className="col-md-3">
-                <label htmlFor="priceMin" className="form-label">
+                <label htmlFor="priceMin" className="form-label" style={{ color: labelColor || 'black' }}>
                 Cena minimalna
                 </label>
                 <input
@@ -185,7 +186,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 />
             </div>
             <div className="col-md-3">
-                <label htmlFor="priceMax" className="form-label">
+                <label htmlFor="priceMax" className="form-label" style={{ color: labelColor || 'black' }}>
                 Cena maksymalna
                 </label>
                 <input
@@ -195,7 +196,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 />
             </div>
             <div className="col-md-3">
-                <label htmlFor="yearMin" className="form-label">
+                <label htmlFor="yearMin" className="form-label" style={{ color: labelColor || 'black' }}>
                 Rocznik minimalny
                 </label>
                 <input
@@ -205,7 +206,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 />
             </div>
             <div className="col-md-3">
-                <label htmlFor="yearMax" className="form-label">
+                <label htmlFor="yearMax" className="form-label" style={{ color: labelColor || 'black' }}>
                 Rocznik maksymalny
                 </label>
                 <input
@@ -215,7 +216,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 />
             </div>
             <div className="col-md-3">
-                <label className="form-label">Data rozpoczecia</label>
+                <label className="form-label" style={{ color: labelColor || 'black' }}>Data rozpoczecia</label>
                 <DatePicker
                 className="form-control"
                 selected={startDate}
@@ -226,7 +227,7 @@ export default function CarFilterForm({ initialValues }: CarFilterFormProps) {
                 />
             </div>
             <div className="col-md-3">
-                <label className="form-label">Data zakonczenia</label>
+                <label className="form-label" style={{ color: labelColor || 'black' }}>Data zakonczenia</label>
                 <DatePicker
                 className="form-control"
                 selected={endDate}
