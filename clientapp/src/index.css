@@ -71,11 +71,12 @@ code {
 
 /* Footer */
 .footer {
-  background-color: #000;
+  background-color: #353434;
+  font-family: "Nunito", sans-serif;
   color: #fff;
   display: flex;
   width: 100vw;
-  height: 6vh;
+  height: 8vh;
   justify-content: center;
   align-items: center;
 }
@@ -878,27 +879,23 @@ table tr:hover td {
 
 /* Account page */
 .page-account {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("../public/images/car_background.jpg");
+  background-color: #FFFFFF;
   background-size: cover;
   background-position: center;
   width: 100vw;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
   color: white;
-  padding: 3rem 0;
 }
 
 .content-wrapper-account {
   width: 50vw;
-  max-width: 500px;
+  max-width: 400px;
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 2px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 2px 0px rgba(66, 68, 90, 1);
+  border-radius: 5px;
+  color: black;
+  margin: 2rem auto;
+  font-family: "Nunito", sans-serif;
 }
 
 .form-account .form-group {
