@@ -117,19 +117,32 @@ const CarPage = () => {
           <h1 className="banner-title">
             {car?.brand} {car?.model}
           </h1>
-          <p className="banner-description">
-            Rocznik: {car?.productionYear}
-            <br />
-            Silnik: {car?.fuelType}
-            <br />
-            Pojemność silnika: {car?.capacity} L<br />
-            Typ nadwozia: {car?.bodyType}
-            <br />
-            Kolor: {car?.color}
-            <br />
-            Cena za dobę:{" "}
-            <span className="car-info-span-allCars">{car?.pricePerDay} zł</span>
-          </p>
+          <div className="banner-info-grid">
+            <div className="info-item">
+              <span className="info-label">Silnik</span>
+              <span className="info-value">{car?.fuelType}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">Pojemność</span>
+              <span className="info-value">{car?.capacity} L</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">Rocznik</span>
+              <span className="info-value">{car?.productionYear}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">Typ nadwozia</span>
+              <span className="info-value">{car?.bodyType}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">Kolor</span>
+              <span className="info-value">{car?.color}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">Cena za dobę</span>
+              <span className="info-value price">{car?.pricePerDay} zł</span>
+            </div>
+          </div>
         </div>
       </div>
 
