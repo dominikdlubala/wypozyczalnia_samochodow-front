@@ -70,19 +70,18 @@ export type AddFault = {
 export type Review = {
   id: number;
   userId: number;
+  username: string;
   carId: number;
   starsOutOfFive: number;
   reviewContent?: string | null;
   dateOfIssue?: Date | null;
-  car: Car;
-  user: User;
 };
 
 export type AddReview = {
   carId: number;
   starsOutOfFive: number;
   reviewContent?: string | null;
-}
+};
 
 export type MyError = {
   error?: boolean;

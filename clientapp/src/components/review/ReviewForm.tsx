@@ -44,10 +44,14 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
   return (
     <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="login-form-title">Zostaw opinię</h1>
+
       <div className="login-form-group">
         <input
           type="number"
           className="login-form-input review-form-input"
+          step={0.5}
+          min={0}
+          max={5}
           placeholder="Ile gwiazdek.."
           {...register("stars", {
             required: {
@@ -56,18 +60,32 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
             },
           })}
         />
+
+        {errors.stars && (
+          <span className="login-input-validate">{errors.stars?.message}</span>
+        )}
       </div>
+
       <div className="login-form-group">
         <input
           type="text"
           className="login-form-input review-form-input"
           placeholder="Opis.."
-          {...register("reviewContent")}
+          {...register("reviewContent", {
+            required: {
+              value: true,
+              message: "Treść opinii jest wymagana",
+            },
+          })}
         />
+
+        {errors.reviewContent && (
+          <span className="login-input-validate">
+            {errors.reviewContent?.message}
+          </span>
+        )}
       </div>
-      {errors.stars && (
-        <span className="login-input-validate">{errors.stars?.message}</span>
-      )}
+
       {isError && (
         <span className="login-input-validate">Błąd w dodawaniu opinii</span>
       )}
