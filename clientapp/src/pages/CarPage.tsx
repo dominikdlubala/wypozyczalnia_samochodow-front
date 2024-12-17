@@ -20,8 +20,10 @@ const CarPage = () => {
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [carId, setCarId] = useState<number>();
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
+  const [totalPrice, setTotalPrice] = useState<number | null>(null);
 
+  const [carId, setCarId] = useState<number>();
   const [car, setCar] = useState<Car | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isError, setIsError] = useState<{
@@ -55,6 +57,17 @@ const CarPage = () => {
       fetchCar();
     }
   }, [id]);
+
+  // Oblicz łączną cenę, gdy zmienią się startDate lub endDate
+  useEffect(() => {
+    if (startDate && endDate && car?.pricePerDay) {
+      const diffInDays =
+        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1; // +1 bo liczymy oba dni włącznie
+      setTotalPrice(diffInDays * car.pricePerDay);
+    } else {
+      setTotalPrice(null);
+    }
+  }, [startDate, endDate, car?.pricePerDay]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -150,7 +163,16 @@ const CarPage = () => {
                   <label>Wybierz datę rozpoczęcia:</label>
                   <DatePicker
                     selected={startDate}
-                    onChange={(date) => setStartDate(date)}
+                    onChange={(date) => {
+                      setStartDate(date);
+                      if (endDate && date && date > endDate) {
+                        setEndDate(null);
+                        setResetMessage(
+                          "Data rozpoczęcia nie może być późniejsza niż data zakończenia."
+                        );
+                        setTimeout(() => setResetMessage(null), 3000);
+                      }
+                    }}
                     minDate={new Date()}
                     maxDate={
                       new Date(new Date().setDate(new Date().getDate() + 90))
@@ -170,7 +192,18 @@ const CarPage = () => {
                     placeholderText="Wybierz datę"
                     excludeDates={excludedDates}
                   />
+                  {resetMessage && (
+                    <p style={{ color: "red" }}>{resetMessage}</p>
+                  )}
                 </div>
+                {totalPrice !== null && (
+                  <p style={{ color: "black" }}>
+                    Łączna cena rezerwacji:{" "}
+                    <span className="car-info-span-allCars">
+                      {totalPrice} zł
+                    </span>
+                  </p>
+                )}
                 {token ? (
                   <button
                     className="btn-submit form-button-submit"
