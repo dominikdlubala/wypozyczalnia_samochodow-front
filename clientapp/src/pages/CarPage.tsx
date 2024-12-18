@@ -124,7 +124,7 @@ const CarPage = () => {
             </div>
             <div className="info-item">
               <span className="info-label">Pojemność</span>
-              <span className="info-value">{car?.capacity} L</span>
+              <span className="info-value">{car?.capacity.toFixed(1)} L</span>
             </div>
             <div className="info-item">
               <span className="info-label">Rocznik</span>

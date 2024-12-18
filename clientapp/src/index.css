@@ -230,7 +230,7 @@ code {
 .search-input {
   display: flex;
   width: 100%;
-  border: 2px solid black;
+  border: 2px solid rgb(0, 0, 0);
   font-size: 1rem;
   margin: 1rem 0rem;
 }
@@ -297,7 +297,7 @@ code {
 
 .form-control,
 .form-select {
-  border: 1px solid darkgray;
+  border: 1px solid rgb(158, 158, 158);
   border-radius: 2px;
   padding: 0.6rem 0.75rem;
   background-color: #f9f9f9;
@@ -656,7 +656,7 @@ code {
 }
 
 .reservation-card--active {
-  background-color: #e8f5e9;
+  background-color: #cce7ce;
   border: 1px solid #e8f5e9;
 }
 
@@ -1056,8 +1056,8 @@ table tr:hover td {
   color: #999;
 }
 
-.review-stars {
-  font-size: 1rem;
+.review-stars-span {
+  font-size: 1.1rem;
   font-weight: bold;
   color: #dbbc0a;
 }

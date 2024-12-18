@@ -19,7 +19,7 @@ export default function CarReviews({ reviewsData }: CarReviewProps) {
               </div>
             </div>
             <div className="review-stars">
-              Gwiazdki: {review.starsOutOfFive}
+              Ocena: <span className="review-stars-span">{review.starsOutOfFive}/5</span>
             </div>
             <div className="review-content">{review.reviewContent}</div>
           </div>
