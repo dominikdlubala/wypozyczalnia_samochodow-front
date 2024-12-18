@@ -5,8 +5,25 @@ interface CarReviewProps {
 }
 
 export default function CarReviews({ reviewsData }: CarReviewProps) {
+  // Funkcja obliczająca średnią ocenę
+  const calculateAverageRating = (reviews: Review[] | null | undefined) => {
+    if (!reviews || reviews.length === 0) return null;
+    const totalStars = reviews.reduce((sum, review) => sum + review.starsOutOfFive, 0);
+    return (totalStars / reviews.length).toFixed(1);
+  };
+
+  const averageRating = calculateAverageRating(reviewsData);
+
   return (
     <div className="car-reviews">
+      {/* Wyświetlanie średniej oceny */}
+      {averageRating && (
+        <div className="average-rating">
+          Średnia ocena ze wszystkich recenzji:{" "}
+          <span className="average-rating-value">{averageRating}/5</span>
+        </div>
+      )}
+      {/* Pozostałe recenzje */}
       {reviewsData &&
         reviewsData.map((review) => (
           <div className="review" key={review.id}>
