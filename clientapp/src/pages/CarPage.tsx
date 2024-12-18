@@ -20,8 +20,10 @@ const CarPage = () => {
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [carId, setCarId] = useState<number>();
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
+  const [totalPrice, setTotalPrice] = useState<number | null>(null);
 
+  const [carId, setCarId] = useState<number>();
   const [car, setCar] = useState<Car | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isError, setIsError] = useState<{
@@ -29,6 +31,7 @@ const CarPage = () => {
     message?: string;
   }>({ isError: false });
 
+  const [isReserving, setIsReserving] = useState<boolean>(false);
   const [reviews, setReviews] = useState<Review[] | null>(null);
 
   useEffect(() => {
@@ -56,9 +59,22 @@ const CarPage = () => {
     }
   }, [id]);
 
+  // Oblicz łączną cenę, gdy zmienią się startDate lub endDate
+  useEffect(() => {
+    if (startDate && endDate && car?.pricePerDay) {
+      const diffInDays =
+        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1; // +1 bo liczymy oba dni włącznie
+      setTotalPrice(diffInDays * car.pricePerDay);
+    } else {
+      setTotalPrice(null);
+    }
+  }, [startDate, endDate, car?.pricePerDay]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (startDate && endDate && carId) {
+      setIsReserving(true);
+
       const { error } = await addReservation(
         { carId, startDate, endDate },
         token as string
@@ -66,15 +82,17 @@ const CarPage = () => {
 
       if (error) {
         setIsError({ isError: true, message: error.message });
+        setIsReserving(false);
       } else {
         setIsSuccess(true);
         setTimeout(() => {
           setIsSuccess(false);
           navigate("/reservations");
-        }, 3000);
+        }, 2000);
       }
     } else {
       setIsError({ isError: true, message: "Nie wybrano okresu rezerwacji" });
+      setIsReserving(false);
       setTimeout(() => {
         setIsError({ isError: false });
       }, 3000);
@@ -163,7 +181,16 @@ const CarPage = () => {
                   <label>Wybierz datę rozpoczęcia:</label>
                   <DatePicker
                     selected={startDate}
-                    onChange={(date) => setStartDate(date)}
+                    onChange={(date) => {
+                      setStartDate(date);
+                      if (endDate && date && date > endDate) {
+                        setEndDate(null);
+                        setResetMessage(
+                          "Data rozpoczęcia nie może być późniejsza niż data zakończenia."
+                        );
+                        setTimeout(() => setResetMessage(null), 3000);
+                      }
+                    }}
                     minDate={new Date()}
                     maxDate={
                       new Date(new Date().setDate(new Date().getDate() + 90))
@@ -183,13 +210,25 @@ const CarPage = () => {
                     placeholderText="Wybierz datę"
                     excludeDates={excludedDates}
                   />
+                  {resetMessage && (
+                    <p style={{ color: "red" }}>{resetMessage}</p>
+                  )}
                 </div>
+                {totalPrice !== null && (
+                  <p style={{ color: "black" }}>
+                    Łączna cena rezerwacji:{" "}
+                    <span className="car-info-span-allCars">
+                      {totalPrice} zł
+                    </span>
+                  </p>
+                )}
                 {token ? (
                   <button
                     className="btn-submit form-button-submit"
                     type="submit"
+                    disabled={isReserving}
                   >
-                    Zarezerwuj
+                    {isReserving ? "Rezerwuję..." : "Rezerwuj"}
                   </button>
                 ) : (
                   <button
