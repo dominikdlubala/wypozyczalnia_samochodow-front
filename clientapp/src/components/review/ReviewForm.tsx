@@ -42,17 +42,17 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
   };
 
   return (
-    <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="login-form-title">Zostaw opinię</h1>
+    <form className="review-form" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="review-form-title">Zostaw opinię</h1>
 
-      <div className="login-form-group">
+      <div className="review-form-group-stars">
         <input
           type="number"
-          className="login-form-input review-form-input"
+          className="review-form-input"
           step={0.5}
           min={0}
           max={5}
-          placeholder="Ile gwiazdek.."
+          placeholder="Ile gwiazdek? (1-5)"
           {...register("stars", {
             required: {
               value: true,
@@ -69,8 +69,8 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
       <div className="login-form-group">
         <input
           type="text"
-          className="login-form-input review-form-input"
-          placeholder="Opis.."
+          className="review-form-input"
+          placeholder="Wpisz treść recenzji..."
           {...register("reviewContent", {
             required: {
               value: true,
@@ -90,7 +90,7 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
         <span className="login-input-validate">Błąd w dodawaniu opinii</span>
       )}
       <button
-        className="login-btn-submit"
+        className="review-btn-submit"
         type="submit"
         disabled={isSubmitting}
       >

@@ -13,16 +13,16 @@ import { useAuth } from "../hooks/useAuth";
 const AdminPage = () => {
   const [cars, setCars] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
-  const [reservations, setReservations] = useState<any[]>([]); // Stan dla rezerwacji
+  const [reservations, setReservations] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
-  const [faults, setFaults] = useState<any[]>([]); // Stan dla usterek
+  const [faults, setFaults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const [showCarsTable, setShowCarsTable] = useState(false);
   const [showUsersTable, setShowUsersTable] = useState(false);
-  const [showReservationsTable, setShowReservationsTable] = useState(false); // Widoczność tabeli rezerwacji
+  const [showReservationsTable, setShowReservationsTable] = useState(false);
   const [showReviewsTable, setShowReviewsTable] = useState(false);
-  const [showFaultsTable, setShowFaultsTable] = useState(false); // Widoczność tabeli usterek
+  const [showFaultsTable, setShowFaultsTable] = useState(false);
 
   const [isCarModalOpen, setIsCarModalOpen] = useState<boolean>(false);
   const [car, setCar] = useState<Car | null>(null);
@@ -35,8 +35,8 @@ const AdminPage = () => {
     );
     if (confirmed) {
       try {
-        await deleteCar(carId, token || ""); // Zastąp funkcją odpowiedzialną za usunięcie samochodu
-        fetchCars(); // Odśwież listę samochodów po usunięciu
+        await deleteCar(carId, token || "");
+        fetchCars();
       } catch (error) {
         setError("Nie udało się usunąć samochodu");
       }
@@ -140,22 +140,34 @@ const AdminPage = () => {
         )}
 
         <div className="d-flex justify-content-between flex-wrap gap-2 mb-4">
-          <button onClick={handleShowCarsTable} className="btn btn-primary">
+          <button
+            onClick={handleShowCarsTable}
+            className={`btn ${showCarsTable ? "btn-success" : "btn-primary"}`}
+          >
             {showCarsTable ? "Ukryj samochody" : "Pokaż samochody"}
           </button>
-          <button onClick={handleShowUsersTable} className="btn btn-primary">
+          <button
+            onClick={handleShowUsersTable}
+            className={`btn ${showUsersTable ? "btn-success" : "btn-primary"}`}
+          >
             {showUsersTable ? "Ukryj użytkowników" : "Pokaż użytkowników"}
           </button>
           <button
             onClick={handleShowReservationsTable}
-            className="btn btn-primary"
+            className={`btn ${showReservationsTable ? "btn-success" : "btn-primary"}`}
           >
             {showReservationsTable ? "Ukryj rezerwacje" : "Pokaż rezerwacje"}
           </button>
-          <button onClick={handleShowReviewsTable} className="btn btn-primary">
+          <button
+            onClick={handleShowReviewsTable}
+            className={`btn ${showReviewsTable ? "btn-success" : "btn-primary"}`}
+          >
             {showReviewsTable ? "Ukryj recenzje" : "Pokaż recenzje"}
           </button>
-          <button onClick={handleShowFaultsTable} className="btn btn-primary">
+          <button
+            onClick={handleShowFaultsTable}
+            className={`btn ${showFaultsTable ? "btn-success" : "btn-primary"}`}
+          >
             {showFaultsTable ? "Ukryj usterki" : "Pokaż usterki"}
           </button>
         </div>
@@ -229,108 +241,128 @@ const AdminPage = () => {
           </div>
         )}
         {showUsersTable && (
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Imię</th>
-                <th>Nazwisko</th>
-                <th>Nazwa użytkownika</th>
-                <th>Email</th>
-                <th>Data rejestracji</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    {new Date(user.registrationDate).toLocaleDateString()}
-                  </td>
+          <div>
+            <div className="text-center">
+              <h3>Użytkownicy</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Imię</th>
+                  <th>Nazwisko</th>
+                  <th>Nazwa użytkownika</th>
+                  <th>Email</th>
+                  <th>Data rejestracji</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      {new Date(user.registrationDate).toLocaleDateString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
         {showReservationsTable && (
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Użytkownik</th>
-                <th>Samochód</th>
-                <th>Data rozpoczęcia</th>
-                <th>Data zakończenia</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reservations.map((reservation) => (
-                <tr key={reservation.id}>
-                  <td>{reservation.id}</td>
-                  <td>{reservation.userName}</td>
-                  <td>{reservation.carName}</td>
-                  <td>
-                    {new Date(reservation.startDate).toLocaleDateString()}
-                  </td>
-                  <td>{new Date(reservation.endDate).toLocaleDateString()}</td>
+          <div>
+            <div className="text-center">
+              <h3>Rezerwacje</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Użytkownik</th>
+                  <th>Samochód</th>
+                  <th>Data rozpoczęcia</th>
+                  <th>Data zakończenia</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {reservations.map((reservation) => (
+                  <tr key={reservation.id}>
+                    <td>{reservation.id}</td>
+                    <td>{reservation.userName}</td>
+                    <td>{reservation.carName}</td>
+                    <td>
+                      {new Date(reservation.startDate).toLocaleDateString()}
+                    </td>
+                    <td>{new Date(reservation.endDate).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
         {showReviewsTable && (
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Samochód</th>
-                <th>Użytkownik</th>
-                <th>Ocena</th>
-                <th>Recenzja</th>
-                <th>Data dodania</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reviews.map((review) => (
-                <tr key={review.id}>
-                  <td>{review.id}</td>
-                  <td>{review.carName}</td>
-                  <td>{review.userName}</td>
-                  <td>{review.starsOutOfFive}</td>
-                  <td>{review.reviewContent}</td>
-                  <td>{new Date(review.dateOfIssue).toLocaleDateString()}</td>
+          <div>
+            <div className="text-center">
+              <h3>Recenzje</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Samochód</th>
+                  <th>Użytkownik</th>
+                  <th>Ocena</th>
+                  <th>Recenzja</th>
+                  <th>Data dodania</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {reviews.map((review) => (
+                  <tr key={review.id}>
+                    <td>{review.id}</td>
+                    <td>{review.carName}</td>
+                    <td>{review.userName}</td>
+                    <td>{review.starsOutOfFive}</td>
+                    <td>{review.reviewContent}</td>
+                    <td>{new Date(review.dateOfIssue).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
         {showFaultsTable && (
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Samochód</th>
-                <th>Zgłaszający</th>
-                <th>Opis</th>
-                <th>Data zgłoszenia</th>
-              </tr>
-            </thead>
-            <tbody>
-              {faults.map((fault) => (
-                <tr key={fault.id}>
-                  <td>{fault.id}</td>
-                  <td>{fault.carName}</td>
-                  <td>{fault.reportedUserName}</td>
-                  <td>{fault.description}</td>
-                  <td>{new Date(fault.dateOfIssue).toLocaleDateString()}</td>
+          <div>
+            <div className="text-center">
+              <h3>Usterki</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Samochód</th>
+                  <th>Zgłaszający</th>
+                  <th>Opis</th>
+                  <th>Data zgłoszenia</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {faults.map((fault) => (
+                  <tr key={fault.id}>
+                    <td>{fault.id}</td>
+                    <td>{fault.carName}</td>
+                    <td>{fault.reportedUserName}</td>
+                    <td>{fault.description}</td>
+                    <td>{new Date(fault.dateOfIssue).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

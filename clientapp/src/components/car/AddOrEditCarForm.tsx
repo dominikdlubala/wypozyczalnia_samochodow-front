@@ -22,24 +22,26 @@ interface FormProps {
   onSubmited: () => void;
 }
 
-const fuelTypes = ["Petrol", "Diesel", "Hybrid", "Electric"];
+const fuelTypes = ["Benzyna", "Diesel"];
 const bodyTypes = [
-  "Convertible",
-  "Coupe",
+  "Couple",
   "Hatchback",
+  "Kabriolet",
   "Kombi",
   "Sedan",
   "SUV",
 ];
 const colors = [
-  "Black",
-  "Blue",
-  "Gray",
-  "Green",
-  "Red",
-  "Silver",
-  "White",
-  "Yellow",
+  "Biały",
+  "Czarny",
+  "Czerwony",
+  "Granatowy",
+  "Niebieski",
+  "Pomarańczowy",
+  "Srebrny",
+  "Szary",
+  "Zielony",
+  "Żółty"
 ];
 
 export default function AddOrEditCarForm({
@@ -102,13 +104,13 @@ export default function AddOrEditCarForm({
   };
 
   return (
-    <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="login-form-title">
+    <form className="addOrEdit-form" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="addOrEdit-form-title">
         {car ? "Edytuj samochód" : "Dodaj nowy samochód"}
       </h1>
 
       {/* Zdjęcie */}
-      <div className="login-form-group">
+      <div className="addOrEdit-form-group">
         {imageUrl && (
           <div className="mb-3 text-center">
             <img
@@ -119,7 +121,7 @@ export default function AddOrEditCarForm({
           </div>
         )}
 
-        <label className="login-form-label">Dodaj zdjęcie:</label>
+        <label className="addOrEdit-form-label">Dodaj zdjęcie:</label>
         <input type="file" accept="image/*" onChange={handleFileChange} />
 
         <input
@@ -139,7 +141,7 @@ export default function AddOrEditCarForm({
       </div>
 
       {/* Marka */}
-      <div className="login-form-group">
+      <div className="addOrEdit-form-group">
         <input
           type="text"
           className="login-form-input"
@@ -159,7 +161,7 @@ export default function AddOrEditCarForm({
       </div>
 
       {/* Model */}
-      <div className="login-form-group">
+      <div className="addOrEdit-form-group">
         <input
           type="text"
           className="login-form-input"
@@ -179,8 +181,8 @@ export default function AddOrEditCarForm({
       </div>
 
       {/* Typ silnika */}
-      <div className="login-form-group">
-        <label className="login-form-label">Typ silnika: </label>
+      <div className="addOrEdit-form-group">
+        <label className="addOrEdit-form-label">Typ silnika: </label>
         <select
           className="form-select"
           defaultValue={car?.fuelType}
@@ -195,11 +197,11 @@ export default function AddOrEditCarForm({
       </div>
 
       {/* Pojemność */}
-      <div className="login-form-group">
+      <div className="addOrEdit-form-group">
         <label>Pojemność silnika (L):</label>
         <input
           type="number"
-          className="login-form-input"
+          className="addOrEdit-form-input"
           step={0.1}
           placeholder="Pojemność silnika (L)"
           defaultValue={car?.capacity}
@@ -227,8 +229,8 @@ export default function AddOrEditCarForm({
       </div>
 
       {/* Rodzaj nadwozia */}
-      <div className="login-form-group">
-        <label className="login-form-label">Rodzaj nadwozia: </label>
+      <div className="addOrEdit-form-group">
+        <label className="addOrEdit-form-label">Rodzaj nadwozia: </label>
         <select
           className="form-select"
           defaultValue={car?.bodyType}
@@ -243,8 +245,8 @@ export default function AddOrEditCarForm({
       </div>
 
       {/* Kolor */}
-      <div className="login-form-group">
-        <label className="login-form-label">Kolor: </label>
+      <div className="addOrEdit-form-group">
+        <label className="addOrEdit-form-label">Kolor: </label>
         <select
           className="form-select"
           defaultValue={car?.color}
@@ -259,11 +261,11 @@ export default function AddOrEditCarForm({
       </div>
 
       {/* Cena */}
-      <div className="login-form-group">
-        <label>Cena za dzień (PLN):</label>
+      <div className="addOrEdit-form-group">
+        <label className="addOrEdit-form-label">Cena za dzień (PLN):</label>
         <input
           type="number"
-          className="login-form-input"
+          className="addOrEdit-form-input"
           placeholder="Cena za dzień (PLN)"
           defaultValue={car?.pricePerDay}
           {...register("pricePerDay", {
@@ -286,11 +288,11 @@ export default function AddOrEditCarForm({
       </div>
 
       {/* Rok produkcji */}
-      <div className="login-form-group">
-        <label>Rok produkcji:</label>
+      <div className="addOrEdit-form-group">
+        <label className="addOrEdit-form-label">Rok produkcji:</label>
         <input
           type="number"
-          className="login-form-input"
+          className="addOrEdit-form-input"
           placeholder="Rok produkcji"
           defaultValue={car?.productionYear}
           {...register("productionYear", {
@@ -318,7 +320,7 @@ export default function AddOrEditCarForm({
 
       {/* Przycisk */}
       <div className="mt-3">
-        <button type="submit" className="btn btn-success">
+        <button type="submit" className="addOrEdit-btn-submit">
           {car ? "Edytuj" : "Dodaj"}
         </button>
       </div>

@@ -34,12 +34,12 @@ export default function FaultForm({ carId, modalClose }: FaultFormProps) {
     };
 
     return (
-        <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-            <h1 className="login-form-title">Zgłoś usterkę</h1>
-            <div className="login-form-group">
+        <form className="fault-form" onSubmit={handleSubmit(onSubmit)}>
+            <h1 className="fault-form-title">Zgłaszanie usterki</h1>
+            <div className="fault-form-group">
                 <textarea
-                    className="login-form-input fault-form-input"
-                    placeholder="Opis usterki.."
+                    className="fault-form-input"
+                    placeholder="Opisz usterkę..."
                     {...register("description", {
                         required: {
                             value: true,
@@ -51,7 +51,7 @@ export default function FaultForm({ carId, modalClose }: FaultFormProps) {
             {errors.description && <span className="login-input-validate">{errors.description?.message}</span>}
             {isError && <span className="login-input-validate">Błąd podczas zgłaszania usterki</span>}
             <button 
-                className="login-btn-submit"
+                className="fault-btn-submit"
                 type="submit"
                 disabled={isSubmitting}
             >
