@@ -691,8 +691,9 @@ code {
 .noReservationInfo {
   color: black;
   font-family: "Rubik", sans-serif;
-  font-weight: 300;
-  margin-top: 1rem;
+  font-weight: 350;
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 /* Error */
@@ -972,6 +973,17 @@ table tr:hover td {
 }
 
 .content-wrapper-admin .btn-success {
+  background-color: #28a745;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 2px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: "Rubik", sans-serif;
+}
+
+.content-wrapper-admin .btn-success {
   background-color: #0c8620;
   border: none;
   padding: 0.5rem 1.2rem;
@@ -1120,8 +1132,8 @@ table tr:hover td {
   padding: 20px;
   flex-direction: column;
   margin: auto;
-  height: 70%;
-  width: 60%;
+  height: 40%;
+  width: 40%;
   border-radius: 10px;
   background-color: #fff;
   position: relative;
@@ -1150,3 +1162,148 @@ table tr:hover td {
 .btn-add--fault:hover {
   background-color: rgb(252, 66, 66);
 }
+
+ /* Fault form */
+ .fault-form {
+  width: 30vw;
+  margin: auto;
+  font-family: "Rubik", sans-serif;
+}
+
+.fault-form-title {
+  color: #333;
+  font-size: 2rem;
+  font-weight: 550;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.fault-form-group {
+  margin-bottom: 1rem;
+}
+
+.fault-form-input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fault-btn-submit {
+  display: block;
+  margin-left: auto;
+  width: 40%;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  background-color: #707484;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.fault-btn-submit:hover {
+  background-color: #949494;
+}
+
+/* Review form */
+.review-form {
+  width: 30vw;
+  margin: auto;
+  font-family: "Rubik", sans-serif;
+}
+
+.review-form-title {
+  color: #333;
+  font-size: 2rem;
+  font-weight: 550;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.review-form-group-stars {
+  width: 50%;
+  display: block;
+  margin: 0 auto 1rem auto;
+}
+
+.review-form-group {
+  margin-bottom: 1rem;
+}
+
+.review-form-input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-btn-submit {
+  display: block;
+  margin-left: auto;
+  width: 40%;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  background-color: #707484;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.review-btn-submit:hover {
+  background-color: #949494;
+}
+
+ /* AddOrEdit form */
+ .addOrEdit-form {
+  width: 30vw;
+  margin: auto;
+  font-family: "Rubik", sans-serif;
+}
+
+.addOrEdit-form-title {
+  color: #333;
+  font-size: 2rem;
+  font-weight: 550;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.addOrEdit-form-group {
+  margin-bottom: 1rem;
+}
+
+.addOrEdit-form-input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.addOrEdit-btn-submit {
+  display: block;
+  margin-left: auto;
+  width: 40%;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  background-color: #227e38;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addOrEdit-btn-submit:hover {
+  background-color: #24993f;
+}
+
