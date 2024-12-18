@@ -59,11 +59,10 @@ const CarPage = () => {
     }
   }, [id]);
 
-  // Oblicz łączną cenę, gdy zmienią się startDate lub endDate
   useEffect(() => {
     if (startDate && endDate && car?.pricePerDay) {
       const diffInDays =
-        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1; // +1 bo liczymy oba dni włącznie
+        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1;
       setTotalPrice(diffInDays * car.pricePerDay);
     } else {
       setTotalPrice(null);

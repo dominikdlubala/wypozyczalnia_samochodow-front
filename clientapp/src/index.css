@@ -1057,6 +1057,22 @@ table tr:hover td {
   width: 50vw;
 }
 
+.average-rating {
+  text-align: center;
+  margin: 0.5rem 0 0.2rem 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #333;
+  font-family: "Rubik", sans-serif;
+}
+
+.average-rating-value {
+  color: #d8ba0f;
+  font-size: 1.1rem;
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+}
+
 .review {
   background-color: #FFFFFF;
   color: black;
@@ -1080,7 +1096,7 @@ table tr:hover td {
 .review-stars-span {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #dbbc0a;
+  color: #d8ba0f;
 }
 
 .review-content {
@@ -1091,14 +1107,14 @@ table tr:hover td {
 .btn-add--review,
 .btn-add--fault,
 .btn-add--cancel {
-  max-width: 200px;
+  max-width: 160px;
   border: none;
   border-radius: 2px;
-  padding: 0.6rem;
+  padding: 0.4rem;
   background-color: #1da518;
   cursor: pointer;
   color: black;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-family: "Rubik", sans-serif;
 }
 

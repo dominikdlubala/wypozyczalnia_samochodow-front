@@ -46,6 +46,18 @@ export default function ReservationItem({
     }
   };
 
+  // Obliczenie łącznej ceny rezerwacji
+  const calculateTotalPrice = () => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const days = Math.ceil(
+      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1
+    );
+    return days * car.pricePerDay;
+  };
+
+  const totalPrice = calculateTotalPrice();
+
   return (
     <div
       className={`reservation-card ${
@@ -90,6 +102,10 @@ export default function ReservationItem({
             <p>
               Data zakończenia:{" "}
               <strong>{new Date(endDate).toLocaleDateString()}</strong>
+            </p>
+            <p>
+              Łączna cena wynajmu:{" "}
+              <strong>{totalPrice} zł</strong>
             </p>
 
             <div className="col-6 d-flex flex-column mt-3">
