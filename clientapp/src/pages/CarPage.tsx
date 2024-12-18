@@ -31,6 +31,7 @@ const CarPage = () => {
     message?: string;
   }>({ isError: false });
 
+  const [isReserving, setIsReserving] = useState<boolean>(false);
   const [reviews, setReviews] = useState<Review[] | null>(null);
 
   useEffect(() => {
@@ -72,6 +73,8 @@ const CarPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (startDate && endDate && carId) {
+      setIsReserving(true);
+
       const { error } = await addReservation(
         { carId, startDate, endDate },
         token as string
@@ -79,15 +82,17 @@ const CarPage = () => {
 
       if (error) {
         setIsError({ isError: true, message: error.message });
+        setIsReserving(false);
       } else {
         setIsSuccess(true);
         setTimeout(() => {
           setIsSuccess(false);
           navigate("/reservations");
-        }, 3000);
+        }, 2000);
       }
     } else {
       setIsError({ isError: true, message: "Nie wybrano okresu rezerwacji" });
+      setIsReserving(false);
       setTimeout(() => {
         setIsError({ isError: false });
       }, 3000);
@@ -208,8 +213,9 @@ const CarPage = () => {
                   <button
                     className="btn-submit form-button-submit"
                     type="submit"
+                    disabled={isReserving}
                   >
-                    Zarezerwuj
+                    {isReserving ? "Rezerwuję..." : "Rezerwuj"}
                   </button>
                 ) : (
                   <button

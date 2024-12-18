@@ -31,9 +31,13 @@ export default function ReservationsPage() {
   if (isError.error) {
     content = <Error message={isError.message} />;
   } else if (userReservations && userReservations.length === 0) {
-    content = <h2 className="noReservationInfo text-center">Brak rezerwacji.</h2>;
+    content = (
+      <h2 className="noReservationInfo text-center">Brak rezerwacji.</h2>
+    );
   } else {
-    content = userReservations && <ReservationList reservationsData={userReservations}/>
+    content = userReservations && (
+      <ReservationList reservationsData={userReservations} />
+    );
   }
 
   return (
@@ -42,7 +46,8 @@ export default function ReservationsPage() {
         <div className="banner-content">
           <h1 className="banner-title">MOJE REZERWACJE</h1>
           <p className="banner-description">
-            Przeglądaj swoje rezerwacje, zgłaszaj usterki oraz wystawiaj recenzje.
+            Przeglądaj swoje rezerwacje, zgłaszaj usterki oraz wystawiaj
+            recenzje.
           </p>
         </div>
       </div>

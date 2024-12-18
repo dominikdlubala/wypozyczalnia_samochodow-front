@@ -86,14 +86,28 @@ export const addReservation = async (
   }
 };
 
-// export const deleteReservation = async (id: number): Promise<ReservationApiReturn> => {
-//     try {
-//         const response = await fetch(API_URL, {
-//             method: 'DELETE',
+export const deleteReservation = async (
+  id: number,
+  token: string
+): Promise<ReservationApiReturn> => {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
 
-//         });
+    if (response.status === 204) return { data: null };
 
-//     } catch(error) {
-//         return { error: { error: true, message: 'Unexpected error / deleteReservation' } }
-//     }
-// }
+    return {
+      data: null,
+      error: { error: true, message: "Bad request / deleteReservation" },
+    };
+  } catch (error) {
+    return {
+      error: { error: true, message: "Unexpected error / deleteReservation" },
+    };
+  }
+};

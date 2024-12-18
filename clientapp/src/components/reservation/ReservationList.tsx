@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Reservation } from "../../types";
 import ReservationItem from "./ReservationItem";
 
@@ -8,7 +9,10 @@ interface ReservationListProps {
 export default function ReservationList({
   reservationsData,
 }: ReservationListProps) {
-  const sortedReservations = reservationsData.sort((a, b) => {
+  const [reservations, setReservations] =
+    useState<Reservation[]>(reservationsData);
+
+  const sortedReservations = [...reservations].sort((a, b) => {
     const today = new Date().getTime();
 
     const isActiveA =
@@ -29,10 +33,18 @@ export default function ReservationList({
     return 0;
   });
 
+  const handleCancel = (id: number) => {
+    setReservations((prev) => prev.filter((r) => r.id !== id));
+  };
+
   return (
     <div className="list list--reservation">
       {sortedReservations.map((el) => (
-        <ReservationItem key={el.id} reservationData={el} />
+        <ReservationItem
+          key={el.id}
+          reservationData={el}
+          onCancel={() => handleCancel(el.id)}
+        />
       ))}
     </div>
   );

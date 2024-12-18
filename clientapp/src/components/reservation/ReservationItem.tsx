@@ -4,20 +4,26 @@ import type { Reservation } from "../../types";
 import Modal from "../primitives/Modal";
 import ReviewForm from "../review/ReviewForm";
 import FaultForm from "../fault/FaultForm";
+import { deleteReservation } from "../../services/ReservationService";
+import { useAuth } from "../../hooks/useAuth";
 
 interface ReservationItemProps {
   reservationData: Reservation;
+  onCancel: () => void;
 }
 
 export default function ReservationItem({
   reservationData,
+  onCancel,
 }: ReservationItemProps) {
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   const { id, startDate, endDate, car } = reservationData;
 
   const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
   const [isFaultModalOpen, setIsFaultModalOpen] = useState<boolean>(false);
+  const [isCanceling, setIsCanceling] = useState<boolean>(false);
 
   const today = new Date().getTime();
   const isReservationActive =
@@ -25,8 +31,27 @@ export default function ReservationItem({
     today < new Date(endDate).getTime();
   const hasReservationFinished = today > new Date(endDate).getTime();
 
+  const handleCancelReservation = async () => {
+    if (!window.confirm("Czy na pewno chcesz anulować tę rezerwację?")) return;
+
+    setIsCanceling(true);
+    const { data, error } = await deleteReservation(id, token as string);
+
+    if (error) {
+      setIsCanceling(false);
+      alert(`Wystąpił błąd: ${error?.message}`);
+    } else {
+      setIsCanceling(false);
+      onCancel();
+    }
+  };
+
   return (
-    <div className={`reservation-card ${ isReservationActive ? "reservation-card--active" : ""} ${ hasReservationFinished ? "reservation-card--finished" : ""}`}>
+    <div
+      className={`reservation-card ${
+        isReservationActive ? "reservation-card--active" : ""
+      } ${hasReservationFinished ? "reservation-card--finished" : ""}`}
+    >
       {isReviewModalOpen && (
         <Modal modalClose={() => setIsReviewModalOpen(false)}>
           <ReviewForm
@@ -54,7 +79,6 @@ export default function ReservationItem({
             : "Rezerwacja zaplanowana"}
         </h3>
         <div className="row g-3 align-items-center">
-
           <div className="col-6">
             <h2 onClick={() => navigate(`/car/${car.id}`)} role="button">
               {car.brand || "Nie podano"} {car.model || "Nie podano"}
@@ -86,8 +110,12 @@ export default function ReservationItem({
                 </button>
               )}
               {!isReservationActive && !hasReservationFinished && (
-                <button className="btn-add btn-add--cancel">
-                  Anuluj rezerwację
+                <button
+                  className="btn-add btn-add--cancel"
+                  onClick={handleCancelReservation}
+                  disabled={isCanceling}
+                >
+                  {isCanceling ? "Anuluję..." : "Anuluj rezerwację"}
                 </button>
               )}
             </div>
