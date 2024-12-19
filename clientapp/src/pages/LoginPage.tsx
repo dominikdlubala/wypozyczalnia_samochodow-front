@@ -75,7 +75,7 @@ export default function LoginPage() {
                         {isSubmitting ? 'Loguję...' : 'Zaloguj'}
                     </button>
                 </form>
-                <div className="login-register-link mt-2">
+                <div className="login-register-link mt-4">
                     <span>Nie masz konta?</span> <br/>
                     <Link to={'/register'}>Zarejestruj się</Link>
                 </div>

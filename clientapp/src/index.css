@@ -789,36 +789,35 @@ code {
 
 .login-form-wrapper {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   padding: 3rem;
   margin: auto;
-  font-family: "Nunito", sans-serif;
+  font-family: "Rubik", sans-serif;
   background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
 }
 
 .login-form {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   margin: auto;
+  text-align: center;
 }
 
 .login-form-title {
   color: #333;
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: center;
-  margin-bottom: 1.5rem;
 }
 
 .login-form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .login-form-input {
   width: 100%;
   padding: 0.8rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border: 1px solid darkgray;
   border-radius: 4px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -837,9 +836,9 @@ code {
 }
 
 .login-btn-submit {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1.2rem;
+  width: 40%;
+  padding: 0.5rem;
+  font-size: 1.1rem;
   background-color: #707484;
   color: white;
   border: none;
@@ -849,12 +848,11 @@ code {
 }
 
 .login-btn-submit:hover {
-  background-color: #b8a4a4;
+  background-color: #9297af;
 }
 
 .login-register-link {
   text-align: center;
-  margin-top: 1.5rem;
 }
 
 .login-register-link a {
@@ -880,36 +878,36 @@ code {
 
 .register-form-wrapper {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   padding: 3rem;
   margin: auto;
-  font-family: "Nunito", sans-serif;
+  font-family: "Rubik", sans-serif;
   background-color: #f8f9fa;
-  border-radius: 8px;
+  border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .register-form {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   margin: auto;
+  text-align: center;
 }
 
 .register-form-title {
   color: #333;
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: center;
-  margin-bottom: 1.5rem;
 }
 
 .register-form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .register-form-input {
   width: 100%;
   padding: 0.8rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border: 1px solid darkgray;
   border-radius: 4px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -928,9 +926,9 @@ code {
 }
 
 .register-btn-submit {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1.2rem;
+  width: 40%;
+  padding: 0.5rem;
+  font-size: 1.1rem;
   background-color: #707484;
   color: white;
   border: none;
@@ -940,7 +938,7 @@ code {
 }
 
 .register-btn-submit:hover {
-  background-color: #b8a4a4;
+  background-color: #9297af;
 }
 
 /*admin panel */
