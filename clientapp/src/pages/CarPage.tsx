@@ -164,85 +164,75 @@ const CarPage = () => {
       </div>
 
       <div className="car car-reservation">
-        <div className="car-content">
+        <div className="car-reservation-container">
+        <div className="car-image-container">
           <img
-            className="car-image car-image--reservation"
+            className="car-image-centered"
             src={"/images/cars/" + car?.imageUrl}
             alt="car-image"
           />
-          <div className="reservation-controls">
-            <div className="form-wrapper form-wrapper--reservation">
-              <h1 className="form-title form-title--reservation">
-                Zarezerwuj!
-              </h1>
-              <form className="form form--reservation" onSubmit={handleSubmit}>
-                <div className="form-group form-group--reservation">
-                  <label>Wybierz datę rozpoczęcia:</label>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => {
-                      setStartDate(date);
-                      if (endDate && date && date > endDate) {
-                        setEndDate(null);
-                        setResetMessage(
-                          "Data rozpoczęcia nie może być późniejsza niż data zakończenia."
-                        );
-                        setTimeout(() => setResetMessage(null), 3000);
-                      }
-                    }}
-                    minDate={new Date()}
-                    maxDate={
-                      new Date(new Date().setDate(new Date().getDate() + 90))
-                    }
-                    dateFormat="dd/MM/yyyy"
-                    placeholderText="Wybierz datę"
-                    excludeDates={excludedDates}
-                  />
-                </div>
-                <div className="form-group form-group--reservation">
-                  <label>Wybierz datę zakończenia:</label>
-                  <DatePicker
-                    selected={endDate}
-                    onChange={(date) => setEndDate(date)}
-                    minDate={startDate ? startDate : new Date()}
-                    dateFormat="dd/MM/yyyy"
-                    placeholderText="Wybierz datę"
-                    excludeDates={excludedDates}
-                  />
-                  {resetMessage && (
-                    <p style={{ color: "red" }}>{resetMessage}</p>
-                  )}
-                </div>
-                {totalPrice !== null && (
-                  <p style={{ color: "black" }}>
-                    Łączna cena rezerwacji:{" "}
-                    <span className="car-info-span-allCars">
-                      {totalPrice} zł
-                    </span>
-                  </p>
-                )}
-                {token ? (
-                  <button
-                    className="btn-submit form-button-submit"
-                    type="submit"
-                    disabled={isReserving}
-                  >
-                    {isReserving ? "Rezerwuję..." : "Rezerwuj"}
-                  </button>
-                ) : (
-                  <button
-                    className="btn-submit form-button-submit"
-                    onClick={(e: React.FormEvent<HTMLButtonElement>) => {
-                      e.preventDefault();
-                      navigate("/login");
-                    }}
-                  >
-                    Zaloguj się przed rezerwacją
-                  </button>
-                )}
-              </form>
+        </div>
+          <form className="reservation-options" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Data rozpoczęcia:</label>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => {
+                  setStartDate(date);
+                  if (endDate && date && date > endDate) {
+                    setEndDate(null);
+                    setResetMessage(
+                      "Data rozpoczęcia nie może być późniejsza niż data zakończenia."
+                    );
+                    setTimeout(() => setResetMessage(null), 3000);
+                  }
+                }}
+                minDate={new Date()}
+                maxDate={new Date(new Date().setDate(new Date().getDate() + 90))}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="Wybierz datę"
+                excludeDates={excludedDates}
+              />
             </div>
-          </div>
+            <div className="form-group">
+              <label>Data zakończenia:</label>
+              <DatePicker
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                minDate={startDate || new Date()}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="Wybierz datę"
+                excludeDates={excludedDates}
+              />
+            </div>
+            {token ? (
+              <button
+                className="btn-submit form-button-submit"
+                type="submit"
+                disabled={isReserving}
+              >
+              {isReserving ? "Rezerwuję..." : "Rezerwuj"}
+            </button>
+            ) : (
+              <button
+                className="btn-submit form-button-submit"
+                onClick={(e: React.FormEvent<HTMLButtonElement>) => {
+                  e.preventDefault();
+                  navigate("/login");
+                }}
+              >
+                Zaloguj się, aby zarezerwować
+              </button>
+            )}
+          </form>
+        </div>
+
+        <div>
+        {totalPrice !== null && (
+              <p className="total-price">
+                Łączna cena: <span>{totalPrice} zł</span>
+              </p>
+            )}
         </div>
 
         <div className="reviews-title-box">
