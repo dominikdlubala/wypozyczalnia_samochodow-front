@@ -47,7 +47,7 @@ export default function RegisterPage() {
             { formSuccess.isSuccess && <Prompt success handleClose={() => setFormSuccess({ ...formSuccess, isSuccess: false })}>{formSuccess.message}</Prompt>}
             <div className="register-form-wrapper">
                 <form  className="register-form" onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className="register-form-title">Zarejestruj się</h1>
+                    <h1 className="register-form-title">Rejestracja</h1>
                     <div className="register-form-group">
                         <input 
                             type="text" 
