@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Reservation } from "../../types";
+import type { Reservation, Review } from "../../types";
 import Modal from "../primitives/Modal";
 import ReviewForm from "../review/ReviewForm";
 import FaultForm from "../fault/FaultForm";
 import { deleteReservation } from "../../services/ReservationService";
 import { useAuth } from "../../hooks/useAuth";
+import { getUserReviewForCar } from "../../services/ReviewService";
 
 interface ReservationItemProps {
   reservationData: Reservation;
@@ -21,6 +22,28 @@ export default function ReservationItem({
 
   const { id, startDate, endDate, car } = reservationData;
 
+  useEffect(() => {
+    fetchUserReview();
+  }, [token]);
+
+  const fetchUserReview = async () => {
+    setIsFetching(true);
+    const { data, error } = await getUserReviewForCar(
+      reservationData.car.id,
+      token as string
+    );
+    if (data) {
+      setReview(data as Review);
+    }
+    setIsFetching(false);
+  };
+
+  const onReviewSubmit = () => {
+    fetchUserReview();
+  };
+
+  const [review, setReview] = useState<Review>();
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
   const [isFaultModalOpen, setIsFaultModalOpen] = useState<boolean>(false);
   const [isCanceling, setIsCanceling] = useState<boolean>(false);
@@ -69,6 +92,8 @@ export default function ReservationItem({
           <ReviewForm
             modalClose={() => setIsReviewModalOpen(false)}
             carId={car.id}
+            existingReview={review ?? null}
+            onReviewSubmit={onReviewSubmit}
           />
         </Modal>
       )}
@@ -104,17 +129,27 @@ export default function ReservationItem({
               <strong>{new Date(endDate).toLocaleDateString()}</strong>
             </p>
             <p>
-              Łączna cena wynajmu:{" "}
-              <strong>{totalPrice} zł</strong>
+              Łączna cena wynajmu: <strong>{totalPrice} zł</strong>
             </p>
 
             <div className="col-6 d-flex flex-column mt-3">
               {hasReservationFinished && (
                 <button
                   className="btn-add btn-add--review"
+                  disabled={isFetching}
                   onClick={() => setIsReviewModalOpen(true)}
                 >
-                  Oceń samochód
+                  {isFetching ? (
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  ) : review ? (
+                    "Edytuj recenzję"
+                  ) : (
+                    "Oceń samochód"
+                  )}
                 </button>
               )}
               {isReservationActive && (

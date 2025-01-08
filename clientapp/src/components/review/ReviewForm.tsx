@@ -1,20 +1,28 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 
-import { addReview } from "../../services/ReviewService";
+import { addReview, editReview } from "../../services/ReviewService";
 import { useAuth } from "../../hooks/useAuth";
+import { Review } from "../../types";
 
 type FormValues = {
   stars: number;
-  reviewContent?: string;
+  reviewContent: string;
 };
 
 interface ReviewFormProps {
   carId: number;
   modalClose: () => void;
+  existingReview: Review | null;
+  onReviewSubmit: () => void;
 }
 
-export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
+export default function ReviewForm({
+  carId,
+  modalClose,
+  existingReview,
+  onReviewSubmit,
+}: ReviewFormProps) {
   const { token } = useAuth();
 
   const [isError, setIsError] = useState<boolean>(false);
@@ -30,11 +38,20 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
     reviewContent,
   }) => {
     try {
-      const { data, error } = await addReview(
-        { carId, starsOutOfFive: stars, reviewContent },
-        token || ""
-      );
+      if (existingReview) {
+        await editReview(
+          existingReview.id,
+          { starsOutOfFive: stars, reviewContent },
+          token as string
+        );
+      } else {
+        await addReview(
+          { carId, starsOutOfFive: stars, reviewContent },
+          token || ""
+        );
+      }
 
+      onReviewSubmit();
       modalClose();
     } catch (error) {
       setIsError(true);
@@ -53,6 +70,7 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
           min={0}
           max={5}
           placeholder="Ile gwiazdek? (1-5)"
+          defaultValue={existingReview?.starsOutOfFive}
           {...register("stars", {
             required: {
               value: true,
@@ -71,6 +89,7 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
           type="text"
           className="review-form-input"
           placeholder="Wpisz treść recenzji..."
+          defaultValue={existingReview?.reviewContent as string}
           {...register("reviewContent", {
             required: {
               value: true,
@@ -94,7 +113,13 @@ export default function ReviewForm({ carId, modalClose }: ReviewFormProps) {
         type="submit"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Dodaję..." : "Dodaj opinię"}
+        {isSubmitting
+          ? existingReview
+            ? "Edytuję..."
+            : "Dodaję..."
+          : existingReview
+          ? "Edytuj opinię"
+          : "Dodaj opinię"}
       </button>
     </form>
   );
