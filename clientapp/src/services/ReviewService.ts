@@ -44,6 +44,38 @@ export const getCarsReviews = async (
   }
 };
 
+export const getUserReviewForCar = async (
+  carId: number,
+  token: string
+): Promise<ReviewApiReturn> => {
+  try {
+    const response = await fetch(`${API_URL}/car/${carId}/user-review`, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    if (!response.ok) {
+      return {
+        data: null,
+        error: {
+          error: true,
+          message: await response.text(),
+        },
+      };
+    }
+
+    const data = await response.json();
+    return { data };
+  } catch (error) {
+    return {
+      data: null,
+      error: { error: true, message: "Unexpected error / getMyReviewForCar" },
+    };
+  }
+};
+
 export const addReview = async (
   newReview: AddReview,
   token: string
@@ -72,6 +104,41 @@ export const addReview = async (
     return {
       data: null,
       error: { error: true, message: "Unexpected error / addReview" },
+    };
+  }
+};
+
+export const editReview = async (
+  reviewId: number,
+  updatedReview: { starsOutOfFive: number; reviewContent: string },
+  token: string
+): Promise<ReviewApiReturn> => {
+  try {
+    const response = await fetch(`${API_URL}/${reviewId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(updatedReview),
+    });
+
+    if (!response.ok) {
+      return {
+        data: null,
+        error: {
+          error: true,
+          message: await response.text(),
+        },
+      };
+    }
+
+    const data = await response.json();
+    return { data };
+  } catch (error) {
+    return {
+      data: null,
+      error: { error: true, message: "Unexpected error / editReview" },
     };
   }
 };
