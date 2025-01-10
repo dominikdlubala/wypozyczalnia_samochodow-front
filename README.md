@@ -22,20 +22,35 @@ This repository contains the frontend code for the Car Rental web application, b
 
 ## Setup and Installation
 
+The following instructions have been proved to be working on a Windows machine. It should also work on a Linux/Mac machine, though it has not been checked.
+
 ### Steps
-1. Clone the repository:
+1. Check if you have git installed
+   ```bash
+   git --version
+   ```
+   If it's not installed visit https://git-scm.com/book/en/v2/Getting-Started-Installing-Git and follow the steps to installing git on your machine 
+
+2. Clone the repository:
    ```bash
    git clone https://github.com/dominikdlubala/wypozyczalnia_samochodow-front
    ```
-2. Navigate to the project directory:
+3. Navigate to the project directory:
    ```bash
    cd wypozyczalnia_samochodow-front/clientapp
    ```
-3. Install dependencies:
+4. Check if you have Node.js and npm installed
+   ```bash
+   node -v
+   npm -v
+   ```
+   If they're not installed visit https://nodejs.org/en/download/ and follow the steps to installing them on your machine
+   
+5. Install dependencies:
    ```bash
    npm install
    ```
-4. Start the development server:
+6. Start the development server:
    ```bash
    npm start
    ```
