@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { Car } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { getUniquePropertyValues } from "../../services/CarService";
 import { SubmitHandler, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import { normalize } from "path";
 
 interface UniqueCarProperties {
     fuelTypes: string[];

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUser, updateUser, changePassword } from "../services/UserService";
+import { useAuth } from "../hooks/useAuth";
 
 interface User {
   id: number;
@@ -11,6 +12,9 @@ interface User {
 }
 
 export default function AccountPage() {
+
+  const { token } = useAuth(); 
+
   const [user, setUser] = useState<User | null | undefined>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -72,7 +76,7 @@ export default function AccountPage() {
         lastName: user.lastName,
         email: user.email,
         username: user.username,
-      });
+      }, token as string);
       setSuccess("Dane zostały zaktualizowane.");
     } catch (error: any) {
       setError("Nie udało się zaktualizować danych użytkownika.");
@@ -93,7 +97,7 @@ export default function AccountPage() {
     }
 
     try {
-      await changePassword(user.id, currentPassword, newPassword);
+      await changePassword(user.id, currentPassword, newPassword, token);
       setPasswordSuccess("Hasło zostało zmienione.");
       setCurrentPassword("");
       setNewPassword("");

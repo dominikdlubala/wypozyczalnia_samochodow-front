@@ -161,13 +161,15 @@ export const registerUser = async ({
 
 export const updateUser = async (
   id: number,
-  updatedUser: Partial<User>
+  updatedUser: Partial<User>, 
+  token: string
 ): Promise<User> => {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + token
       },
       body: JSON.stringify(updatedUser),
     });
@@ -186,20 +188,16 @@ export const updateUser = async (
 export async function changePassword(
   userId: number,
   currentPassword: string,
-  newPassword: string
+  newPassword: string, 
+  token: string | null
 ): Promise<void> {
   try {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      throw new Error("Użytkownik nie jest zalogowany.");
-    }
 
     const response = await fetch(`${API_URL}/${userId}/change-password`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
         currentPassword,
