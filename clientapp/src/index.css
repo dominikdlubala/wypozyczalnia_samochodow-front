@@ -407,6 +407,7 @@ code {
   font-family: "Rubik", sans-serif;
   margin: 0 auto;
   max-width: fit-content;
+  grid-template-columns: repeat(6, 1fr);
 }
 
 
@@ -1380,5 +1381,60 @@ table tr:hover td {
 
 .addOrEdit-btn-submit:hover {
   background-color: #24993f;
+}
+
+@media (max-width: 576px) {
+  .reservation-options {
+    margin-left: 2.8rem;
+  }
+
+  .car-page-form-submit {
+    margin-right: 3rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .menu {
+    margin-right: 0.8rem;
+  }
+
+  .menu-link {
+    font-size: 0.75em; /* Mniejszy rozmiar czcionki dla linków w navbarze */
+    padding: 0.1rem; /* Mniejsze odstępy między linkami */
+  }
+
+  .menu-links {
+    gap: 0.2rem; /* Zmniejszenie odstępów między elementami */
+  }
+
+  .logo-image {
+    max-height: 2.1vh; /* Mniejsze logo */
+  }
+
+  .header {
+    padding: 0.5rem; /* Zmniejszenie paddingu w headerze */
+  }
+}
+
+@media (max-width: 576px) {
+  .banner-info-grid {
+    display: grid; /* Przełączenie na siatkę dla małych ekranów */
+    grid-template-columns: repeat(3, 1fr); /* 3 kolumny */
+    grid-template-rows: repeat(2, auto); /* 2 wiersze */
+    text-align: center;
+  }
+
+  .banner-title {
+    font-size: 1.3rem;
+  }
+
+  .info-label {
+    font-size: 0.7rem;
+  }
+
+  .info-value {
+    font-size: 1.1rem;
+  }
 }
 
