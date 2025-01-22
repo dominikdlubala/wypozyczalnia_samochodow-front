@@ -207,7 +207,7 @@ const CarPage = () => {
             </div>
             {token ? (
               <button
-                className="btn-submit form-button-submit"
+                className="btn-submit form-button-submit car-page-form-submit"
                 type="submit"
                 disabled={isReserving}
               >
