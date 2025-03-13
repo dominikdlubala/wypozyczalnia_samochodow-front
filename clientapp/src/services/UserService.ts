@@ -2,24 +2,11 @@ import type { User, UserLoginApiReturn } from "../types";
 
 const API_URL = "/api/User";
 
-export const getUsers = async (): Promise<User[]> => {
+export const getUser = async (token: string, id: number): Promise<User> => {
   try {
-    const response = await fetch(API_URL);
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch users");
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    throw error;
-  }
-};
-
-export const getUser = async (id: number): Promise<User> => {
-  try {
-    const response = await fetch(`${API_URL}/${id}`);
+    const response = await fetch(`${API_URL}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch user with id: ${id}`);
@@ -29,51 +16,6 @@ export const getUser = async (id: number): Promise<User> => {
   } catch (error) {
     console.error("Error fetching user:", error);
     throw error;
-  }
-};
-
-export const findUser = async (
-  username: string,
-  password: string
-): Promise<UserLoginApiReturn> => {
-  try {
-    const response = await fetch(`${API_URL}/find`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    });
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        return {
-          token: null,
-          error: { error: true, message: "User not found" },
-        };
-      }
-      return {
-        token: null,
-        error: {
-          error: true,
-          message: "Unexpected error in UserService/findUSer",
-        },
-      };
-    }
-
-    const data = await response.json();
-    return { token: data };
-  } catch (error) {
-    return {
-      token: null,
-      error: {
-        error: true,
-        message: "Unexpected error in UserService/findUser",
-      },
-    };
   }
 };
 
@@ -161,7 +103,7 @@ export const registerUser = async ({
 
 export const updateUser = async (
   id: number,
-  updatedUser: Partial<User>, 
+  updatedUser: Partial<User>,
   token: string
 ): Promise<User> => {
   try {
@@ -169,7 +111,7 @@ export const updateUser = async (
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify(updatedUser),
     });
@@ -188,11 +130,10 @@ export const updateUser = async (
 export async function changePassword(
   userId: number,
   currentPassword: string,
-  newPassword: string, 
+  newPassword: string,
   token: string | null
 ): Promise<void> {
   try {
-
     const response = await fetch(`${API_URL}/${userId}/change-password`, {
       method: "PUT",
       headers: {

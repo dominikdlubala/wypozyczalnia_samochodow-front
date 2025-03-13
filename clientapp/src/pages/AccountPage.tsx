@@ -12,8 +12,7 @@ interface User {
 }
 
 export default function AccountPage() {
-
-  const { token } = useAuth(); 
+  const { token } = useAuth();
 
   const [user, setUser] = useState<User | null | undefined>(null);
   const [loading, setLoading] = useState(true);
@@ -29,7 +28,6 @@ export default function AccountPage() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem("token");
         if (!token) {
           setError("Brak tokena. Użytkownik nie jest zalogowany.");
           setLoading(false);
@@ -37,7 +35,7 @@ export default function AccountPage() {
         }
 
         const userId = parseInt(JSON.parse(atob(token.split(".")[1])).nameid);
-        const fetchedUser = await getUser(userId);
+        const fetchedUser = await getUser(token, userId);
 
         const normalizedUser: User = {
           ...fetchedUser,
@@ -71,12 +69,16 @@ export default function AccountPage() {
     if (!user) return;
 
     try {
-      await updateUser(user.id, {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        username: user.username,
-      }, token as string);
+      await updateUser(
+        user.id,
+        {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          username: user.username,
+        },
+        token as string
+      );
       setSuccess("Dane zostały zaktualizowane.");
     } catch (error: any) {
       setError("Nie udało się zaktualizować danych użytkownika.");
@@ -114,7 +116,6 @@ export default function AccountPage() {
 
   return (
     <div className="page-account">
-
       <div className="banner-section">
         <div className="banner-content">
           <h1 className="banner-title">PANEL UŻYTKOWNIKA</h1>
