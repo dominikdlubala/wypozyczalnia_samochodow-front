@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getUser, updateUser, changePassword } from "../services/UserService";
 import { useAuth } from "../hooks/useAuth";
+import Prompt from "../components/primitives/Prompt";
 
 interface User {
   id: number;
@@ -80,8 +81,10 @@ export default function AccountPage() {
         token as string
       );
       setSuccess("Dane zostały zaktualizowane.");
+      setTimeout(() => setSuccess(null), 3000);
     } catch (error: any) {
       setError("Nie udało się zaktualizować danych użytkownika.");
+      setTimeout(() => setError(null), 3000);
     }
   };
 
@@ -95,12 +98,14 @@ export default function AccountPage() {
     // Walidacja, czy nowe hasło i potwierdzenie hasła są takie same
     if (newPassword !== confirmNewPassword) {
       setPasswordError("Nowe hasło i jego potwierdzenie muszą być takie same.");
+      setTimeout(() => setPasswordError(null), 3000);
       return;
     }
 
     try {
       await changePassword(user.id, currentPassword, newPassword, token);
       setPasswordSuccess("Hasło zostało zmienione.");
+      setTimeout(() => setPasswordSuccess(null), 3000);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
@@ -108,14 +113,36 @@ export default function AccountPage() {
       setPasswordError(
         "Nie udało się zmienić hasła. Sprawdź, czy aktualne hasło jest poprawne."
       );
+      setTimeout(() => setPasswordError(null), 3000);
     }
   };
 
-  if (loading) return <p>Ładowanie...</p>;
-  if (error) return <p>Błąd: {error}</p>;
+  //if (loading) return <p>Ładowanie...</p>;
+  //if (error) return <p>Błąd: {error}</p>;
 
   return (
     <div className="page-account">
+      {success && (
+        <Prompt success handleClose={() => setSuccess(null)}>
+          {success}
+        </Prompt>
+      )}
+      {error && (
+        <Prompt error handleClose={() => setError(null)}>
+          {error}
+        </Prompt>
+      )}
+      {passwordSuccess && (
+        <Prompt success handleClose={() => setPasswordSuccess(null)}>
+          {passwordSuccess}
+        </Prompt>
+      )}
+      {passwordError && (
+        <Prompt error handleClose={() => setPasswordError(null)}>
+          {passwordError}
+        </Prompt>
+      )}
+
       <div className="banner-section">
         <div className="banner-content">
           <h1 className="banner-title">PANEL UŻYTKOWNIKA</h1>

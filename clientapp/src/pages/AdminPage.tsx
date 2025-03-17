@@ -61,7 +61,7 @@ const AdminPage = () => {
   };
 
   const fetchReservations = async () => {
-    const response = await getAllReservations();
+    const response = await getAllReservations(token);
     if (response.data) {
       setReservations(response.data);
     } else {
