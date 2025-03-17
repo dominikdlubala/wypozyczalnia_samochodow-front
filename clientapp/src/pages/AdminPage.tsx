@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAllCars } from "../services/CarService";
-import { getUsers } from "../services/UserService";
 import { getAllReservations } from "../services/ReservationService";
 import { getAllReviews } from "../services/ReviewService";
 import { getAllFaults } from "../services/FaultService";
 import Modal from "../components/primitives/Modal";
 import AddOrEditCarForm from "../components/car/AddOrEditCarForm";
 import { Car } from "../types";
-import { deleteCar } from "../services/AdminService";
+import { deleteCar, getUsers } from "../services/AdminService";
 import { useAuth } from "../hooks/useAuth";
 
 const AdminPage = () => {
@@ -54,7 +53,7 @@ const AdminPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const data = await getUsers();
+      const data = await getUsers(token || "");
       setUsers(data);
     } catch {
       setError("Nie udało się pobrać użytkowników");
@@ -62,7 +61,7 @@ const AdminPage = () => {
   };
 
   const fetchReservations = async () => {
-    const response = await getAllReservations();
+    const response = await getAllReservations(token);
     if (response.data) {
       setReservations(response.data);
     } else {
@@ -115,12 +114,10 @@ const AdminPage = () => {
 
   return (
     <div className="page page-admin">
-
       <div className="banner-section">
         <div className="banner-content">
           <h1 className="banner-title">PANEL ADMINISTRATORA</h1>
-          <p className="banner-description">
-          </p>
+          <p className="banner-description"></p>
         </div>
       </div>
 
@@ -154,13 +151,17 @@ const AdminPage = () => {
           </button>
           <button
             onClick={handleShowReservationsTable}
-            className={`btn ${showReservationsTable ? "btn-success" : "btn-primary"}`}
+            className={`btn ${
+              showReservationsTable ? "btn-success" : "btn-primary"
+            }`}
           >
             {showReservationsTable ? "Ukryj rezerwacje" : "Pokaż rezerwacje"}
           </button>
           <button
             onClick={handleShowReviewsTable}
-            className={`btn ${showReviewsTable ? "btn-success" : "btn-primary"}`}
+            className={`btn ${
+              showReviewsTable ? "btn-success" : "btn-primary"
+            }`}
           >
             {showReviewsTable ? "Ukryj recenzje" : "Pokaż recenzje"}
           </button>
@@ -297,7 +298,9 @@ const AdminPage = () => {
                     <td>
                       {new Date(reservation.startDate).toLocaleDateString()}
                     </td>
-                    <td>{new Date(reservation.endDate).toLocaleDateString()}</td>
+                    <td>
+                      {new Date(reservation.endDate).toLocaleDateString()}
+                    </td>
                   </tr>
                 ))}
               </tbody>

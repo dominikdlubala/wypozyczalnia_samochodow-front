@@ -1,6 +1,27 @@
-import { Car, CarApiReturn } from "../types";
+import { Car, CarApiReturn, User } from "../types";
 
 const API_URL = "/api/admin";
+
+// USER
+
+export const getUsers = async (token: string): Promise<User[]> => {
+  try {
+    const response = await fetch(API_URL + "/user", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch users");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+
+// CAR
 
 export const uploadImage = async (
   file: File,

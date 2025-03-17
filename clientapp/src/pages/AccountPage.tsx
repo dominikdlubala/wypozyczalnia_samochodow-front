@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getUser, updateUser, changePassword } from "../services/UserService";
 import { useAuth } from "../hooks/useAuth";
+import Prompt from "../components/primitives/Prompt";
 
 interface User {
   id: number;
@@ -12,8 +13,7 @@ interface User {
 }
 
 export default function AccountPage() {
-
-  const { token } = useAuth(); 
+  const { token } = useAuth();
 
   const [user, setUser] = useState<User | null | undefined>(null);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,6 @@ export default function AccountPage() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem("token");
         if (!token) {
           setError("Brak tokena. Użytkownik nie jest zalogowany.");
           setLoading(false);
@@ -37,7 +36,7 @@ export default function AccountPage() {
         }
 
         const userId = parseInt(JSON.parse(atob(token.split(".")[1])).nameid);
-        const fetchedUser = await getUser(userId);
+        const fetchedUser = await getUser(token, userId);
 
         const normalizedUser: User = {
           ...fetchedUser,
@@ -71,15 +70,21 @@ export default function AccountPage() {
     if (!user) return;
 
     try {
-      await updateUser(user.id, {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        username: user.username,
-      }, token as string);
+      await updateUser(
+        user.id,
+        {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          username: user.username,
+        },
+        token as string
+      );
       setSuccess("Dane zostały zaktualizowane.");
+      setTimeout(() => setSuccess(null), 3000);
     } catch (error: any) {
       setError("Nie udało się zaktualizować danych użytkownika.");
+      setTimeout(() => setError(null), 3000);
     }
   };
 
@@ -93,12 +98,14 @@ export default function AccountPage() {
     // Walidacja, czy nowe hasło i potwierdzenie hasła są takie same
     if (newPassword !== confirmNewPassword) {
       setPasswordError("Nowe hasło i jego potwierdzenie muszą być takie same.");
+      setTimeout(() => setPasswordError(null), 3000);
       return;
     }
 
     try {
       await changePassword(user.id, currentPassword, newPassword, token);
       setPasswordSuccess("Hasło zostało zmienione.");
+      setTimeout(() => setPasswordSuccess(null), 3000);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
@@ -106,14 +113,35 @@ export default function AccountPage() {
       setPasswordError(
         "Nie udało się zmienić hasła. Sprawdź, czy aktualne hasło jest poprawne."
       );
+      setTimeout(() => setPasswordError(null), 3000);
     }
   };
 
-  if (loading) return <p>Ładowanie...</p>;
-  if (error) return <p>Błąd: {error}</p>;
+  //if (loading) return <p>Ładowanie...</p>;
+  //if (error) return <p>Błąd: {error}</p>;
 
   return (
     <div className="page-account">
+      {success && (
+        <Prompt success handleClose={() => setSuccess(null)}>
+          {success}
+        </Prompt>
+      )}
+      {error && (
+        <Prompt error handleClose={() => setError(null)}>
+          {error}
+        </Prompt>
+      )}
+      {passwordSuccess && (
+        <Prompt success handleClose={() => setPasswordSuccess(null)}>
+          {passwordSuccess}
+        </Prompt>
+      )}
+      {passwordError && (
+        <Prompt error handleClose={() => setPasswordError(null)}>
+          {passwordError}
+        </Prompt>
+      )}
 
       <div className="banner-section">
         <div className="banner-content">

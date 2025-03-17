@@ -6,12 +6,16 @@ import type {
 
 const API_URL = "/api/Reservation";
 
-export const getAllReservations = async (): Promise<{
+export const getAllReservations = async (
+  token: string | null
+): Promise<{
   data: any[] | null;
   error?: { error: boolean; message: string };
 }> => {
   try {
-    const response = await fetch("/api/Reservation");
+    const response = await fetch("/api/Reservation", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     if (!response.ok) {
       return {
         data: null,
