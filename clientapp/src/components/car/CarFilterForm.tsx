@@ -5,245 +5,303 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 
 interface UniqueCarProperties {
-    fuelTypes: string[];
-    bodyTypes: string[];
-    colors: string[];
-  }
-  
+  fuelTypes: string[];
+  bodyTypes: string[];
+  colors: string[];
+}
+
 export interface FormValues {
-    engineType?: string | null;
-    displacement?: string | null;
-    bodyType?: string | null;
-    colour?: string | null;
-    priceMin?: string | null;
-    priceMax?: string | null;
-    yearMin?: string | null;
-    yearMax?: string | null;
-    [key: string]: string | null | undefined;
+  engineType?: string | null;
+  displacement?: string | null;
+  bodyType?: string | null;
+  colour?: string | null;
+  priceMin?: string | null;
+  priceMax?: string | null;
+  yearMin?: string | null;
+  yearMax?: string | null;
+  [key: string]: string | null | undefined;
 }
 
 interface CarFilterFormProps {
-    initialValues: FormValues; 
-    labelColor?: string;
+  initialValues: FormValues;
+  labelColor?: string;
 }
-  
 
-export default function CarFilterForm({ initialValues, labelColor  }: CarFilterFormProps) {
+export default function CarFilterForm({
+  initialValues,
+  labelColor,
+}: CarFilterFormProps) {
+  const normalizedValues = Object.fromEntries(
+    Object.entries(initialValues).map(([key, value]) => [
+      key[0].toLowerCase() + key.slice(1),
+      value,
+    ])
+  );
 
-    const normalizedValues = Object.fromEntries(
-        Object.entries(initialValues).map(([key, value]) => [key[0].toLowerCase() + key.slice(1), value])
-    );
-
-    const [error, setError] = useState<{ error: boolean; message?: string }>({
+  const [error, setError] = useState<{ error: boolean; message?: string }>({
     error: false,
-    });
-    const [startDate, setStartDate] = useState<Date | null>(normalizedValues.reservationStart ? new Date(normalizedValues.reservationStart) : null);
-    const [endDate, setEndDate] = useState<Date | null>(normalizedValues.reservationEnd ? new Date(normalizedValues.reservationEnd) : null);
-    const [uniqueProps, setUniqueProps] = useState<UniqueCarProperties | null>(
+  });
+  const [startDate, setStartDate] = useState<Date | null>(
+    normalizedValues.reservationStart
+      ? new Date(normalizedValues.reservationStart)
+      : null
+  );
+  const [endDate, setEndDate] = useState<Date | null>(
+    normalizedValues.reservationEnd
+      ? new Date(normalizedValues.reservationEnd)
+      : null
+  );
+  const [uniqueProps, setUniqueProps] = useState<UniqueCarProperties | null>(
     null
-    );
+  );
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { isSubmitting },
-        setValue, 
-    } = useForm<FormValues>({
-        defaultValues: normalizedValues
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+    setValue,
+    reset,
+  } = useForm<FormValues>({
+    defaultValues: normalizedValues,
+  });
 
-    useEffect(() => {
+  useEffect(() => {
+    const fetchUniqueProps = async () => {
+      try {
+        const { data } = await getUniquePropertyValues();
+        setUniqueProps(data as UniqueCarProperties);
+      } catch (error) {
+        setError({ error: true, message: "Failed to fetch unique properties" });
+      }
+    };
 
-        const fetchUniqueProps = async () => {
-            try {
-            const { data } = await getUniquePropertyValues();
-            setUniqueProps(data as UniqueCarProperties);
-            } catch (error) {
-            setError({ error: true, message: "Failed to fetch unique properties" });
-            }
-        };
+    fetchUniqueProps();
+  }, []);
 
-        fetchUniqueProps();
-    }, []);
+  useEffect(() => {
+    if (normalizedValues) {
+      Object.entries(normalizedValues).forEach(([key, value]) => {
+        setValue(key, value);
+      });
+    }
+  }, [normalizedValues, setValue]);
 
-    useEffect(() => {
-        if (normalizedValues) {
-            Object.entries(normalizedValues).forEach(([key, value]) => {
-                setValue(key, value);
-            });
-        }
-    }, [normalizedValues, setValue]);
-    
-
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     var paramsObj = {};
     let key: keyof typeof data;
     for (key in data) {
-        const value = data[key];
-        if (value !== "") {
+      const value = data[key];
+      if (value !== "") {
         paramsObj = {
-            ...paramsObj,
-            [key.slice(0, 1).toUpperCase() + key.slice(1)]: value,
+          ...paramsObj,
+          [key.slice(0, 1).toUpperCase() + key.slice(1)]: value,
         };
-        }
+      }
     }
     startDate &&
-        (paramsObj = { ...paramsObj, reservationStart: startDate.toISOString() });
+      (paramsObj = { ...paramsObj, reservationStart: startDate.toISOString() });
     endDate &&
-        (paramsObj = { ...paramsObj, reservationEnd: endDate.toISOString() });
+      (paramsObj = { ...paramsObj, reservationEnd: endDate.toISOString() });
     const query = new URLSearchParams(paramsObj).toString();
     navigate(`/cars?${query}`);
-    };
+  };
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
-            <div className="col-md-3">
-                <label htmlFor="engineType" className="form-label" style={{ color: labelColor || 'black' }}>
-                Typ silnika
-                </label>
-                <select
-                    defaultValue=""
-                    className="form-select"
-                    {...register("engineType")}
-                >
-                <option value="" disabled hidden>
-                    Wybierz typ silnika
-                </option>
-                {uniqueProps?.fuelTypes.map((fuelType) => (
-                    <option key={fuelType} value={fuelType}>
-                    {fuelType}
-                    </option>
-                ))}
-                </select>
-            </div>
-            <div className="col-md-3">
-                <label htmlFor="displacement" className="form-label" style={{ color: labelColor || 'black' }}>
-                    Pojemność
-                </label>
-                <select
-                    defaultValue=""
-                    className="form-select"
-                    {...register("displacement")}
-                >
-                <option value="" disabled hidden>
-                    Wybierz pojemność
-                </option>
-                <option value="smallEngine">1.0-2.0</option>
-                <option value="mediumEngine">2.0-3.0</option>
-                <option value="bigEngine">3.0+</option>
-                </select>
-            </div>
-            <div className="col-md-3">
-                <label htmlFor="bodyType" className="form-label" style={{ color: labelColor || 'black' }}>
-                Nadwozie
-                </label>
-                <select
-                    defaultValue=""
-                    className="form-select"
-                    {...register("bodyType")}
-                >
-                <option value="" disabled hidden>
-                    Wybierz nadwozie
-                </option>
-                {uniqueProps?.bodyTypes.map((bodyType) => (
-                    <option key={bodyType} value={bodyType}>
-                    {bodyType}
-                    </option>
-                ))}
-                </select>
-            </div>
-            <div className="col-md-3">
-                <label htmlFor="colour" className="form-label" style={{ color: labelColor || 'black' }}>
-                Kolor
-                </label>
-                <select
-                    defaultValue=""
-                    className="form-select"
-                    {...register("colour")}
-                >
-                <option value="" disabled hidden>
-                    Wybierz kolor
-                </option>
-                {uniqueProps?.colors.map((color) => (
-                    <option key={color} value={color}>
-                    {color}
-                    </option>
-                ))}
-                </select>
-            </div>
-            <div className="col-md-3">
-                <label htmlFor="priceMin" className="form-label" style={{ color: labelColor || 'black' }}>
-                Cena minimalna
-                </label>
-                <input
-                type="number"
-                className="form-control"
-                {...register("priceMin")}
-                />
-            </div>
-            <div className="col-md-3">
-                <label htmlFor="priceMax" className="form-label" style={{ color: labelColor || 'black' }}>
-                Cena maksymalna
-                </label>
-                <input
-                type="number"
-                className="form-control"
-                {...register("priceMax")}
-                />
-            </div>
-            <div className="col-md-3">
-                <label htmlFor="yearMin" className="form-label" style={{ color: labelColor || 'black' }}>
-                Rocznik minimalny
-                </label>
-                <input
-                type="number"
-                className="form-control"
-                {...register("yearMin")}
-                />
-            </div>
-            <div className="col-md-3">
-                <label htmlFor="yearMax" className="form-label" style={{ color: labelColor || 'black' }}>
-                Rocznik maksymalny
-                </label>
-                <input
-                type="number"
-                className="form-control"
-                {...register("yearMax")}
-                />
-            </div>
-            <div className="col-md-3">
-                <label className="form-label" style={{ color: labelColor || 'black' }}>Data rozpoczecia</label>
-                <DatePicker
-                className="form-control"
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                minDate={new Date()}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="Wybierz datę"
-                />
-            </div>
-            <div className="col-md-3">
-                <label className="form-label" style={{ color: labelColor || 'black' }}>Data zakonczenia</label>
-                <DatePicker
-                className="form-control"
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                minDate={startDate ? startDate : new Date()}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="Wybierz datę"
-                />
-            </div>
-            <div className="col-12 text-center mt-4">
-                <button
-                className="btn btn-primary btn-submit"
-                type="submit"
-                disabled={isSubmitting}
-                >
-                    Szukaj
-                </button>
-            </div>
-        </form>
-    )
+  const handleClearForm = () => {
+    reset();
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
+      <div className="col-md-3">
+        <label
+          htmlFor="engineType"
+          className="form-label"
+          style={{ color: labelColor || "black" }}
+        >
+          Typ silnika
+        </label>
+        <select
+          defaultValue=""
+          className="form-select"
+          {...register("engineType")}
+        >
+          <option value="" disabled hidden>
+            Wybierz typ silnika
+          </option>
+          {uniqueProps?.fuelTypes.map((fuelType) => (
+            <option key={fuelType} value={fuelType}>
+              {fuelType}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="col-md-3">
+        <label
+          htmlFor="displacement"
+          className="form-label"
+          style={{ color: labelColor || "black" }}
+        >
+          Pojemność
+        </label>
+        <select
+          defaultValue=""
+          className="form-select"
+          {...register("displacement")}
+        >
+          <option value="" disabled hidden>
+            Wybierz pojemność
+          </option>
+          <option value="smallEngine">1.0-2.0</option>
+          <option value="mediumEngine">2.0-3.0</option>
+          <option value="bigEngine">3.0+</option>
+        </select>
+      </div>
+      <div className="col-md-3">
+        <label
+          htmlFor="bodyType"
+          className="form-label"
+          style={{ color: labelColor || "black" }}
+        >
+          Nadwozie
+        </label>
+        <select
+          defaultValue=""
+          className="form-select"
+          {...register("bodyType")}
+        >
+          <option value="" disabled hidden>
+            Wybierz nadwozie
+          </option>
+          {uniqueProps?.bodyTypes.map((bodyType) => (
+            <option key={bodyType} value={bodyType}>
+              {bodyType}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="col-md-3">
+        <label
+          htmlFor="colour"
+          className="form-label"
+          style={{ color: labelColor || "black" }}
+        >
+          Kolor
+        </label>
+        <select defaultValue="" className="form-select" {...register("colour")}>
+          <option value="" disabled hidden>
+            Wybierz kolor
+          </option>
+          {uniqueProps?.colors.map((color) => (
+            <option key={color} value={color}>
+              {color}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="col-md-3">
+        <label
+          htmlFor="priceMin"
+          className="form-label"
+          style={{ color: labelColor || "black" }}
+        >
+          Cena minimalna
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          {...register("priceMin")}
+        />
+      </div>
+      <div className="col-md-3">
+        <label
+          htmlFor="priceMax"
+          className="form-label"
+          style={{ color: labelColor || "black" }}
+        >
+          Cena maksymalna
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          {...register("priceMax")}
+        />
+      </div>
+      <div className="col-md-3">
+        <label
+          htmlFor="yearMin"
+          className="form-label"
+          style={{ color: labelColor || "black" }}
+        >
+          Rocznik minimalny
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          {...register("yearMin")}
+        />
+      </div>
+      <div className="col-md-3">
+        <label
+          htmlFor="yearMax"
+          className="form-label"
+          style={{ color: labelColor || "black" }}
+        >
+          Rocznik maksymalny
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          {...register("yearMax")}
+        />
+      </div>
+      <div className="col-md-3">
+        <label className="form-label" style={{ color: labelColor || "black" }}>
+          Data rozpoczecia
+        </label>
+        <DatePicker
+          className="form-control"
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          minDate={new Date()}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="Wybierz datę"
+        />
+      </div>
+      <div className="col-md-3">
+        <label className="form-label" style={{ color: labelColor || "black" }}>
+          Data zakonczenia
+        </label>
+        <DatePicker
+          className="form-control"
+          selected={endDate}
+          onChange={(date) => setEndDate(date)}
+          minDate={startDate ? startDate : new Date()}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="Wybierz datę"
+        />
+      </div>
+      <div className="col-12 text-center mt-4">
+        <button
+          className="btn btn-primary btn-submit"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          Szukaj
+        </button>
+      </div>
+      <div className="col-12 text-center mt-2">
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={handleClearForm}
+        >
+          Wyczyść formularz
+        </button>
+      </div>
+    </form>
+  );
 }
